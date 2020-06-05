@@ -1,0 +1,9 @@
+controller_list:
+  - name: fake_arduinobot_arm_controller
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+initial:  # Define initial robot poses.
+  - group: arduinobot_arm
+    pose: home
