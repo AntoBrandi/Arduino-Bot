@@ -72,3 +72,10 @@
 /home/legion/arduinobot/build/arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir
 /home/legion/arduinobot/build/arduinobot_moveit/CMakeFiles/rebuild_cache.dir
 /home/legion/arduinobot/build/arduinobot_moveit/CMakeFiles/install.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/install/strip.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/edit_cache.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/list_install_components.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/test.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/install/local.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/rebuild_cache.dir
+/home/legion/arduinobot/build/arduinobot_voice/CMakeFiles/install.dir

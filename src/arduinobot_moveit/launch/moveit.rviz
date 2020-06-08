@@ -5,6 +5,11 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
+        - /MotionPlanning1/Scene Geometry1
+        - /MotionPlanning1/Scene Robot1
+        - /MotionPlanning1/Planning Request1
+        - /MotionPlanning1/Planning Metrics1
+        - /MotionPlanning1/Planned Path1
       Splitter Ratio: 0.7425600290298462
     Tree Height: 361
   - Class: rviz/Help
@@ -130,7 +135,7 @@ Visualization Manager:
         Joint Violation Color: 255; 0; 255
         Planning Group: arduinobot_arm
         Query Goal State: true
-        Query Start State: true
+        Query Start State: false
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
@@ -140,7 +145,7 @@ Visualization Manager:
         Scene Alpha: 1
         Scene Color: 50; 230; 50
         Scene Display Time: 0.20000000298023224
-        Show Scene Geometry: true
+        Show Scene Geometry: false
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
       Scene Robot:
@@ -212,18 +217,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.11356700211763382
-        Y: 0.10592000186443329
+        X: 0.499836802482605
+        Y: 0.33746856451034546
         Z: 2.2351800055275817e-7
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.41479697823524475
+      Pitch: 0.42479705810546875
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 5.664949893951416
+      Yaw: 5.749950408935547
     Saved: ~
 Window Geometry:
   Displays:

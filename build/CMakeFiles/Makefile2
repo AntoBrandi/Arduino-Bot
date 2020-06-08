@@ -985,6 +985,24 @@ clean: arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory arduinobot_voice
+
+# Convenience name for "all" pass in the directory.
+arduinobot_voice/all:
+
+.PHONY : arduinobot_voice/all
+
+# Convenience name for "clean" pass in the directory.
+arduinobot_voice/clean:
+
+.PHONY : arduinobot_voice/clean
+
+# Convenience name for "preinstall" pass in the directory.
+arduinobot_voice/preinstall:
+
+.PHONY : arduinobot_voice/preinstall
+
+#=============================================================================
 # Special targets to cleanup operation of make.
 
 # Special rule to run CMake to check the build system integrity.

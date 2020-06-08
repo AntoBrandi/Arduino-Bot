@@ -1,0 +1,8 @@
+prefix=/home/legion/arduinobot/install
+
+Name: arduinobot_voice
+Description: Description of arduinobot_voice
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

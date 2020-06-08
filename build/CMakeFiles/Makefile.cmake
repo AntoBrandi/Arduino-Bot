@@ -15,6 +15,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "arduinobot_description/catkin_generated/ordered_paths.cmake"
   "arduinobot_description/catkin_generated/package.cmake"
   "arduinobot_moveit/catkin_generated/package.cmake"
+  "arduinobot_voice/catkin_generated/ordered_paths.cmake"
+  "arduinobot_voice/catkin_generated/package.cmake"
   "catkin/catkin_generated/version/package.cmake"
   "catkin_generated/installspace/_setup_util.py"
   "catkin_generated/order_packages.cmake"
@@ -25,6 +27,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/legion/arduinobot/src/arduinobot_description/package.xml"
   "/home/legion/arduinobot/src/arduinobot_moveit/CMakeLists.txt"
   "/home/legion/arduinobot/src/arduinobot_moveit/package.xml"
+  "/home/legion/arduinobot/src/arduinobot_voice/CMakeLists.txt"
+  "/home/legion/arduinobot/src/arduinobot_voice/package.xml"
   "/opt/ros/melodic/share/catkin/cmake/../package.xml"
   "/opt/ros/melodic/share/catkin/cmake/all.cmake"
   "/opt/ros/melodic/share/catkin/cmake/assert.cmake"
@@ -184,6 +188,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "arduinobot_controller/CMakeFiles/CMakeDirectoryInformation.cmake"
   "arduinobot_description/CMakeFiles/CMakeDirectoryInformation.cmake"
   "arduinobot_moveit/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "arduinobot_voice/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:

@@ -302,11 +302,20 @@ arduinobot_moveit_BINARY_DIR:STATIC=/home/legion/arduinobot/build/arduinobot_mov
 //Value Computed by CMake
 arduinobot_moveit_SOURCE_DIR:STATIC=/home/legion/arduinobot/src/arduinobot_moveit
 
+//Value Computed by CMake
+arduinobot_voice_BINARY_DIR:STATIC=/home/legion/arduinobot/build/arduinobot_voice
+
+//Value Computed by CMake
+arduinobot_voice_SOURCE_DIR:STATIC=/home/legion/arduinobot/src/arduinobot_voice
+
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/melodic/share/catkin/cmake
 
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/melodic/share/cpp_common/cmake
+
+//The directory containing a CMake configuration file for geometry_msgs.
+geometry_msgs_DIR:PATH=/opt/ros/melodic/share/geometry_msgs/cmake
 
 //Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/home/legion/arduinobot/build/gtest/googlemock
@@ -506,7 +515,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

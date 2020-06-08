@@ -134,6 +134,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/legion/arduinobot/build/arduinobot_controller/cmake_install.cmake")
   include("/home/legion/arduinobot/build/arduinobot_description/cmake_install.cmake")
   include("/home/legion/arduinobot/build/arduinobot_moveit/cmake_install.cmake")
+  include("/home/legion/arduinobot/build/arduinobot_voice/cmake_install.cmake")
 
 endif()
 
