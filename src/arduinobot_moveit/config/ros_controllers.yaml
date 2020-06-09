@@ -12,6 +12,7 @@ hardware_interface:
     - joint_1
     - joint_2
     - joint_3
+    - joint_4
   sim_control_mode: 1  # 0: position, 1: velocity
 # Publish all joint states
 # Creates the /joint_states topic necessary in ROS
@@ -20,7 +21,7 @@ joint_state_controller:
   publish_rate: 50
 controller_list:
   []
-arm_position_controller:
+position_controller:
   type: position_controllers/JointPositionController
   joints:
     - joint_1
