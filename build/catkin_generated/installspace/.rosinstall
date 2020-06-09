@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/legion/arduinobot/install/setup.sh
+    local-name: /home/ubuntu/arduinobot/install/setup.sh

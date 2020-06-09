@@ -67,14 +67,14 @@ set(arduinobot_controller_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(arduinobot_controller_SOURCE_PREFIX /home/legion/arduinobot/src/arduinobot_controller)
-  set(arduinobot_controller_DEVEL_PREFIX /home/legion/arduinobot/devel)
+  set(arduinobot_controller_SOURCE_PREFIX /home/ubuntu/arduinobot/src/arduinobot_controller)
+  set(arduinobot_controller_DEVEL_PREFIX /home/ubuntu/arduinobot/devel)
   set(arduinobot_controller_INSTALL_PREFIX "")
   set(arduinobot_controller_PREFIX ${arduinobot_controller_DEVEL_PREFIX})
 else()
   set(arduinobot_controller_SOURCE_PREFIX "")
   set(arduinobot_controller_DEVEL_PREFIX "")
-  set(arduinobot_controller_INSTALL_PREFIX /home/legion/arduinobot/install)
+  set(arduinobot_controller_INSTALL_PREFIX /home/ubuntu/arduinobot/install)
   set(arduinobot_controller_PREFIX ${arduinobot_controller_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/legion/arduinobot/install/lib;/home/legion/arduinobot/devel/lib;/home/legion/summit-xl/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/ubuntu/arduinobot/install/lib;/home/ubuntu/catkin_ws/devel/lib;/home/ubuntu/summit-xl/devel/lib;/home/ubuntu/omniagv_ws/devel/lib;/home/ubuntu/ws_moveit/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -1,4 +1,4 @@
-prefix=/home/legion/arduinobot/devel
+prefix=/home/ubuntu/arduinobot/devel
 
 Name: arduinobot_voice
 Description: Description of arduinobot_voice

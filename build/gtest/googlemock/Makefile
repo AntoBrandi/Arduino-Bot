@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/legion/arduinobot/src
+CMAKE_SOURCE_DIR = /home/ubuntu/arduinobot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/legion/arduinobot/build
+CMAKE_BINARY_DIR = /home/ubuntu/arduinobot/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/legion/arduinobot/build/CMakeFiles /home/legion/arduinobot/build/gtest/googlemock/CMakeFiles/progress.marks
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/legion/arduinobot/build/CMakeFiles 0
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/arduinobot/build/CMakeFiles /home/ubuntu/arduinobot/build/gtest/googlemock/CMakeFiles/progress.marks
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/arduinobot/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/clean
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,22 +154,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/preinstall
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/preinstall
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 gtest/googlemock/CMakeFiles/gmock_main.dir/rule:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/CMakeFiles/gmock_main.dir/rule
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/CMakeFiles/gmock_main.dir/rule
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/rule
 
 # Convenience name for target.
@@ -179,12 +179,12 @@ gmock_main: gtest/googlemock/CMakeFiles/gmock_main.dir/rule
 
 # fast build rule for target.
 gmock_main/fast:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
 .PHONY : gmock_main/fast
 
 # Convenience name for target.
 gtest/googlemock/CMakeFiles/gmock.dir/rule:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/CMakeFiles/gmock.dir/rule
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/CMakeFiles/gmock.dir/rule
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/rule
 
 # Convenience name for target.
@@ -194,7 +194,7 @@ gmock: gtest/googlemock/CMakeFiles/gmock.dir/rule
 
 # fast build rule for target.
 gmock/fast:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
 .PHONY : gmock/fast
 
 __/googletest/src/gtest-all.o: __/googletest/src/gtest-all.cc.o
@@ -203,8 +203,8 @@ __/googletest/src/gtest-all.o: __/googletest/src/gtest-all.cc.o
 
 # target to build an object file
 __/googletest/src/gtest-all.cc.o:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.o
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.o
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.o
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.o
 .PHONY : __/googletest/src/gtest-all.cc.o
 
 __/googletest/src/gtest-all.i: __/googletest/src/gtest-all.cc.i
@@ -213,8 +213,8 @@ __/googletest/src/gtest-all.i: __/googletest/src/gtest-all.cc.i
 
 # target to preprocess a source file
 __/googletest/src/gtest-all.cc.i:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.i
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.i
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.i
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.i
 .PHONY : __/googletest/src/gtest-all.cc.i
 
 __/googletest/src/gtest-all.s: __/googletest/src/gtest-all.cc.s
@@ -223,8 +223,8 @@ __/googletest/src/gtest-all.s: __/googletest/src/gtest-all.cc.s
 
 # target to generate assembly for a file
 __/googletest/src/gtest-all.cc.s:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.s
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.s
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.s
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.s
 .PHONY : __/googletest/src/gtest-all.cc.s
 
 src/gmock-all.o: src/gmock-all.cc.o
@@ -233,8 +233,8 @@ src/gmock-all.o: src/gmock-all.cc.o
 
 # target to build an object file
 src/gmock-all.cc.o:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.o
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.o
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o
 .PHONY : src/gmock-all.cc.o
 
 src/gmock-all.i: src/gmock-all.cc.i
@@ -243,8 +243,8 @@ src/gmock-all.i: src/gmock-all.cc.i
 
 # target to preprocess a source file
 src/gmock-all.cc.i:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.i
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.i
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.i
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.i
 .PHONY : src/gmock-all.cc.i
 
 src/gmock-all.s: src/gmock-all.cc.s
@@ -253,8 +253,8 @@ src/gmock-all.s: src/gmock-all.cc.s
 
 # target to generate assembly for a file
 src/gmock-all.cc.s:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.s
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.s
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.s
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.s
 .PHONY : src/gmock-all.cc.s
 
 src/gmock_main.o: src/gmock_main.cc.o
@@ -263,7 +263,7 @@ src/gmock_main.o: src/gmock_main.cc.o
 
 # target to build an object file
 src/gmock_main.cc.o:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o
 .PHONY : src/gmock_main.cc.o
 
 src/gmock_main.i: src/gmock_main.cc.i
@@ -272,7 +272,7 @@ src/gmock_main.i: src/gmock_main.cc.i
 
 # target to preprocess a source file
 src/gmock_main.cc.i:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.i
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.i
 .PHONY : src/gmock_main.cc.i
 
 src/gmock_main.s: src/gmock_main.cc.s
@@ -281,7 +281,7 @@ src/gmock_main.s: src/gmock_main.cc.s
 
 # target to generate assembly for a file
 src/gmock_main.cc.s:
-	cd /home/legion/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.s
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.s
 .PHONY : src/gmock_main.cc.s
 
 # Help Target
@@ -319,6 +319,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

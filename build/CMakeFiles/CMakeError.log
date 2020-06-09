@@ -53,3 +53,59 @@ Makefile:126: recipe for target 'cmTC_5ca19/fast' failed
 make: *** [cmTC_5ca19/fast] Error 2
 
 
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_59cd2/fast"
+/usr/bin/make -f CMakeFiles/cmTC_59cd2.dir/build.make CMakeFiles/cmTC_59cd2.dir/build
+make[1]: Entering directory '/home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_59cd2.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_59cd2.dir/CheckSymbolExists.c.o   -c /home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_59cd2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_59cd2.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_59cd2.dir/CheckSymbolExists.c.o  -o cmTC_59cd2 
+CMakeFiles/cmTC_59cd2.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x14): undefined reference to `pthread_create'
+CheckSymbolExists.c:(.text+0x18): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_59cd2.dir/build.make:97: recipe for target 'cmTC_59cd2' failed
+make[1]: *** [cmTC_59cd2] Error 1
+make[1]: Leaving directory '/home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_59cd2/fast' failed
+make: *** [cmTC_59cd2/fast] Error 2
+
+File /home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_aef2a/fast"
+/usr/bin/make -f CMakeFiles/cmTC_aef2a.dir/build.make CMakeFiles/cmTC_aef2a.dir/build
+make[1]: Entering directory '/home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_aef2a.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_aef2a.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_aef2a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aef2a.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_aef2a.dir/CheckFunctionExists.c.o  -o cmTC_aef2a -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_aef2a.dir/build.make:97: recipe for target 'cmTC_aef2a' failed
+make[1]: *** [cmTC_aef2a] Error 1
+make[1]: Leaving directory '/home/ubuntu/arduinobot/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_aef2a/fast' failed
+make: *** [cmTC_aef2a/fast] Error 2
+
+

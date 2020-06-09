@@ -1,8 +1,8 @@
-# Install script for directory: /home/legion/arduinobot/src/arduinobot_description
+# Install script for directory: /home/ubuntu/arduinobot/src/arduinobot_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/legion/arduinobot/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ubuntu/arduinobot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/legion/arduinobot/build/arduinobot_description/catkin_generated/installspace/arduinobot_description.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ubuntu/arduinobot/build/arduinobot_description/catkin_generated/installspace/arduinobot_description.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/arduinobot_description/cmake" TYPE FILE FILES
-    "/home/legion/arduinobot/build/arduinobot_description/catkin_generated/installspace/arduinobot_descriptionConfig.cmake"
-    "/home/legion/arduinobot/build/arduinobot_description/catkin_generated/installspace/arduinobot_descriptionConfig-version.cmake"
+    "/home/ubuntu/arduinobot/build/arduinobot_description/catkin_generated/installspace/arduinobot_descriptionConfig.cmake"
+    "/home/ubuntu/arduinobot/build/arduinobot_description/catkin_generated/installspace/arduinobot_descriptionConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/arduinobot_description" TYPE FILE FILES "/home/legion/arduinobot/src/arduinobot_description/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/arduinobot_description" TYPE FILE FILES "/home/ubuntu/arduinobot/src/arduinobot_description/package.xml")
 endif()
 

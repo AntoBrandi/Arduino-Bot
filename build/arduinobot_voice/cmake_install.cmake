@@ -1,8 +1,8 @@
-# Install script for directory: /home/legion/arduinobot/src/arduinobot_voice
+# Install script for directory: /home/ubuntu/arduinobot/src/arduinobot_voice
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/legion/arduinobot/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ubuntu/arduinobot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/legion/arduinobot/build/arduinobot_voice/catkin_generated/installspace/arduinobot_voice.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ubuntu/arduinobot/build/arduinobot_voice/catkin_generated/installspace/arduinobot_voice.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/arduinobot_voice/cmake" TYPE FILE FILES
-    "/home/legion/arduinobot/build/arduinobot_voice/catkin_generated/installspace/arduinobot_voiceConfig.cmake"
-    "/home/legion/arduinobot/build/arduinobot_voice/catkin_generated/installspace/arduinobot_voiceConfig-version.cmake"
+    "/home/ubuntu/arduinobot/build/arduinobot_voice/catkin_generated/installspace/arduinobot_voiceConfig.cmake"
+    "/home/ubuntu/arduinobot/build/arduinobot_voice/catkin_generated/installspace/arduinobot_voiceConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/arduinobot_voice" TYPE FILE FILES "/home/legion/arduinobot/src/arduinobot_voice/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/arduinobot_voice" TYPE FILE FILES "/home/ubuntu/arduinobot/src/arduinobot_voice/package.xml")
 endif()
 

@@ -100,3 +100,18 @@ class GoalPublisher:
 
         # increase the counter to move into another location the next time
         self.counter += 1
+
+
+    def setRobotJoint(self):
+        # We can get the joint values from the group and adjust some of the values:
+        joint_goal = self.move_group.get_current_joint_values()
+        joint_goal[0] = -1.1655308744855999  #1.38826979362584
+        joint_goal[1] = -0.4561592533027199
+        joint_goal[2] = 0.050579641722960034
+        print(joint_goal)
+
+        # go to the target position in the joint space
+        self.move_group.go(joint_goal, wait=True)
+
+        # once the mouvement has been completed, stop the robot
+        self.move_group.stop()

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/legion/arduinobot/src
+CMAKE_SOURCE_DIR = /home/ubuntu/arduinobot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/legion/arduinobot/build
+CMAKE_BINARY_DIR = /home/ubuntu/arduinobot/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ install/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/legion/arduinobot/build/CMakeFiles /home/legion/arduinobot/build/arduinobot_moveit/CMakeFiles/progress.marks
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/legion/arduinobot/build/CMakeFiles 0
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/arduinobot/build/CMakeFiles /home/ubuntu/arduinobot/build/arduinobot_moveit/CMakeFiles/progress.marks
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/arduinobot/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/clean
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,22 +154,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/preinstall
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/preinstall
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule:
-	cd /home/legion/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f CMakeFiles/Makefile2 arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
 .PHONY : arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
 
 # Convenience name for target.
@@ -179,7 +179,7 @@ _catkin_empty_exported_target: arduinobot_moveit/CMakeFiles/_catkin_empty_export
 
 # fast build rule for target.
 _catkin_empty_exported_target/fast:
-	cd /home/legion/arduinobot/build && $(MAKE) -f arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build
+	cd /home/ubuntu/arduinobot/build && $(MAKE) -f arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build
 .PHONY : _catkin_empty_exported_target/fast
 
 # Help Target
@@ -207,6 +207,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

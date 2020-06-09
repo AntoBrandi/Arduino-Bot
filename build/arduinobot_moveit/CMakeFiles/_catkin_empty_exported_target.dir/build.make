@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/legion/arduinobot/src
+CMAKE_SOURCE_DIR = /home/ubuntu/arduinobot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/legion/arduinobot/build
+CMAKE_BINARY_DIR = /home/ubuntu/arduinobot/build
 
 # Utility rule file for _catkin_empty_exported_target.
 
@@ -63,10 +63,10 @@ arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build: _catkin_em
 .PHONY : arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build
 
 arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	cd /home/legion/arduinobot/build/arduinobot_moveit && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
+	cd /home/ubuntu/arduinobot/build/arduinobot_moveit && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
 .PHONY : arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/depend:
-	cd /home/legion/arduinobot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/legion/arduinobot/src /home/legion/arduinobot/src/arduinobot_moveit /home/legion/arduinobot/build /home/legion/arduinobot/build/arduinobot_moveit /home/legion/arduinobot/build/arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/arduinobot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/arduinobot/src /home/ubuntu/arduinobot/src/arduinobot_moveit /home/ubuntu/arduinobot/build /home/ubuntu/arduinobot/build/arduinobot_moveit /home/ubuntu/arduinobot/build/arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : arduinobot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/depend
 

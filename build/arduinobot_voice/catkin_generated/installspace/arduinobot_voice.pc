@@ -1,4 +1,4 @@
-prefix=/home/legion/arduinobot/install
+prefix=/home/ubuntu/arduinobot/install
 
 Name: arduinobot_voice
 Description: Description of arduinobot_voice

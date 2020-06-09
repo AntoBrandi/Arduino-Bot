@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/legion/arduinobot/src
-# Build directory: /home/legion/arduinobot/build
+# Source directory: /home/ubuntu/arduinobot/src
+# Build directory: /home/ubuntu/arduinobot/build
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
