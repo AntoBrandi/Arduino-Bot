@@ -1,0 +1,3 @@
+[console_scripts]
+roslibpy = roslibpy.__main__:main
+
