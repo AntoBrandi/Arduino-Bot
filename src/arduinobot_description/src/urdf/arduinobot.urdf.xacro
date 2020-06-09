@@ -88,6 +88,37 @@
         </collision>
     </link>
 
+    <link name="gripper_right">
+        <visual>
+            <origin rpy="0 0 -${PI/2}" xyz="-0.1 0.50 -0.1"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/src/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 -${PI/2}" xyz="-0.1 0.50 -0.1"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/src/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="gripper_left">
+        <visual>
+            <origin rpy="0 0 -${PI/2}" xyz="-0.04 0.50 -0.1"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/src/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 -${PI/2}" xyz="-0.2 0.50 -0.1"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/src/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+
     <link name="tool_link"></link>
 
     
@@ -128,8 +159,25 @@
         <origin xyz="0 0.82 0"/>
     </joint>
 
-    <joint name ="claw_support_to_tool" type="fixed">
+    <joint name ="joint_4" type="revolute">
         <parent link="claw_support"/>
+        <child link = "gripper_right"/>
+        <origin xyz="-0.04 0.13 -0.1"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-${PI/2}" upper="0" effort="1000.0" velocity="0.5"/>
+    </joint>
+
+    <joint name ="joint_5" type="revolute">
+        <parent link="claw_support"/>
+        <child link = "gripper_left"/>
+        <origin xyz="-0.22 0.13 -0.1"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="${PI/2}" effort="1000.0" velocity="0.5"/>
+        <mimic joint="joint_4" multiplier="-1" offset="0"/> 
+    </joint>
+
+    <joint name ="gripper_right_to_tool" type="fixed">
+        <parent link="gripper_right"/>
         <child link = "tool_link"/>
         <origin xyz="0 0 0"/>
     </joint>
@@ -164,6 +212,17 @@
             <hardwareInterface>PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor_3">
+            <hardwareInterface>PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="transmission_4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_4">
+            <hardwareInterface>PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor_4">
             <hardwareInterface>PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
