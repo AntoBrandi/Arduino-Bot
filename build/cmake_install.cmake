@@ -131,6 +131,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/ubuntu/arduinobot/build/gtest/cmake_install.cmake")
+  include("/home/ubuntu/arduinobot/build/arduinobot_bringup/cmake_install.cmake")
   include("/home/ubuntu/arduinobot/build/arduinobot_controller/cmake_install.cmake")
   include("/home/ubuntu/arduinobot/build/arduinobot_description/cmake_install.cmake")
   include("/home/ubuntu/arduinobot/build/arduinobot_moveit/cmake_install.cmake")

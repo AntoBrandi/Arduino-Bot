@@ -285,6 +285,12 @@ _gtest_INCLUDES:FILEPATH=/usr/include/gtest/gtest.h
 _gtest_SOURCES:FILEPATH=/usr/src/gtest/src/gtest.cc
 
 //Value Computed by CMake
+arduinobot_bringup_BINARY_DIR:STATIC=/home/ubuntu/arduinobot/build/arduinobot_bringup
+
+//Value Computed by CMake
+arduinobot_bringup_SOURCE_DIR:STATIC=/home/ubuntu/arduinobot/src/arduinobot_bringup
+
+//Value Computed by CMake
 arduinobot_controller_BINARY_DIR:STATIC=/home/ubuntu/arduinobot/build/arduinobot_controller
 
 //Value Computed by CMake
@@ -506,7 +512,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=9
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
