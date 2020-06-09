@@ -15,6 +15,13 @@ class GoalPublisher:
     # POSE B
     pose_b =  geometry_msgs.msg.Pose()
 
+    # Set a list of possible joint configuration of the robot
+    # JOINT A
+    joint_a = [1.49921669110568, -0.5978450819800801, -0.39521235582288017]
+
+    # JOINT B 
+    joint_b = [-1.1451105222372, -0.5978450819800801, -0.07099999397135992]
+
     # select which pose to apply
     counter = 0
 
@@ -105,13 +112,17 @@ class GoalPublisher:
     def setRobotJoint(self):
         # We can get the joint values from the group and adjust some of the values:
         joint_goal = self.move_group.get_current_joint_values()
-        joint_goal[0] = -1.1655308744855999  #1.38826979362584
-        joint_goal[1] = -0.4561592533027199
-        joint_goal[2] = 0.050579641722960034
-        print(joint_goal)
 
+        # PICK
+        joint_goal[:3] = self.joint_a
         # go to the target position in the joint space
         self.move_group.go(joint_goal, wait=True)
+        # once the mouvement has been completed, stop the robot
+        self.move_group.stop()
 
+        # PLACE
+        joint_goal[:3] = self.joint_b
+        # go to the target position in the joint space
+        self.move_group.go(joint_goal, wait=True)
         # once the mouvement has been completed, stop the robot
         self.move_group.stop()
