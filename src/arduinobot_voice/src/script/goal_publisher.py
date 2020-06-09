@@ -18,9 +18,15 @@ class GoalPublisher:
     # Set a list of possible joint configuration of the robot
     # JOINT A
     joint_a = [1.49921669110568, -0.5978450819800801, -0.39521235582288017]
+    joint_a_gripper = [-1, 1]
 
     # JOINT B 
-    joint_b = [-1.1451105222372, -0.5978450819800801, -0.07099999397135992]
+    joint_b = [1.49921669110568, -0.5978450819800801, -0.39521235582288017]
+    joint_b_gripper = [0, 0]
+
+    # JOINT C
+    joint_c = [-1.1451105222372, -0.5978450819800801, -0.07099999397135992]
+    joint_c_gripper = [0, 0]
 
     # select which pose to apply
     counter = 0
@@ -37,6 +43,11 @@ class GoalPublisher:
         self.group_name = 'arduinobot_arm'
         self.move_group = moveit_commander.MoveGroupCommander(self.group_name)
         self.group = moveit_commander.MoveGroupCommander(self.group_name)
+
+        # create a move group commander object for the gripper
+        self.group_name_gripper = 'gripper'
+        self.move_group_gripper = moveit_commander.MoveGroupCommander(self.group_name_gripper)
+        self.group_gripper = moveit_commander.MoveGroupCommander(self.group_name_gripper)
 
         # create a display trajectory object that will publish the trajectory to rviz
         self.display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
@@ -112,17 +123,36 @@ class GoalPublisher:
     def setRobotJoint(self):
         # We can get the joint values from the group and adjust some of the values:
         joint_goal = self.move_group.get_current_joint_values()
+        joint_goal_gripper = self.move_group_gripper.get_current_joint_values()
 
         # PICK
+        # 1
         joint_goal[:3] = self.joint_a
+        joint_goal_gripper[:2] = self.joint_a_gripper
         # go to the target position in the joint space
+        self.move_group_gripper.go(joint_goal_gripper, wait=True)
         self.move_group.go(joint_goal, wait=True)
         # once the mouvement has been completed, stop the robot
         self.move_group.stop()
+        self.move_group_gripper.stop()
+
+        # 2
+        joint_goal[:3] = self.joint_b
+        joint_goal_gripper[:2] = self.joint_b_gripper
+        # go to the target position in the joint space
+        self.move_group.go(joint_goal, wait=True)
+        self.move_group_gripper.go(joint_goal_gripper, wait=True)
+        # once the mouvement has been completed, stop the robot
+        self.move_group.stop()
+        self.move_group_gripper.stop()
 
         # PLACE
-        joint_goal[:3] = self.joint_b
+        # 3
+        joint_goal[:3] = self.joint_c
+        joint_goal_gripper[:2] = self.joint_c_gripper
         # go to the target position in the joint space
         self.move_group.go(joint_goal, wait=True)
+        self.move_group_gripper.go(joint_goal_gripper, wait=True)
         # once the mouvement has been completed, stop the robot
         self.move_group.stop()
+        self.move_group_gripper.stop()
