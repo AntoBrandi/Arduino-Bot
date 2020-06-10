@@ -9,7 +9,9 @@ from ros_interface import RosInterface
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 NOTE_STRS = ["make a note", "write this down", "remember this"]
-WAKE_STRS = "ok jarvis"
+WAKE_STRS = "jarvis"
+THANK_STRS = ["thank you", "thanks"]
+
 
 
 # Function that reads a string of text to the user
@@ -72,5 +74,20 @@ while True:
             speak("OK, I'm moving the robot")
             # create an instance of the ros interface class that will publish messages on ROS topics
             ros.publish('/jarvis')
+
+        if "pen" in text:
+            speak("Sure")
+            # publish the ros message in order to complete the task
+            ros.publish('/jarvis')
+
+        if "pencil" in text:
+            speak("Sure")
+            # publish the ros message in order to complete the task
+            ros.publish('/jarvis')
+
+    # detect if the user thank the assistant
+    if text.count(THANK_STRS) > 0:
+        speak("You are welcome")
+
 
 
