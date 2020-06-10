@@ -1,22 +1,18 @@
 <launch>
   <!-- Run the moveit simulation -->
-  <include file="$(find arduinobot_moveit)/src/launch/demo.launch">
+  <include file="$(find arduinobot_moveit)/launch/demo.launch">
     <arg name="load_robot_description" value="true"/>
   </include>
 
   <!-- Launch the websocket server in order to receive external commands -->
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
-    <arg name="load_robot_description" value="true"/>
   </include>
 
   <!-- Launch the low level control in order to communicate with the Arduino -->
   <include file="$(find arduinobot_controller)/src/launch/arduino.launch">
-    <arg name="load_robot_description" value="true"/>
   </include>
 
   <!-- Run the listener for the voice commands coming from external sources -->
-  <include file="$(find arduinobot_moveit)/launch/planning_context.launch">
-    <arg name="load_robot_description" value="true"/>
-  </include>
+  <node name="set_joint_goal.py" pkg="arduinobot_voice" type="set_joint_goal.py" output="screen">
 
 </launch>
