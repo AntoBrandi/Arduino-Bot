@@ -1,7 +1,6 @@
 <launch>
   <!-- Run the moveit simulation -->
   <include file="$(find arduinobot_moveit)/launch/demo.launch">
-    <arg name="load_robot_description" value="true"/>
   </include>
 
   <!-- Launch the websocket server in order to receive external commands -->
