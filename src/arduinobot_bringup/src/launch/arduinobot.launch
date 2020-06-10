@@ -14,5 +14,6 @@
 
   <!-- Run the listener for the voice commands coming from external sources -->
   <node name="set_joint_goal.py" pkg="arduinobot_voice" type="set_joint_goal.py" output="screen">
+  </node>
 
 </launch>
