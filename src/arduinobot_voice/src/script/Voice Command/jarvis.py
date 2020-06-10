@@ -9,7 +9,7 @@ from ros_interface import RosInterface
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 NOTE_STRS = ["make a note", "write this down", "remember this"]
-WAKE_STRS = "jarvis"
+WAKE_STRS = "ok jarvis"
 THANK_STRS = "thank you"
 
 

@@ -19,7 +19,8 @@ def callback(data):
     joint_1 = int(((anglesRad[0]+1.57075)*180)/3.1415)
     joint_2 = 180-int(((anglesRad[1]+1.57075)*180)/3.1415)
     joint_3 = int(((anglesRad[2]+1.57075)*180)/3.1415)
-    anglesPerc = [joint_1, joint_2, joint_3]
+    joint_4 = int(((-anglesRad[3])*180)/1.57075)
+    anglesPerc = [joint_1, joint_2, joint_3, joint_4]
     print "Angles %s ", anglesPerc
     publish(anglesPerc)
     
