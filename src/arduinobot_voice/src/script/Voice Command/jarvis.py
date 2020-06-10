@@ -10,7 +10,7 @@ from ros_interface import RosInterface
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 NOTE_STRS = ["make a note", "write this down", "remember this"]
 WAKE_STRS = "jarvis"
-THANK_STRS = ["thank you", "thanks"]
+THANK_STRS = "thank you"
 
 
 

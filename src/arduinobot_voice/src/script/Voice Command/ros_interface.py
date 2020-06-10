@@ -7,6 +7,7 @@ class RosInterface:
         try:
             self.client = roslibpy.Ros(host=host, port=9090)
             self.client.run()
+            print('Connected')
         except Exception as e:
             print('WebSocket Error: ' + str(e))
 
