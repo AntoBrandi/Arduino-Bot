@@ -31,7 +31,7 @@
   </p>
 </p>
 
-[![Product Name Screen Shot Real][product-screenshot-real]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -52,30 +52,25 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot 2][product-screenshot-2]](https://example.com)
 
-This project aim is to build an omni-directional robot for the indoor navigation and mapping using inexpensive sensors such as ultrasonic sensors.
-Furthermore, it implements some basics human tracking and following functionalities using the raspberry pi camera mounted on its top. In order to activate or deactivate
-this tracking functionalities, a speech recognition module has been implemented. This module can run on any computer with a microphone that is connected to the same Wi-Fi network 
+This project aim is to build a 3 axis robot arm with simple and cheap hardware that can be easily and remotely controlled.
+Despite all the other robot arms built with an Aruidno Uno that are controlled by applying joint angles, this can be controlled assigning X, Y, Z coordinates in the workspace because it implements the inverse kinamatic.
+Furthermore, it implements a speech recognition module that can run on any computer with a microphone that is connected to the same Wi-Fi network 
 of the robot.
 
 ### Built With
 This robot is powered by:
-* Raspberry Pi 4
+* Raspberry Pi 4 or PC with Ubuntu 18.04
 * Arduino UNO
-* CNC Shield
-* Nema 17 Stepper Motor
-* drv8825 Stepper Motor Driver
-* 11.1V 3s LiPo Battery
-* LM2596 DC-DC converter
-* Raspberry Pi Camera
-* HC-SR04 Ultrasonic Sensors
-* MPU6050 IMU
+* SG90 Servo Motors (x4)
+* Power Supply Module
+* Prototype Expansion Board
 
 And is controlled by:
-* ROS Kinetic
+* ROS Melodic
 
-[![Product Name Screen Shot Exploded][product-screenshot-exploded]](https://example.com)
+[![Product Name Screen Shot Real][product-screenshot-real]](https://example.com)
 
 
 <!-- GETTING STARTED -->
@@ -174,9 +169,8 @@ My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [Ubiquity Robotics Raspberry Pi Images](https://downloads.ubiquityrobotics.com/pi.html)
-* [Ubiquity Robotics raspicam_node](https://github.com/UbiquityRobotics/raspicam_node)
-* [How To Mechatronics mechanum wheel](https://howtomechatronics.com/)
+* [Arduino 3D-Printed Robotic Arm](https://create.arduino.cc/projecthub/mircemk/arduino-3d-printed-robotic-arm-e824d8?ref=search&ref_id=robot%20arm&offset=86)
+* [EEZYbotARM](https://www.thingiverse.com/thing:1015238)
 
 
 
@@ -186,6 +180,6 @@ My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/antonio-brandi-512166bb/
-[product-screenshot]: images/solidworks.jpg
-[product-screenshot-exploded]: images/solidworks-exploded.jpg
-[product-screenshot-real]: images/robot.jpg
+[product-screenshot]: images/BB3A0020.jpg
+[product-screenshot-2]: images/BB3A0026.jpg
+[product-screenshot-real]: images/screen_video.png
