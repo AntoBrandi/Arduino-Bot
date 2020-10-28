@@ -169,9 +169,7 @@ My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [Ubiquity Robotics Raspberry Pi Images](https://downloads.ubiquityrobotics.com/pi.html)
-* [Ubiquity Robotics raspicam_node](https://github.com/UbiquityRobotics/raspicam_node)
-* [How To Mechatronics mechanum wheel](https://howtomechatronics.com/)
+* [Arduino 3D-Printed Robotic Arm](https://create.arduino.cc/projecthub/mircemk/arduino-3d-printed-robotic-arm-e824d8?ref=search&ref_id=robot%20arm&offset=86)
 
 
 
