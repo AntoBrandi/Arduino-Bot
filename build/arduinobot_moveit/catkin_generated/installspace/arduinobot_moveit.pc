@@ -1,8 +1,0 @@
-prefix=/home/ubuntu/arduinobot/install
-
-Name: arduinobot_moveit
-Description: Description of arduinobot_moveit
-Version: 0.3.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

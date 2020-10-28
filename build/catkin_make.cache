@@ -1,2 +1,0 @@
-arduinobot_bringup:arduinobot_controller:arduinobot_description:arduinobot_moveit:arduinobot_voice
--DCATKIN_DEVEL_PREFIX=/home/ubuntu/arduinobot/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/arduinobot/install -G Unix Makefiles
