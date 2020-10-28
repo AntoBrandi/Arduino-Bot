@@ -61,7 +61,7 @@ of the robot.
 
 ### Built With
 This robot is powered by:
-* Raspberry Pi 4 or PC with Ubuntu 18.04
+* Raspberry Pi 3/4 or PC with Ubuntu 18.04
 * Arduino UNO
 * SG90 Servo Motors (x4)
 * Power Supply Module
@@ -80,11 +80,11 @@ Once it's printed and assembled according and connected, there are few configura
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* Install Ubuntu 16.04 on Raspberry Pi 4
-Use the [Ubiquity Robotics](https://downloads.ubiquityrobotics.com/pi.html) Raspberry Pi images that cames along with a lot of pre-installed functionalities such as ROS kinetic, ssh server, GPIO and camera
-drivers
-* Install missing ROS libraries. Some libraries that are used in this project are not in the standard ROS package. Install them with:
+Make sure you install correctly the following required tools before continuing
+* Install Ubuntu 18.04 on Raspberry Pi 3/4 or on PC
+Use the [Ubuntu Raspberry Pi](https://ubuntu.com/download/raspberry-pi) for your Raspberry Pi or [Ubuntu 18.04](https://ubuntu.com/download/alternative-downloads) for your PC
+* Install [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) on your Ubuntu 18.04
+* Install ROS missing libraries. Some libraries that are used in this project are not in the standard ROS package. Install them with:
 ```sh
 sudo apt-get install ros-kinetic-rosserial
 ```
@@ -92,7 +92,10 @@ sudo apt-get install ros-kinetic-rosserial
 sudo apt-get install ros-kinetic-rosserial-arduino
 ```
 ```sh
-sudo apt-get install ros-kinetic-rviz-imu-plugin
+sudo apt-get install ros-kinetic-rosbridge-server
+```
+```sh
+sudo apt-get install ros-kinetic-moveit
 ```
 * Install VS Code and Platform IO extension on your PC in order to build and load the Arduino code on the device
 
@@ -101,11 +104,11 @@ sudo apt-get install ros-kinetic-rviz-imu-plugin
 
 1. Clone the repo
 ```sh
-git clone https://github.com/AntoBrandi/DextroBot.git
+git clone https://github.com/AntoBrandi/arduinobot.git
 ```
 2. Build the ROS workspace
 ```sh
-cd ~/DextroBot/ROS/dextrobot_ws
+cd ~/arduinobot
 ```
 ```sh
 catkin_make
@@ -116,7 +119,7 @@ sudo nano ~/.bashrc
 ```
 And add the following at the end of the document
 ```sh
-source ~/DextroBot/ROS/dextrobot_ws/devel/setup.bash
+source ~/arduinobot/devel/setup.bash
 ```
 4. Connect the Arduino UNO on your PC with VS Code and Platform IO. Open the [folder](https://github.com/AntoBrandi/DextroBot/tree/master/ROS/dextrobot_ws/src/dextrobot_controller/src/arduino/wheel_controller)
 containing the code for the Arduino wheel control and load the main.cpp to the Arduino.
