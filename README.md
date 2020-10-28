@@ -170,6 +170,7 @@ My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 * [Arduino 3D-Printed Robotic Arm](https://create.arduino.cc/projecthub/mircemk/arduino-3d-printed-robotic-arm-e824d8?ref=search&ref_id=robot%20arm&offset=86)
+* [EEZYbotARM](https://www.thingiverse.com/thing:1015238)
 
 
 
