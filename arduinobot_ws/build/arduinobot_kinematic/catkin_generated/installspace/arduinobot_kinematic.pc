@@ -1,8 +1,0 @@
-prefix=/home/ubuntu/arduinobot/arduinobot_ws/install
-
-Name: arduinobot_kinematic
-Description: Description of arduinobot_kinematic
-Version: 0.3.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

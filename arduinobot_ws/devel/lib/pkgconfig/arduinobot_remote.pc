@@ -1,8 +1,0 @@
-prefix=/home/ubuntu/arduinobot/arduinobot_ws/devel
-
-Name: arduinobot_remote
-Description: Description of arduinobot_remote
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
