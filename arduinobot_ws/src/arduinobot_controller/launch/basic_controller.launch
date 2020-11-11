@@ -5,9 +5,5 @@
     </node>
 
     <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-    <node pkg="arduinobot_controller" type="trajectory_controller.py" name="trajectory_controller" respawn="true" output="screen"/>
-    <node pkg="arduinobot_controller" type="gripper_controller.py" name="gripper_controller" respawn="true" output="screen"/>
-
-    <node pkg="arduinobot_controller" type="dumb_converter.py" name="dumb_converter" respawn="true" output="screen"/>
-
+    <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
 </launch>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from control_msgs.msg import FollowJointTrajectoryActionGoal
+from control_msgs.msg import FollowJointTrajectoryActionGoal, GripperCommandActionGoal
 from moveit_msgs.msg import ExecuteTrajectoryActionGoal
 
 def callback(data):
@@ -8,10 +8,12 @@ def callback(data):
     msg.header = data.header
     msg.goal_id = data.goal_id
     msg.goal.trajectory = data.goal.trajectory.joint_trajectory
-    pub.publish(msg)
+    pub_arm.publish(msg)
+
     
 if __name__ == '__main__':
-    pub = rospy.Publisher('/arduinobot_controller/goal', FollowJointTrajectoryActionGoal, queue_size=10)
+    pub_arm = rospy.Publisher('/follow_joint_trajectory/goal', FollowJointTrajectoryActionGoal, queue_size=10)
+    pub_gripper = rospy.Publisher('/gripper_action/goal', GripperCommandActionGoal, queue_size=10)
 
     rospy.init_node('dumb_converter', anonymous=True)
     # init the subscriber
