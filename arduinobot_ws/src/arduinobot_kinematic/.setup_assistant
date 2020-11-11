@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: arduinobot_description
+    relative_path: urdf/arduinobot.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/arduinobot.srdf
+  CONFIG:
+    author_name: antonio brandi
+    author_email: antonio.brandi@outlook.it
+    generated_timestamp: 1604854807

@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/arduinobot/arduinobot_ws/install
+
+Name: arduinobot_description
+Description: Description of arduinobot_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

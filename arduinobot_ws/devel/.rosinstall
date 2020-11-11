@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ubuntu/arduinobot/arduinobot_ws/devel/setup.sh

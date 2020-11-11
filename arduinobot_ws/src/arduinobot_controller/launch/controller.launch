@@ -1,0 +1,9 @@
+<launch>
+    <!-- Launch the rosserial node that interface ROS with Arduino -->
+    <node pkg="rosserial_python" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">
+        <param name="port" value="/dev/ttyACM0" />
+    </node>
+
+    <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
+    <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+    <!-- Launch the rosbridge node that interface with the external -->
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
+    <!-- Launch the remote interface node that handles remote requests -->
+    <node pkg="arduinobot_remote" type="remote_controller.py" name="remote_controller" respawn="true" output="screen"/>
+</launch>
