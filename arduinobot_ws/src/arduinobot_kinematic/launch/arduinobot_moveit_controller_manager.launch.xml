@@ -6,5 +6,5 @@
   <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
 
   <!-- loads ros_controllers to the param server -->
-  <rosparam file="$(find arduinobot_kinematic)/config/ros_controllers.yaml"/>
+  <rosparam file="$(find arduinobot_kinematic)/config/arduinobot_controller.yaml"/>
 </launch>

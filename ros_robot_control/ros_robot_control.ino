@@ -90,7 +90,8 @@ void servoActuateCb( const std_msgs::UInt8MultiArray& msg){
   moveArm(base_angle, shoulder_angle, elbow_angle, gripper_angle);
 }
 
-ros::Subscriber<std_msgs::UInt8MultiArray> sub("servo_actuate", &servoActuateCb );
+ros::Subscriber<std_msgs::UInt8MultiArray> sub_arm("arduino/arm_actuate", &arm_actuate_cb );
+ros::Subscriber<std_msgs::UInt8> sub_gripper("arduino/gripper_actuate", &gripper_actuate_cb );
 
 
 void setup() {

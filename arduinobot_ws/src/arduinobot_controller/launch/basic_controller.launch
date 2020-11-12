@@ -5,5 +5,5 @@
     </node>
 
     <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-    <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
+    <node pkg="arduinobot_controller" type="basic_controller_interface.py" name="basic_controller_interface" respawn="true" output="screen"/>
 </launch>
