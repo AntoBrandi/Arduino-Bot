@@ -12,8 +12,8 @@ def callback(data):
 
     
 if __name__ == '__main__':
-    pub_arm = rospy.Publisher('arduinobot_controller/follow_joint_trajectory/goal', FollowJointTrajectoryActionGoal, queue_size=10)
-    pub_gripper = rospy.Publisher('arduinobot_controller/gripper_action/goal', GripperCommandActionGoal, queue_size=10)
+    pub_arm = rospy.Publisher('follow_joint_trajectory/goal', FollowJointTrajectoryActionGoal, queue_size=10)
+    pub_gripper = rospy.Publisher('gripper_action/goal', GripperCommandActionGoal, queue_size=10)
 
     rospy.init_node('dumb_converter', anonymous=True)
     # init the subscriber
