@@ -14,7 +14,7 @@ class GripperControllerAction(object):
         self._action_name = name
         self._as = actionlib.SimpleActionServer(self._action_name, control_msgs.msg.GripperCommandAction, execute_cb=self.goal_cb, auto_start = False)
         self._as.start()
-        self.old_joint_angle = 90
+        self.old_joint_angle = 0.0
         self.execute(self.old_joint_angle)
       
     # This function is called when the action server receives a new goal
@@ -27,8 +27,7 @@ class GripperControllerAction(object):
             self._as.set_preempted()
             success = False
         else:
-            angle = self.convert_gripper_angle(goal.command.position)
-            self.execute(angle)
+            self.execute(goal.command.position)
 
             self._feedback.position = goal.command.position
             self._feedback.reached_goal = True
@@ -42,8 +41,10 @@ class GripperControllerAction(object):
         
 
     def execute(self, angle):
-        rospy.loginfo('Angle : %s' % angle)
-        pub.publish(data=int(angle))
+        rospy.loginfo('Angle Radians: %s' % angle)
+        angle_rad = self.convert_gripper_angle(angle)
+        rospy.loginfo('Angle Degrees: %s' % angle_rad)
+        pub.publish(data=int(angle_rad))
 
     def convert_gripper_angle(self, angle_rad):
         return int(((-angle_rad)*180)/1.57075)

@@ -14,10 +14,8 @@
   </include>
 
   <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
-
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="use_gui" value="false"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" >
+    <remap from="joint_states" to="arduinobot_controller/joint_status"/>
   </node>
 
   <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
@@ -26,7 +24,6 @@
     <arg name="info" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
     <arg name="pipeline" value="$(arg pipeline)"/>
-    <remap from="joint_states" to="robot/joint_states"/>
   </include>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->

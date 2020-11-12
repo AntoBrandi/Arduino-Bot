@@ -16,8 +16,8 @@ class TrajectoryControllerAction(object):
         self._action_name = name
         self._as = actionlib.SimpleActionServer(self._action_name, control_msgs.msg.FollowJointTrajectoryAction, execute_cb=self.goal_cb, auto_start = False)
         self._as.start()
-        self.old_joint_angles = [90,90,90]
-        self.execute(self.old_joint_angles)
+        self.old_joint_angles = [0.0,0.0,0.0]
+        self.execute(self.old_joint_angles, JOINT_NAMES)
       
     # This function is called when the action server receives a new goal
     def goal_cb(self, goal):
@@ -34,8 +34,8 @@ class TrajectoryControllerAction(object):
 
             delay = point.time_from_start - goal.trajectory.points[i-1].time_from_start if i>0 else 0
             rospy.sleep(delay)
-            angles = self.convert_angles(point.positions, joint_names)
-            self.execute(angles)
+            self.execute(point.positions, joint_names)
+
             self._feedback.joint_names = JOINT_NAMES
             self._feedback.actual = point
             self._feedback.desired = point
@@ -67,13 +67,14 @@ class TrajectoryControllerAction(object):
             else:
                 current_angles.append(self.old_joint_angles[i])
 
-        print "Angles %s ", current_angles
         return current_angles           
         
 
-    def execute(self, angles):
-        rospy.loginfo('Angles : %s' % angles)
-        pub.publish(data=angles)
+    def execute(self, angles, joint_names):
+        rospy.loginfo('Angles Radians : %s' % str(angles))
+        angles_deg = self.convert_angles(angles, joint_names)
+        rospy.loginfo('Angles Degrees : %s' % str(angles_deg))
+        pub.publish(data=angles_deg)
     
     def convert_base_angle(self, angle_rad):
         return int(((angle_rad+1.57075)*180)/3.1415)

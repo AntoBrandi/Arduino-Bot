@@ -12,6 +12,7 @@
         <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
         <node pkg="arduinobot_controller" type="trajectory_controller.py" name="trajectory_controller" respawn="true" output="screen"/>
         <node pkg="arduinobot_controller" type="gripper_controller.py" name="gripper_controller" respawn="true" output="screen"/>
+        <node pkg="arduinobot_controller" type="status_controller.py" name="status_controller" respawn="true" output="screen"/>
     </group>
 
 </launch>
