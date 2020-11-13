@@ -17,6 +17,6 @@
         <node pkg="arduinobot_controller" type="gripper_controller.py" name="gripper_action" respawn="true" output="screen"/>
     </group>
 
-    <node pkg="arduinobot_controller" type="status_controller.py" name="status_controller" respawn="true" output="screen"/>
+    <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
 
 </launch>

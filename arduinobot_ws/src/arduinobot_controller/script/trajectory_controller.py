@@ -2,7 +2,8 @@
 import rospy
 import actionlib
 import control_msgs.msg
-from std_msgs.msg import UInt8MultiArray
+import math
+from std_msgs.msg import UInt16MultiArray
 
 JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
 
@@ -77,18 +78,18 @@ class TrajectoryControllerAction(object):
         pub.publish(data=angles_deg)
     
     def convert_base_angle(self, angle_rad):
-        return int(((angle_rad+1.57075)*180)/3.1415)
+        return int(((angle_rad+(math.pi/2))*180)/math.pi)
     
     def convert_shoulder_angle(self, angle_rad):
-        return 180-int(((angle_rad+1.57075)*180)/3.1415)
+        return 180-int(((angle_rad+(math.pi/2))*180)/math.pi)
 
     def convert_elbow_angle(self, angle_rad):
-        return int(((angle_rad+1.57075)*180)/3.1415)
+        return int(((angle_rad+(math.pi/2))*180)/math.pi)
         
 
 if __name__ == '__main__':
     # Publish the converted joint angles to the arduino subscriber node
-    pub = rospy.Publisher('arduino/arm_actuate', UInt8MultiArray, queue_size=10)
+    pub = rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
 
     rospy.init_node('trajectory_action')
 
