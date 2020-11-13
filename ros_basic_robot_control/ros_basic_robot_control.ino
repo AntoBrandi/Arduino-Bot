@@ -8,8 +8,7 @@
 
 #include <Servo.h>
 #include <ros.h>
-#include <std_msgs/UInt8MultiArray.h>
-#include <std_msgs/Int16.h>
+#include <std_msgs/UInt16MultiArray.h>
 
 // Declare the Arduino pin where each servo is connected
 #define SERVO_BASE_PIN 8
@@ -70,7 +69,7 @@ void moveArm(int base_angle, int shoulder_angle, int elbow_angle, int gripper_an
 }
 
 
-void servoActuateCb( const std_msgs::UInt8MultiArray& msg){
+void servoActuateCb( const std_msgs::UInt16MultiArray& msg){
   int base_angle = (int)msg.data[0];
   int shoulder_angle = (int)msg.data[1];
   int elbow_angle = (int)msg.data[2];
@@ -90,7 +89,7 @@ void servoActuateCb( const std_msgs::UInt8MultiArray& msg){
   moveArm(base_angle, shoulder_angle, elbow_angle, gripper_angle);
 }
 
-ros::Subscriber<std_msgs::UInt8MultiArray> sub("servo_actuate", &servoActuateCb );
+ros::Subscriber<std_msgs::UInt16MultiArray> sub("servo_actuate", &servoActuateCb );
 
 
 void setup() {

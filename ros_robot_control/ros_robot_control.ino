@@ -8,8 +8,8 @@
 
 #include <Servo.h>
 #include <ros.h>
-#include <std_msgs/UInt8MultiArray.h>
-#include <std_msgs/UInt8.h>
+#include <std_msgs/UInt16MultiArray.h>
+#include <std_msgs/UInt16.h>
 
 
 // Declare the Arduino pin where each servo is connected
@@ -28,6 +28,11 @@
 #define SHOULDER_START 90
 #define ELBOW_START 90
 #define GRIPPER_START 0
+
+// Define the pubblication frequency
+#define PUBLISH_DELAY 100
+
+int pub_counter = 0;
 
 // Register the servo motors of each joint
 Servo base;  
@@ -78,7 +83,7 @@ void move_gripper(int gripper_angle){
   last_angle_gripper = gripper_angle;
 }
 
-void arm_actuate_cb( const std_msgs::UInt8MultiArray& msg){
+void arm_actuate_cb( const std_msgs::UInt16MultiArray& msg){
   int base_angle = (int)msg.data[0];
   int shoulder_angle = (int)msg.data[1];
   int elbow_angle = (int)msg.data[2];
@@ -95,7 +100,7 @@ void arm_actuate_cb( const std_msgs::UInt8MultiArray& msg){
   move_arm(base_angle, shoulder_angle, elbow_angle);
 }
 
-void gripper_actuate_cb(const std_msgs::UInt8& msg){
+void gripper_actuate_cb(const std_msgs::UInt16& msg){
   int gripper_angle = (int)msg.data;
 
   if(gripper_angle<MIN_RANGE_GRIPPER) gripper_angle = MIN_RANGE_GRIPPER;
@@ -105,8 +110,12 @@ void gripper_actuate_cb(const std_msgs::UInt8& msg){
 }
 
 // Subscribers
-ros::Subscriber<std_msgs::UInt8MultiArray> sub_arm("arduinobot_arm_controller/arduino/arm_actuate", &arm_actuate_cb );
-ros::Subscriber<std_msgs::UInt8> sub_gripper("arduinobot_gripper_controller/arduino/gripper_actuate", &gripper_actuate_cb );
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arduinobot_arm_controller/arduino/arm_actuate", &arm_actuate_cb );
+ros::Subscriber<std_msgs::UInt16> sub_gripper("arduinobot_gripper_controller/arduino/gripper_actuate", &gripper_actuate_cb );
+
+// Publishers
+std_msgs::UInt16MultiArray states_msg;
+ros::Publisher pub_states("arduino/joint_states", &states_msg);
 
 
 void setup() {
@@ -124,12 +133,35 @@ void setup() {
 
   // Inizialize the ROS node on the Arduino
   nh.initNode();
+
+  // Init the response message
+  states_msg.layout.dim = (std_msgs::MultiArrayDimension *)
+  malloc(sizeof(std_msgs::MultiArrayDimension)*2);
+  states_msg.layout.dim[0].label = "height";
+  states_msg.layout.dim[0].size = 4;
+  states_msg.layout.dim[0].stride = 1;
+  states_msg.layout.data_offset = 0;
+  states_msg.data = (int *)malloc(sizeof(int)*8);
+  states_msg.data_length = 4;
+  
   // Inform ROS that this node will subscribe to messages on a given topic
   nh.subscribe(sub_arm);
   nh.subscribe(sub_gripper);
+  nh.advertise(pub_states);
 }
 
 void loop() {
+  pub_counter++;
+  if(pub_counter>PUBLISH_DELAY){
+    states_msg.data[0] = last_angle_base;
+    states_msg.data[1] = last_angle_shoulder;
+    states_msg.data[2] = last_angle_elbow;
+    states_msg.data[3] = last_angle_gripper;
+    
+    pub_states.publish( &states_msg );
+    pub_counter = 0;
+  }
+  
   // Keep the ROS node up and running
   nh.spinOnce();
   delay(1);
