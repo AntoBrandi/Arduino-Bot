@@ -1,8 +1,9 @@
 #! /usr/bin/env python
 import rospy
 import actionlib
+import math
 import control_msgs.msg
-from std_msgs.msg import UInt8
+from std_msgs.msg import UInt16
 
 
 class GripperControllerAction(object):
@@ -47,12 +48,12 @@ class GripperControllerAction(object):
         pub.publish(data=int(angle_rad))
 
     def convert_gripper_angle(self, angle_rad):
-        return int(((-angle_rad)*180)/1.57075)
+        return int(((-angle_rad)*180)/(math.pi/2))
         
 
 if __name__ == '__main__':
     # Publish the converted joint angles to the arduino subscriber node
-    pub = rospy.Publisher('arduino/gripper_actuate', UInt8, queue_size=10)
+    pub = rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
 
     rospy.init_node('gripper_action')
 
