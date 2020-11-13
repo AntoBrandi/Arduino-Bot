@@ -9,6 +9,8 @@
 #include <Servo.h>
 #include <ros.h>
 #include <std_msgs/UInt8MultiArray.h>
+#include <std_msgs/UInt8.h>
+
 
 // Declare the Arduino pin where each servo is connected
 #define SERVO_BASE_PIN 8
@@ -25,7 +27,7 @@
 #define BASE_START 90
 #define SHOULDER_START 90
 #define ELBOW_START 90
-#define GRIPPER_START 90
+#define GRIPPER_START 0
 
 // Register the servo motors of each joint
 Servo base;  
@@ -103,8 +105,8 @@ void gripper_actuate_cb(const std_msgs::UInt8& msg){
 }
 
 // Subscribers
-ros::Subscriber<std_msgs::UInt8MultiArray> sub_arm("arduino/arm_actuate", &arm_actuate_cb );
-ros::Subscriber<std_msgs::UInt8> sub_gripper("arduino/gripper_actuate", &gripper_actuate_cb );
+ros::Subscriber<std_msgs::UInt8MultiArray> sub_arm("arduinobot_arm_controller/arduino/arm_actuate", &arm_actuate_cb );
+ros::Subscriber<std_msgs::UInt8> sub_gripper("arduinobot_gripper_controller/arduino/gripper_actuate", &gripper_actuate_cb );
 
 
 void setup() {
