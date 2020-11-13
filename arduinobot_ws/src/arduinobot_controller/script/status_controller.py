@@ -19,13 +19,13 @@ def gripper_controller_cb(data):
 
 if __name__ == '__main__':
 
-    pub_status = rospy.Publisher('joint_status', JointState, queue_size=10)
+    pub_status = rospy.Publisher('joint_states', JointState, queue_size=10)
 
     rospy.init_node('status_controller', anonymous=True)
     rate = rospy.Rate(10)
 
-    rospy.Subscriber("trajectory_controller/feedback", FollowJointTrajectoryActionFeedback, trajectory_feedback_cb)
-    rospy.Subscriber("gripper_controller/feedback", GripperCommandActionFeedback, gripper_controller_cb)
+    rospy.Subscriber("arduinobot_arm_controller/trajectory_action/feedback", FollowJointTrajectoryActionFeedback, trajectory_feedback_cb)
+    rospy.Subscriber("arduinobot_gripper_controller/gripper_action/feedback", GripperCommandActionFeedback, gripper_controller_cb)
 
     while not rospy.is_shutdown():
         status = JointState()

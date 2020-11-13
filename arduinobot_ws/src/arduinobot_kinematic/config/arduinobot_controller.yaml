@@ -1,14 +1,14 @@
 controller_list:
- - name: arduinobot_controller
-   action_ns: trajectory_controller
+ - name: arduinobot_arm_controller
+   action_ns: trajectory_action
    type: FollowJointTrajectory
    default: true
    joints:
      - joint_1
      - joint_2
      - joint_3
- - name: arduinobot_controller
-   action_ns: gripper_controller
+ - name: arduinobot_gripper_controller
+   action_ns: gripper_action
    type: GripperCommand
    default: true
    joints:

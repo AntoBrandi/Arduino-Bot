@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # Publish the converted joint angles to the arduino subscriber node
     pub = rospy.Publisher('arduino/gripper_actuate', UInt8, queue_size=10)
 
-    rospy.init_node('gripper_controller')
+    rospy.init_node('gripper_action')
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot
