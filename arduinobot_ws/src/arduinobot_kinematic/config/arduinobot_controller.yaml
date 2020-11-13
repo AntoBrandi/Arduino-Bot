@@ -11,6 +11,5 @@ controller_list:
    action_ns: gripper_controller
    type: GripperCommand
    default: true
-   parallel: true
    joints:
      - joint_4
