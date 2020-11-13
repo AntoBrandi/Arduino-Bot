@@ -77,8 +77,7 @@
     <param name="planning_scene_monitor/publish_geometry_updates" value="$(arg publish_monitored_planning_scene)" />
     <param name="planning_scene_monitor/publish_state_updates" value="$(arg publish_monitored_planning_scene)" />
     <param name="planning_scene_monitor/publish_transforms_updates" value="$(arg publish_monitored_planning_scene)" />
-
-    <remap from="joint_states" to="arduinobot_controller/joint_status"/>
+    
   </node>
 
 </launch>
