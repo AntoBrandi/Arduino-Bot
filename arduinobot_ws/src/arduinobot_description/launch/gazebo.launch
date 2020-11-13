@@ -1,0 +1,10 @@
+<launch>
+
+  <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model arduinobot" />
+  
+</launch>
