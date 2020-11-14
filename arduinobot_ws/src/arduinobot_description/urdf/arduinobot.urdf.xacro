@@ -5,28 +5,12 @@
     <xacro:property name="PI" value="3.14159265359" />
 
     <!-- Links -->
-    <!-- Used for fixing robot to Gazebo 'base_link' -->
-    <link name="world"/>
-
-    <joint name="fixed" type="fixed">
-        <parent link="world"/>
-        <child link="base_link"/>
-    </joint>
-
     <link name="base_link">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
@@ -45,18 +29,10 @@
 
     <link name="base_plate">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
@@ -74,18 +50,10 @@
 
     <link name="forward_drive_arm">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy=" 0 -${PI/2} ${PI/2}" xyz="0.19 0.06 -0.08"/>
@@ -103,18 +71,10 @@
 
     <link name="horizontal_arm">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy="${PI/2} 0 ${PI/2}" xyz="-0.03 -0.4 -0.06"/>
@@ -132,18 +92,10 @@
 
     <link name="claw_support">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy="0 0 ${PI/2}" xyz="0 -0.05 -0.15"/>
@@ -161,18 +113,10 @@
 
     <link name="gripper_right">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy="0 0 -${PI/2}" xyz="-0.1 0.50 -0.1"/>
@@ -190,18 +134,10 @@
 
     <link name="gripper_left">
         <inertial>
-            <origin
-                xyz="-0.00377490175092598 0.0117968193300164 0.111915553022725"
-                rpy="0 0 0" />
-            <mass
-                value="0.0497217748522043" />
-            <inertia
-                ixx="2.7691005915736E-05"
-                ixy="3.52926313057377E-10"
-                ixz="2.67965631475746E-09"
-                iyy="4.56375668926374E-05"
-                iyz="1.08925829164701E-07"
-                izz="2.5397344287959E-05" />
+                <mass value="1" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
         </inertial>
         <visual>
             <origin rpy="0 0 -${PI/2}" xyz="-0.04 0.50 -0.1"/>
@@ -210,7 +146,7 @@
             </geometry>
         </visual>
         <collision>
-            <origin rpy="0 0 -${PI/2}" xyz="-0.2 0.50 -0.1"/>
+            <origin rpy="0 0 -${PI/2}" xyz="-0.04 0.50 -0.1"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
@@ -278,10 +214,9 @@
     <transmission name="transmission_1">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint_1">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor_1">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
@@ -289,10 +224,9 @@
     <transmission name="transmission_2">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint_2">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor_2">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
@@ -300,10 +234,9 @@
     <transmission name="transmission_3">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint_3">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor_3">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
@@ -311,10 +244,9 @@
     <transmission name="transmission_4">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint_4">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor_4">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
