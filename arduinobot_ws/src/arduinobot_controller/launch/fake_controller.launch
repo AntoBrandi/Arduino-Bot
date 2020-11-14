@@ -3,11 +3,22 @@
   <rosparam command="load" file="$(find arduinobot_controller)/config/joints.yaml"  />
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/arduinobot" args="joint_1_position_controller joint_2_position_controller joint_3_position_controller joint_4_position_controller joint_state_controller"/>
+    output="screen" ns="/arduinobot_sim" args="joint_1_position_controller joint_2_position_controller joint_3_position_controller joint_4_position_controller joint_5_position_controller joint_state_controller"/>
 
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
-    respawn="false" output="screen">
-    <remap from="/joint_states" to="/arduinobot/joint_states" />
-  </node>
+  <group ns="arduinobot_arm_controller">
+      <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
+      <node pkg="arduinobot_controller" type="trajectory_controller.py" name="trajectory_action" respawn="true" output="screen">
+          <param name="is_simulated" value="true" />
+      </node>
+  </group>
+
+  <group ns="arduinobot_gripper_controller">
+      <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
+      <node pkg="arduinobot_controller" type="gripper_controller.py" name="gripper_action" respawn="true" output="screen">
+          <param name="is_simulated" value="true" />
+      </node>
+  </group>
+
+  <node pkg="arduinobot_controller" type="fake_controller_interface.py" name="fake_controller_interface" respawn="true" output="screen"/>
   
 </launch>

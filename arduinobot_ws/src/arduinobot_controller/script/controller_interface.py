@@ -25,7 +25,7 @@ def joint_states_cb(data):
 
 if __name__ == '__main__':
 
-    pub_status = rospy.Publisher('joint_states', JointState, queue_size=10)
+    pub_status = rospy.Publisher('arduinobot/joint_states', JointState, queue_size=10)
 
     rospy.init_node('controller_interface', anonymous=True)
 

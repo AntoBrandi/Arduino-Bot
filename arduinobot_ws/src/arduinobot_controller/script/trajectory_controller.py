@@ -3,7 +3,7 @@ import rospy
 import actionlib
 import control_msgs.msg
 import math
-from std_msgs.msg import UInt16MultiArray
+from std_msgs.msg import UInt16MultiArray, Float64MultiArray
 
 JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
 
@@ -73,9 +73,12 @@ class TrajectoryControllerAction(object):
 
     def execute(self, angles, joint_names):
         rospy.loginfo('Angles Radians : %s' % str(angles))
-        angles_deg = self.convert_angles(angles, joint_names)
-        rospy.loginfo('Angles Degrees : %s' % str(angles_deg))
-        pub.publish(data=angles_deg)
+        if isSimulated:
+            pub.publish(data=angles)
+        else:
+            angles_deg = self.convert_angles(angles, joint_names)
+            rospy.loginfo('Angles Degrees : %s' % str(angles_deg))
+            pub.publish(data=angles_deg)
     
     def convert_base_angle(self, angle_rad):
         return int(((angle_rad+(math.pi/2))*180)/math.pi)
@@ -88,10 +91,15 @@ class TrajectoryControllerAction(object):
         
 
 if __name__ == '__main__':
-    # Publish the converted joint angles to the arduino subscriber node
-    pub = rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
 
     rospy.init_node('trajectory_action')
+
+    # get the parameters passed to this node
+    isSimulated = rospy.get_param('~is_simulated')
+
+    # Publish the converted joint angles to the arduino subscriber node
+    pub = rospy.Publisher('arduino_sim/arm_actuate', Float64MultiArray, queue_size=10) if isSimulated else rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
+        
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot

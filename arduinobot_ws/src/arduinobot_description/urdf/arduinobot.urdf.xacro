@@ -8,7 +8,7 @@
     <link name="world"/>
 
 
-    <joint name="fixed" type="fixed">
+    <joint name="virtual_joint" type="fixed">
         <parent link="world"/>
         <child link="base_link"/>
         <origin xyz="0 0 0.25"/>
@@ -265,10 +265,21 @@
         </actuator>
     </transmission>
 
+    <transmission name="transmission_5">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint_5">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor_5">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
     <!-- ros_control plugin -->
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/arduinobot</robotNamespace>
+            <robotNamespace>/arduinobot_sim</robotNamespace>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <legacyModeNS>true</legacyModeNS>
         </plugin>

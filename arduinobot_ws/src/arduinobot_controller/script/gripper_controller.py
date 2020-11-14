@@ -2,8 +2,9 @@
 import rospy
 import actionlib
 import math
+import sys
 import control_msgs.msg
-from std_msgs.msg import UInt16
+from std_msgs.msg import UInt16, Float64
 
 
 class GripperControllerAction(object):
@@ -43,19 +44,26 @@ class GripperControllerAction(object):
 
     def execute(self, angle):
         rospy.loginfo('Angle Radians: %s' % angle)
-        angle_rad = self.convert_gripper_angle(angle)
-        rospy.loginfo('Angle Degrees: %s' % angle_rad)
-        pub.publish(data=int(angle_rad))
+        if isSimulated:
+            pub.publish(data=angle)
+        else:
+            angle_deg = self.convert_gripper_angle(angle)
+            rospy.loginfo('Angle Degrees: %s' % angle_deg)
+            pub.publish(data=int(angle_deg))
 
     def convert_gripper_angle(self, angle_rad):
         return int(((-angle_rad)*180)/(math.pi/2))
         
 
 if __name__ == '__main__':
-    # Publish the converted joint angles to the arduino subscriber node
-    pub = rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
 
     rospy.init_node('gripper_action')
+
+    # get the parameters passed to this node
+    isSimulated = rospy.get_param('~is_simulated')
+
+    # Publish the converted joint angles to the arduino subscriber node
+    pub = rospy.Publisher('arduino_sim/gripper_actuate', Float64, queue_size=10) if isSimulated else rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot

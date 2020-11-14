@@ -1,6 +1,7 @@
 <launch>
 
     <arg name="arduino_interface" default="true" />
+    <arg name="is_simulated" default="false" />
 
     <!-- Launch the rosserial node that interface ROS with Arduino -->
     <node if="$(arg arduino_interface)" pkg="rosserial_python" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">
@@ -9,12 +10,16 @@
 
     <group ns="arduinobot_arm_controller">
         <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-        <node pkg="arduinobot_controller" type="trajectory_controller.py" name="trajectory_action" respawn="true" output="screen"/>
+        <node pkg="arduinobot_controller" type="trajectory_controller.py" name="trajectory_action" respawn="true" output="screen">
+            <param name="is_simulated" value="$(arg is_simulated)" />
+        </node>
     </group>
 
     <group ns="arduinobot_gripper_controller">
         <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-        <node pkg="arduinobot_controller" type="gripper_controller.py" name="gripper_action" respawn="true" output="screen"/>
+        <node pkg="arduinobot_controller" type="gripper_controller.py" name="gripper_action" respawn="true" output="screen">
+            <param name="is_simulated" value="$(arg is_simulated)" />
+        </node>
     </group>
 
     <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
