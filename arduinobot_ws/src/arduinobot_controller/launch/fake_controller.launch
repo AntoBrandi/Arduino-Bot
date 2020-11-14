@@ -1,13 +1,6 @@
 <launch>
 
-  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
-  <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
-
-  <include file="$(find arduinobot_description)/launch/gazebo.launch">
-    <arg name="model" value="$(arg model)" />
-  </include>
-
-  <rosparam command="load" file="$(find arduinobot_description)/config/joints.yaml"  />
+  <rosparam command="load" file="$(find arduinobot_controller)/config/joints.yaml"  />
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/arduinobot" args="joint_1_position_controller joint_2_position_controller joint_3_position_controller joint_4_position_controller joint_state_controller"/>
