@@ -1,7 +1,7 @@
 /*
-  arduinobot
+  arduinobot - basic_robot_control
   Script that enables the control of the robot arm via terminal.
-  It enables to control each servo at each joint by indicating it's angle.
+  It enables to control each servo at each joint by writing it's angle in the serial monitor
   Run it with:
     - Load the script on the Arduino
     - Open the Serial monitor setting 9600 baud
@@ -25,10 +25,18 @@ Servo shoulder;
 Servo elbow;  
 Servo gripper;  
  
+// Raw User Inputs
+// The serial monitor will first ask the user to insert the joint that will be controlled
+// and then it will ask the angle that joint will be actuated
 String input_joint = "";
 String input_angle = "";  
-int angle = 0;
-int joint = 0;
+// Converted User Input
+int angle = -1;
+int joint = -1;
+
+// Keep track of the last angle of each servo
+// When a new angle is assigned to a servo, start its movement from 
+// the last known position instead of restarting from 0
 int last_angle_base = 0;
 int last_angle_shoulder = 0;
 int last_angle_elbow = 0;
@@ -37,18 +45,18 @@ int last_angle_gripper = 0;
 /*
  * This function moves a given servo smoothly from a given start position to a given end position.
  * The mouvement can be both clockwise or counterclockwise based on the values assigned to
- * the start position and end position
+ * the start position and end position.
  */
 void reach_goal(Servo servo, int start_point, int end_point){
   if(end_point>=start_point){
-    for (int pos = start_point; pos <= end_point; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // goes from the start point degrees to the end point degrees
+    for (int pos = start_point; pos <= end_point; pos += 1) { 
     servo.write(pos);     
     delay(15);                       
     }
   } else{
-    for (int pos = start_point; pos >= end_point; pos -= 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // goes from the end point degrees to the start point degrees
+    for (int pos = start_point; pos >= end_point; pos -= 1) {
     servo.write(pos);     
     delay(15);                       
     }
@@ -58,17 +66,17 @@ void reach_goal(Servo servo, int start_point, int end_point){
 /*
  * This function checks the inputs of the user and associates at each input the 
  * respective servo motor and triggers its mouvement.
- * Finally, it updates the variable that keeps track of the curren position of each servo
- * that is used as start point for the next mouvement
+ * Finally, it updates the variable that keeps track of the current position of each servo
+ * that is used as start point for the next movement
  */
 void move(int joint, int target){
   switch(joint){
-    case 1: // if (joint==1)
+    case 1: 
       Serial.println("Moving base");
       reach_goal(base, last_angle_base, target);
       last_angle_base = target;
       break;
-    case 2: // else if (joint==1)
+    case 2: 
       Serial.println("Moving shoulder");
       reach_goal(shoulder, last_angle_shoulder, target);
       last_angle_shoulder = target;
@@ -92,13 +100,14 @@ void setup() {
   // Enable the serial communication for displaying information and reading user inputs
   Serial.begin(9600);
   
-  // Attach each Servo to the Arduino pin where it is connected
+  // Attach and Initialize each Servo to the Arduino pin where it is connected
   base.attach(SERVO_BASE_PIN);
   shoulder.attach(SERVO_SHOULDER_PIN);
   elbow.attach(SERVO_ELBOW_PIN);
   gripper.attach(SERVO_GRIPPER_PIN);    
 
   // Set a common start point for each joint
+  // This way, the start status of each joint is known
   base.write(0);
   shoulder.write(0);
   elbow.write(0);
@@ -136,6 +145,8 @@ void loop() {
     Serial.print("Joint: ");
     Serial.println(String(joint));
     move(joint, angle);
+
+    // reset the variables for the next execution of the loop
     joint = -1;
     angle = -1;
   }

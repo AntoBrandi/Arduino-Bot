@@ -1,8 +1,8 @@
 /*
-  arduinobot
-  Script that creates a ROS node on the Arduino that subscribes to topic
-  for the joint contorl of the arm and the one of the gripper.
-  When a new messages is published on a topic, th 
+  arduinobot - ros_basic_robot_control
+  Script that creates a ROS node on the Arduino that subscribes to 
+  joint angle messages and actuates the servo motors according to the
+  selected angles
   Copyright (c) 2020 Antonio Brandi.  All right reserved.
 */
 
@@ -27,9 +27,12 @@ Servo shoulder;
 Servo elbow;  
 Servo gripper;  
 
+// Initialize the ROS node
 ros::NodeHandle  nh;
 
-// Variable that keeps track of the current position of each joint
+// Keep track of the last angle of each servo
+// When a new angle is assigned to a servo, start its movement from 
+// the last known position instead of restarting from 0
 int last_angle_base = 0;
 int last_angle_shoulder = 0;
 int last_angle_elbow = 0;
@@ -42,21 +45,26 @@ int last_angle_gripper = 0;
  */
 void reach_goal(Servo servo, int start_point, int end_point){
   if(end_point>=start_point){
-    for (int pos = start_point; pos <= end_point; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // goes from the start point degrees to the end point degrees
+    for (int pos = start_point; pos <= end_point; pos += 1) { 
     servo.write(pos);     
     delay(5);                       
     }
   } else{
-    for (int pos = start_point; pos >= end_point; pos -= 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // goes from the end point degrees to the start point degrees
+    for (int pos = start_point; pos >= end_point; pos -= 1) { 
     servo.write(pos);     
     delay(5);                       
     }
   }
 }
 
-
+/*
+ * This function triggers the actuation of each servo motor of the arm 
+ * and keeps track of the last position of each joint for the next execution.
+ * So that, the start point for the current actuation of the servo motors is the 
+ * last registered position for the joint
+ */
 void moveArm(int base_angle, int shoulder_angle, int elbow_angle, int gripper_angle){
   reach_goal(base, last_angle_base, base_angle);
   reach_goal(shoulder, last_angle_shoulder, shoulder_angle);
@@ -69,6 +77,20 @@ void moveArm(int base_angle, int shoulder_angle, int elbow_angle, int gripper_an
 }
 
 
+/*
+ * This function is called each time a new message is published on the topic /servo_actuate
+ * The last message that was published on that topic is passed as input to this function.
+ * The received message is converted to joint angles of each connected servo motor with the following 
+ * order in the received array
+ * 
+ * base angle
+ * shoulder angle
+ * elbow angle
+ * gripper angle
+ * 
+ * Then the received message is compared with fixed boundaries for each joint
+ * and then each servo is actuated. 
+ */
 void servoActuateCb( const std_msgs::UInt16MultiArray& msg){
   int base_angle = (int)msg.data[0];
   int shoulder_angle = (int)msg.data[1];
@@ -89,23 +111,26 @@ void servoActuateCb( const std_msgs::UInt16MultiArray& msg){
   moveArm(base_angle, shoulder_angle, elbow_angle, gripper_angle);
 }
 
+// Define the subscriber to the topic /servo_actuate where are published UInt16MultiArray messages
+// Define the function that will be triggered each time a new message is published on this topic
 ros::Subscriber<std_msgs::UInt16MultiArray> sub("servo_actuate", &servoActuateCb );
 
 
 void setup() {
-  // Attach each Servo to the Arduino pin where it is connected
+  // Attach and Initialize each Servo to the Arduino pin where it is connected
   base.attach(SERVO_BASE_PIN);
   shoulder.attach(SERVO_SHOULDER_PIN);
   elbow.attach(SERVO_ELBOW_PIN);
   gripper.attach(SERVO_GRIPPER_PIN); 
 
   // Set a common start point for each joint
+  // This way, the start status of each joint is known
   base.write(90);
   shoulder.write(90);
   elbow.write(90);
   gripper.write(90);
 
-   // Inizialize the ROS node on the Arduino
+  // Inizialize the ROS node on the Arduino
   nh.initNode();
   // Inform ROS that this node will subscribe to messages on a given topic
   nh.subscribe(sub);

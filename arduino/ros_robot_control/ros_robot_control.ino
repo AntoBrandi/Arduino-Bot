@@ -1,8 +1,10 @@
 /*
-  arduinobot
-  Script that creates a ROS node on the Arduino that subscribes to topic
-  for the joint contorl of the arm and the one of the gripper.
-  When a new messages is published on a topic, th 
+  arduinobot - ros robot control
+  Script that creates a ROS node on the Arduino that subscribes to 
+  joint angle messages and actuates the servo motors according to the
+  selected angles.
+  It then keeps track of the current angle position of each joint
+  and publishes it via ROS in order to provide a feedback to the joint controllers
   Copyright (c) 2020 Antonio Brandi.  All right reserved.
 */
 
@@ -31,7 +33,7 @@
 
 // Define the pubblication frequency
 #define PUBLISH_DELAY 100
-
+// Keeps track of the number of itheration passed since the last publish event
 int pub_counter = 0;
 
 // Register the servo motors of each joint
@@ -40,9 +42,12 @@ Servo shoulder;
 Servo elbow;  
 Servo gripper;  
 
+// Initialize the ROS node
 ros::NodeHandle  nh;
 
-// Variable that keeps track of the current position of each joint
+// Keep track of the last angle of each servo
+// When a new angle is assigned to a servo, start its movement from 
+// the last known position instead of restarting from 0
 int last_angle_base = BASE_START;
 int last_angle_shoulder = SHOULDER_START;
 int last_angle_elbow = ELBOW_START;
@@ -55,20 +60,26 @@ int last_angle_gripper = GRIPPER_START;
  */
 void reach_goal(Servo servo, int start_point, int end_point){
   if(end_point>=start_point){
-    for (int pos = start_point; pos <= end_point; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // goes from the start point degrees to the end point degrees
+    for (int pos = start_point; pos <= end_point; pos += 1) { 
     servo.write(pos);     
     delay(5);                       
     }
   } else{
-    for (int pos = start_point; pos >= end_point; pos -= 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // goes from the end point degrees to the start point degrees
+    for (int pos = start_point; pos >= end_point; pos -= 1) { 
     servo.write(pos);     
     delay(5);                       
     }
   }
 }
 
+/*
+ * This function triggers the actuation of each servo motor of the arm 
+ * and keeps track of the last position of each joint for the next execution.
+ * So that, the start point for the current actuation of the servo motors is the 
+ * last registered position for the joint
+ */
 void move_arm(int base_angle, int shoulder_angle, int elbow_angle){
   reach_goal(base, last_angle_base, base_angle);
   reach_goal(shoulder, last_angle_shoulder, shoulder_angle);
@@ -78,11 +89,31 @@ void move_arm(int base_angle, int shoulder_angle, int elbow_angle){
   last_angle_elbow = elbow_angle;
 }
 
+
+/*
+ * This function triggers the actuation of the gripper servo motor 
+ * and keeps track of the last position of this joint for the next execution.
+ * So that, the start point for the current actuation of the servo motor is the 
+ * last registered position for the joint
+ */
 void move_gripper(int gripper_angle){
   reach_goal(gripper, last_angle_gripper, gripper_angle);
   last_angle_gripper = gripper_angle;
 }
 
+/*
+ * This function is called each time a new message is published on the topic /arduinobot_arm_controller/arduino/arm_actuate
+ * The last message that was published on that topic is passed as input to this function.
+ * The received message is converted to joint angles of each connected servo motor with the following 
+ * order in the received array
+ * 
+ * base angle
+ * shoulder angle
+ * elbow angle
+ * 
+ * Then the received message is compared with fixed boundaries for each joint
+ * and then each servo is actuated. 
+ */
 void arm_actuate_cb( const std_msgs::UInt16MultiArray& msg){
   int base_angle = (int)msg.data[0];
   int shoulder_angle = (int)msg.data[1];
@@ -100,6 +131,14 @@ void arm_actuate_cb( const std_msgs::UInt16MultiArray& msg){
   move_arm(base_angle, shoulder_angle, elbow_angle);
 }
 
+/*
+ * This function is called each time a new message is published on the topic arduinobot_gripper_controller/arduino/gripper_actuate
+ * The last message that was published on that topic is passed as input to this function.
+ * The received message is converted to joint angle of the gripper
+ * 
+ * Then the received message is compared with fixed boundaries for the gripper joint
+ * and then each servo is actuated. 
+ */
 void gripper_actuate_cb(const std_msgs::UInt16& msg){
   int gripper_angle = (int)msg.data;
 
@@ -109,11 +148,17 @@ void gripper_actuate_cb(const std_msgs::UInt16& msg){
   move_gripper(gripper_angle);
 }
 
-// Subscribers
+// SUBSCRIBERS
+// Define the subscriber to the topic /arduinobot_arm_controller/arduino/arm_actuate where are published UInt16MultiArray messages
+// Define the function that will be triggered each time a new message is published on this topic
 ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arduinobot_arm_controller/arduino/arm_actuate", &arm_actuate_cb );
+// Define the subscriber to the topic /arduinobot_gripper_controller/arduino/gripper_actuate where are published UInt16 messages
+// Define the function that will be triggered each time a new message is published on this topic
 ros::Subscriber<std_msgs::UInt16> sub_gripper("arduinobot_gripper_controller/arduino/gripper_actuate", &gripper_actuate_cb );
 
-// Publishers
+// PUBLISHERS
+// Define the type of the message that will be published 
+// Define the topic name on which the message will be published
 std_msgs::UInt16MultiArray states_msg;
 ros::Publisher pub_states("arduino/joint_states", &states_msg);
 
@@ -126,6 +171,7 @@ void setup() {
   gripper.attach(SERVO_GRIPPER_PIN); 
 
   // Set a common start point for each joint
+  // This way, the start status of each joint is known
   base.write(BASE_START);
   shoulder.write(SHOULDER_START);
   elbow.write(ELBOW_START);
@@ -134,7 +180,7 @@ void setup() {
   // Inizialize the ROS node on the Arduino
   nh.initNode();
 
-  // Init the response message
+  // Init and Create the response message that will be published later
   states_msg.layout.dim = (std_msgs::MultiArrayDimension *)
   malloc(sizeof(std_msgs::MultiArrayDimension)*2);
   states_msg.layout.dim[0].label = "height";
@@ -151,14 +197,21 @@ void setup() {
 }
 
 void loop() {
+
+  // Set a periodic publisher that publishes messages via ROS 
+  // each PUBLISH_DELAY milliseconds
   pub_counter++;
   if(pub_counter>PUBLISH_DELAY){
+    // Compose the ,essage that will be published on the topic arduino/joint_states
+    // and publish it 
     states_msg.data[0] = last_angle_base;
     states_msg.data[1] = last_angle_shoulder;
     states_msg.data[2] = last_angle_elbow;
     states_msg.data[3] = last_angle_gripper;
     
     pub_states.publish( &states_msg );
+
+    // Reset the counter for the next loop
     pub_counter = 0;
   }
   
