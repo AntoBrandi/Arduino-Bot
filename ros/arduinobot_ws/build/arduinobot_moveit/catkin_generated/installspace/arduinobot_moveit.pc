@@ -1,0 +1,8 @@
+prefix=/home/omncbar/arduinobot/arduinobot_ws/install
+
+Name: arduinobot_moveit
+Description: Description of arduinobot_moveit
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

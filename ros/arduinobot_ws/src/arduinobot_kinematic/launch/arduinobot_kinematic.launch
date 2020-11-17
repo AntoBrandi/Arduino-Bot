@@ -1,0 +1,38 @@
+<launch>
+
+  <arg name="is_simulated" default="false" />
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <arg name="use_rviz" default="true" />
+
+  <arg unless="$(arg is_simulated)" name="states_topic" value="arduinobot" />
+  <arg     if="$(arg is_simulated)" name="states_topic" value="arduinobot_sim" />
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include file="$(find arduinobot_moveit)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" >
+    <remap from="/joint_states" to="/$(arg states_topic)/joint_states" />
+  </node>
+
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include if="$(arg is_simulated)" file="$(find arduinobot_moveit)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="states_topic" value="$(arg states_topic)"/>
+  </include>
+
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find arduinobot_moveit)/launch/moveit_rviz.launch" if="$(arg use_rviz)">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+</launch>

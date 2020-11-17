@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/omncbar/arduinobot/arduinobot_ws/devel/setup.sh

@@ -1,0 +1,8 @@
+prefix=/home/omncbar/arduinobot/arduinobot_ws/install
+
+Name: arduinobot_bringup
+Description: Description of arduinobot_bringup
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

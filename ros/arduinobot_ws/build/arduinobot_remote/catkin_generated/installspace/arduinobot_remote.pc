@@ -1,0 +1,8 @@
+prefix=/home/omncbar/arduinobot/arduinobot_ws/install
+
+Name: arduinobot_remote
+Description: Description of arduinobot_remote
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

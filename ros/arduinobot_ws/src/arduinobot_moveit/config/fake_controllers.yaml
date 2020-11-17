@@ -1,0 +1,9 @@
+controller_list:
+  - name: fake_arduinobot_arm_controller
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+  - name: fake_arduinobot_hand_controller
+    joints:
+      - joint_4

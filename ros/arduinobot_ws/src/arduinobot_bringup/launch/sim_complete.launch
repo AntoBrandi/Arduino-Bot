@@ -1,0 +1,20 @@
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
+
+  <include file="$(find arduinobot_description)/launch/gazebo.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <include file="$(find arduinobot_controller)/launch/fake_controller.launch"/>
+
+  <!-- Launch the interface with the external -->
+  <include file="$(find arduinobot_remote)/launch/remote_interface.launch"/>
+
+  <!-- Launch the kinematic module -->
+  <include file="$(find arduinobot_kinematic)/launch/arduinobot_kinematic.launch">
+    <arg name="is_simulated" value="true" />
+  </include>
+  
+</launch>

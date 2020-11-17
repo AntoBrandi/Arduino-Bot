@@ -1,0 +1,13 @@
+<launch>
+    <!-- Launch the interface with the robot -->
+    <include file="$(find arduinobot_controller)/launch/controller.launch"/>
+
+    <!-- Launch the interface with the external -->
+    <include file="$(find arduinobot_remote)/launch/remote_interface.launch"/>
+
+    <!-- Launch the kinematic module -->
+    <include file="$(find arduinobot_kinematic)/launch/arduinobot_kinematic.launch">
+        <arg name="is_simulated" value="false" />
+    </include>
+
+</launch>
