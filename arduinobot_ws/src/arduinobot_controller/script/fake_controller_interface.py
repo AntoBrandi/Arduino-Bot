@@ -13,6 +13,7 @@ def arm_actuate_cb(data):
 
 def gripper_actuate_cb(data):
     pub_joint_4.publish(data.data)
+    pub_joint_5.publish(-data.data)
 
 
 if __name__ == '__main__':
@@ -23,6 +24,7 @@ if __name__ == '__main__':
     pub_joint_2 = rospy.Publisher('/arduinobot_sim/joint_2_position_controller/command', Float64, queue_size=10)
     pub_joint_3 = rospy.Publisher('/arduinobot_sim/joint_3_position_controller/command', Float64, queue_size=10)
     pub_joint_4 = rospy.Publisher('/arduinobot_sim/joint_4_position_controller/command', Float64, queue_size=10)
+    pub_joint_5 = rospy.Publisher('/arduinobot_sim/joint_5_position_controller/command', Float64, queue_size=10)
 
     rospy.Subscriber("arduinobot_arm_controller/arduino_sim/arm_actuate", Float64MultiArray, arm_actuate_cb)
     rospy.Subscriber("arduinobot_gripper_controller/arduino_sim/gripper_actuate", Float64, gripper_actuate_cb)
