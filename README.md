@@ -64,8 +64,7 @@ This robot is powered by:
 * Raspberry Pi 3/4 or PC with Ubuntu 18.04
 * Arduino UNO
 * SG90 Servo Motors (x4)
-* Power Supply Module
-* Prototype Expansion Board
+* Prototype Expansion Board or Breadboard
 
 And is controlled by:
 * ROS Melodic
@@ -97,7 +96,7 @@ sudo apt-get install ros-kinetic-rosbridge-server
 ```sh
 sudo apt-get install ros-kinetic-moveit
 ```
-* Install VS Code and Platform IO extension on your PC in order to build and load the Arduino code on the device
+* Install VS Code and Arduino IDE on your PC in order to build and load the Arduino code on the device
 
 
 ### Installation
@@ -108,7 +107,7 @@ git clone https://github.com/AntoBrandi/arduinobot.git
 ```
 2. Build the ROS workspace
 ```sh
-cd ~/arduinobot
+cd ~/arduinobot/arduinobot_ws
 ```
 ```sh
 catkin_make
@@ -119,24 +118,26 @@ sudo nano ~/.bashrc
 ```
 And add the following at the end of the document
 ```sh
-source ~/arduinobot/devel/setup.bash
+source ~/arduinobot/arduinobot_ws/devel/setup.bash
 ```
-4. Connect the Arduino UNO on your PC with VS Code and Platform IO. Open the [folder](https://github.com/AntoBrandi/DextroBot/tree/master/ROS/dextrobot_ws/src/dextrobot_controller/src/arduino/wheel_controller)
-containing the code for the Arduino wheel control and load the main.cpp to the Arduino.
+4. Connect the Arduino UNO on your PC with VS Code and Arduino IDE. Open the [folder](https://github.com/AntoBrandi/arduinobot/tree/master/arduino)
+containing the code for the Arduino controller.
 
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-To launch the ROS enviroment on the Raspberry Pi use
+To launch the ROS simulated robot
 ```sh
-roslaunch dextrobot_bringup dextrobot_complete.launch view_imv:=true
+roslaunch arduinobot_bringup sim_complete.launch
 ```
-With optional parameters
-* **view_imv**: to display the motion vectors detected by the raspberry pi camera
-* **launch_rviz**: to display the readings coming from the sonar sensors and the imu
 
+To launch the real robot, connect the Arduino to the PC and upload the code in the [folder](https://github.com/AntoBrandi/arduinobot/tree/master/arduino/ros_robot_control) on the Arduino controller.
+Then launch the real robot
+```sh
+roslaunch arduinobot_bringup complete.launch
+```
 
 
 
