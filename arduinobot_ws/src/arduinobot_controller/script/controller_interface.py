@@ -3,6 +3,7 @@ import rospy
 import math
 from sensor_msgs.msg import JointState
 from std_msgs.msg import UInt16MultiArray
+from arduinobot_controller.srv import AnglesConverter
 
 """
   arduinobot - controller_interface
@@ -32,12 +33,9 @@ JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4']
 def convert_angles(angles_deg):
     # Function that converts servo motors angles from degrees to radians 
     # according to the angle convention and boundaries expressed in the robot description
-    angles_rad = []
-    angles_rad.append(((math.pi*angles_deg[0]) - ((math.pi/2)*180))/180)
-    angles_rad.append((((180-angles_deg[1])*math.pi)-((math.pi/2)*180))/180)
-    angles_rad.append(((math.pi*angles_deg[2]) - ((math.pi/2)*180))/180)
-    angles_rad.append(-((math.pi/2)*angles_deg[3])/180)
-    return angles_rad
+    degrees_to_radians = rospy.ServiceProxy('degrees_to_radians', AnglesConverter)
+    angles_rad = degrees_to_radians(angles_deg[0],angles_deg[1],angles_deg[2],angles_deg[3])
+    return [angles_rad.base, angles_rad.shoulder, angles_rad.elbow, angles_rad.gripper]
 
 
 def joint_states_cb(data):
@@ -62,6 +60,8 @@ if __name__ == '__main__':
     # register a subscriber on the topic /arduino/joint_states that will listen for UInt16MultiArray messages
     # when a new message is received, the callback function is triggered and starts its execution
     rospy.Subscriber("arduino/joint_states", UInt16MultiArray, joint_states_cb)
+
+    rospy.wait_for_service('angles_converter')
     
     # keep this ROS node up and running
     rospy.spin()

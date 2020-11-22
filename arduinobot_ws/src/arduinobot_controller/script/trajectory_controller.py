@@ -4,6 +4,7 @@ import actionlib
 import control_msgs.msg
 import math
 from std_msgs.msg import UInt16MultiArray, Float64MultiArray
+from arduinobot_controller.srv import AnglesConverter
 
 """
   arduinobot - trajectory_controller
@@ -80,29 +81,7 @@ class TrajectoryControllerAction(object):
         # return a result message with status succeeded
         if success:
             rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self._result)
-
-
-    def convert_angles(self, angles, joint_names):
-        # This function receives an array of joint angles in radians and
-        # convert those in degrees in order to be appliend to the servo motors
-        # by the Arduino controller respecting its boundaries
-        current_angles = []
-        for i, joint_name in enumerate(JOINT_NAMES):
-            if joint_name in joint_names:
-
-                if i == 0:
-                    current_angles.append(self.convert_base_angle(angles[i]))
-                elif i == 1:
-                    current_angles.append(self.convert_shoulder_angle(angles[i]))
-                else:
-                    current_angles.append(self.convert_elbow_angle(angles[i]))
-
-                self.old_joint_angles[i] = current_angles[i]
-            else:
-                current_angles.append(self.old_joint_angles[i])
-
-        return current_angles           
+            self._as.set_succeeded(self._result)        
         
 
     def execute(self, angles, joint_names):
@@ -114,21 +93,10 @@ class TrajectoryControllerAction(object):
             pub.publish(data=angles)
         # The trajectory controller is moving a real robot controlled by Arduino
         else:
-            angles_deg = self.convert_angles(angles, joint_names)
-            rospy.loginfo('Angles Degrees : %s' % str(angles_deg))
-            pub.publish(data=angles_deg)
-    
-    def convert_base_angle(self, angle_rad):
-        # Converts the angle of the base joint from radians to degrees
-        return int(((angle_rad+(math.pi/2))*180)/math.pi)
-    
-    def convert_shoulder_angle(self, angle_rad):
-        # Converts the angle of the shoulder joint from radians to degrees
-        return 180-int(((angle_rad+(math.pi/2))*180)/math.pi)
-
-    def convert_elbow_angle(self, angle_rad):
-        # Converts the angle of the elbow joint from radians to degrees
-        return int(((angle_rad+(math.pi/2))*180)/math.pi)
+            radians_to_degrees = rospy.ServiceProxy('radians_to_degrees', AnglesConverter)
+            angles_deg = radians_to_degrees(angles[0],angles[1],angles[2],0)
+            rospy.loginfo('Angles Degrees : %s' % str(angles_deg[:-1]))
+            pub.publish(data=angles_deg[:-1])
         
 
 if __name__ == '__main__':
@@ -141,7 +109,10 @@ if __name__ == '__main__':
     # Accoring to the input parameter is_simulated, decide whether or not the robot is a real one controlled by Arduino
     # or is a simulated one in Gazebo. The publisher topic will be chosen accordingly 
     pub = rospy.Publisher('arduino_sim/arm_actuate', Float64MultiArray, queue_size=10) if isSimulated else rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
-        
+
+    if not isSimulated:
+        rospy.wait_for_service('angles_converter')
+
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot
     server = TrajectoryControllerAction(rospy.get_name())

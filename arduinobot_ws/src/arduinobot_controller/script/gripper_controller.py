@@ -5,6 +5,7 @@ import math
 import sys
 import control_msgs.msg
 from std_msgs.msg import UInt16, Float64
+from arduinobot_controller.srv import AnglesConverter
 
 
 """
@@ -82,13 +83,10 @@ class GripperControllerAction(object):
             pub.publish(data=angle)
         # The trajectory controller is moving a real robot controlled by Arduino
         else:
-            angle_deg = self.convert_gripper_angle(angle)
-            rospy.loginfo('Angle Degrees: %s' % angle_deg)
-            pub.publish(data=int(angle_deg))
-
-    def convert_gripper_angle(self, angle_rad):
-        # Converts the angle of the gripper joint from radians to degrees
-        return int(((-angle_rad)*180)/(math.pi/2))
+            radians_to_degrees = rospy.ServiceProxy('radians_to_degrees', AnglesConverter)
+            angles_deg = radians_to_degrees(0,0,0,angle)
+            rospy.loginfo('Angle Degrees: %s' % angle_deg[-1])
+            pub.publish(data=int(angle_deg[-1]))
         
 
 if __name__ == '__main__':
@@ -101,6 +99,9 @@ if __name__ == '__main__':
     # Accoring to the input parameter is_simulated, decide whether or not the robot is a real one controlled by Arduino
     # or is a simulated one in Gazebo. The publisher topic will be chosen accordingly 
     pub = rospy.Publisher('arduino_sim/gripper_actuate', Float64, queue_size=10) if isSimulated else rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
+
+    if not isSimulated:
+        rospy.wait_for_service('angles_converter')
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot
