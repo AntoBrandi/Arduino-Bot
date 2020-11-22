@@ -3,10 +3,34 @@
 
     <!-- Useful Variables (Properties) -->
     <xacro:property name="PI" value="3.14159265359" />
+    <xacro:property name="effort" value="30" />
+    <xacro:property name="velocity" value="0.5" />
+
+    <!-- Useful Macros -->
+    <xacro:macro name="default_inertial" params="mass">
+        <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                     iyy="1.0" iyz="0.0"
+                     izz="1.0" />
+        </inertial>
+    </xacro:macro>
+    <xacro:macro name="default_transmission" params="number">
+        <transmission name="transmission_${number}">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="joint_${number}">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="motor_${number}">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
 
     <!-- Links -->
     <link name="world"/>
-
 
     <joint name="virtual_joint" type="fixed">
         <parent link="world"/>
@@ -14,14 +38,8 @@
         <origin xyz="0 0 0.25"/>
     </joint>
     
-
     <link name="base_link">
-        <inertial>
-                <mass value="1" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="1"/>
         <visual>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
             <geometry>
@@ -36,14 +54,8 @@
         </collision>
     </link> 
 
-
     <link name="base_plate">
-        <inertial>
-                <mass value="0.1" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="0.1"/>
         <visual>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
@@ -59,12 +71,7 @@
     </link>
 
     <link name="forward_drive_arm">
-        <inertial>
-                <mass value="0.1" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="0.1"/>
         <visual>
             <origin rpy=" 0 -${PI/2} ${PI/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
@@ -80,12 +87,7 @@
     </link>
 
     <link name="horizontal_arm">
-        <inertial>
-                <mass value="0.1" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="0.1"/>
         <visual>
             <origin rpy="${PI/2} 0 ${PI/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
@@ -101,12 +103,7 @@
     </link>
 
     <link name="claw_support">
-        <inertial>
-                <mass value="0.05" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="0.05"/>
         <visual>
             <origin rpy="0 0 ${PI/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
@@ -122,12 +119,7 @@
     </link>
 
     <link name="gripper_right">
-        <inertial>
-                <mass value="0.01" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="0.01"/>
         <visual>
             <origin rpy="0 0 -${PI/2}" xyz="-0.1 0.50 -0.1"/>
             <geometry>
@@ -143,12 +135,7 @@
     </link>
 
     <link name="gripper_left">
-        <inertial>
-                <mass value="0.01" />
-                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                     iyy="1.0" iyz="0.0"
-                     izz="1.0" />
-        </inertial>
+        <xacro:default_inertial mass="0.01"/>
         <visual>
             <origin rpy="0 0 -${PI/2}" xyz="-0.04 0.50 -0.1"/>
             <geometry>
@@ -172,7 +159,7 @@
         <child link = "base_plate"/>
         <origin xyz="0 0 0.307"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI/2}" upper="${PI/2}" effort="30.0" velocity="0.5"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="joint_2" type="revolute">
@@ -180,7 +167,7 @@
         <child link = "forward_drive_arm"/>
         <origin xyz="-0.02 0 0.35"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-${PI/2}" upper="${PI/2}" effort="30.0" velocity="0.5"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="joint_3" type="revolute">
@@ -188,7 +175,7 @@
         <child link = "horizontal_arm"/>
         <origin xyz="0 0 0.8"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-${PI/2}" upper="${PI/2}" effort="30.0" velocity="0.5"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="horizontal_arm_to_claw_support" type="fixed">
@@ -202,7 +189,7 @@
         <child link = "gripper_right"/>
         <origin xyz="-0.04 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI/2}" upper="0" effort="30.0" velocity="0.5"/>
+        <limit lower="-${PI/2}" upper="0" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="joint_5" type="revolute">
@@ -210,7 +197,7 @@
         <child link = "gripper_left"/>
         <origin xyz="-0.22 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
-        <limit lower="0" upper="${PI/2}" effort="30.0" velocity="0.5"/>
+        <limit lower="0" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
         <mimic joint="joint_4" multiplier="-1" offset="0"/> 
     </joint>
 
@@ -220,63 +207,16 @@
         <origin xyz="0 0 0"/>
     </joint>
 
+
     <!-- Transmissions-->
-    <transmission name="transmission_1">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint_1">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor_1">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
+    <xacro:default_transmission number="1"/>
+    <xacro:default_transmission number="2"/>
+    <xacro:default_transmission number="3"/>
+    <xacro:default_transmission number="4"/>
+    <xacro:default_transmission number="5"/>
 
-    <transmission name="transmission_2">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint_2">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor_2">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
 
-    <transmission name="transmission_3">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint_3">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor_3">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-
-    <transmission name="transmission_4">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint_4">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor_4">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-
-    <transmission name="transmission_5">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint_5">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor_5">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-
-    <!-- ros_control plugin -->
+    <!-- gazebo ros_control plugin -->
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
             <robotNamespace>/arduinobot_sim</robotNamespace>
