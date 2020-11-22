@@ -42,8 +42,8 @@ def callback(data):
     pub.publish(data=msg)
     
 if __name__ == '__main__':
-    # Inizialize a ROS node called controller_interface
-    rospy.init_node('controller_interface', anonymous=True)
+    # Inizialize a ROS node called basic_controller_interface
+    rospy.init_node('basic_controller_interface', anonymous=True)
 
     # register a publisher on the topic /servo_actuate that will publish UInt16MultiArray messages
     pub = rospy.Publisher('servo_actuate', UInt16MultiArray, queue_size=10)

@@ -13,9 +13,6 @@ from std_msgs.msg import Float64MultiArray, Float64
   Copyright (c) 2020 Antonio Brandi.  All right reserved.
 """
 
-# constant list of the joint names 
-JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4']
-
 
 def arm_actuate_cb(data):
     # Callback function that is called each time a new message is published on the topic /arduinobot_arm_controller/arduino_sim/arm_actuate
