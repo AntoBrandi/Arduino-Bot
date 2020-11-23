@@ -1,6 +1,6 @@
 #! /usr/bin/env python
-import rospy
 from __future__ import print_function
+import rospy
 import actionlib
 import actionlib_tutorials.msg
 
@@ -18,6 +18,7 @@ def fibonacci_client():
     goal = actionlib_tutorials.msg.FibonacciGoal(order=20)
 
     # Sends the goal to the action server.
+    print("Seding goal order %s" % goal.order)
     client.send_goal(goal)
 
     # Waits for the server to finish performing the action.
@@ -31,6 +32,8 @@ if __name__ == '__main__':
     try:
         # Inizialize a ROS node called fibonacci_client
         rospy.init_node('fibonacci_client')
+
+        print("Simple Action Client Started")
 
         # Keep this node active until the action server returns a result
         result = fibonacci_client()

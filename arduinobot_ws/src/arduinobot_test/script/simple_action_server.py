@@ -16,9 +16,12 @@ class FibonacciAction(object):
         self._action_name = name
         self._as = actionlib.SimpleActionServer(self._action_name, actionlib_tutorials.msg.FibonacciAction, execute_cb=self.execute_cb, auto_start = False)
         self._as.start()
+        rospy.loginfo('Simple Action Server Started')
       
 
     def execute_cb(self, goal):
+        rospy.loginfo('Goal Received : %s' % goal.order)
+
         # Function that is called each time the action server receives a new goal
         # It starts displaying a fibonacci series from 1 to the goal target
         r = rospy.Rate(1)
