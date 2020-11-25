@@ -2,9 +2,10 @@
 import rospy
 from std_msgs.msg import String
 
-# This function is called each time a new message is published on the topic /chatter
-# The message that has been published is then passed as input to this function
+
 def callback(data):
+    # This function is called each time a new message is published on the topic /chatter
+    # The message that has been published is then passed as input to this function
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
    
     

@@ -12,10 +12,12 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  actionlib 
+  actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -62,15 +64,15 @@ add_service_files(
 
 ## Generate actions in the 'action' folder
 # add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
+#   DIRECTORY action
+#   FILES Fibonacci.action
 # )
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
   std_msgs
+  actionlib_msgs
 )
 
 ################################################
@@ -105,7 +107,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES arduinobot_test
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS actionlib_msgs
 #  DEPENDS system_lib
 )
 
@@ -116,10 +118,10 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
-
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/arduinobot_test.cpp
@@ -133,7 +135,12 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/arduinobot_test_node.cpp)
+add_executable(simple_cpp_publisher script/simple_publisher.cpp)
+add_executable(simple_cpp_subscriber script/simple_subscriber.cpp)
+add_executable(simple_cpp_service script/simple_service.cpp)
+add_executable(simple_cpp_service_client script/simple_service_client.cpp)
+add_executable(simple_cpp_action_server script/simple_action_server.cpp)
+add_executable(simple_cpp_action_client script/simple_action_client.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -143,12 +150,32 @@ include_directories(
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(simple_cpp_publisher arduinobot_test_generate_messages_cpp)
+add_dependencies(simple_cpp_subscriber arduinobot_test_generate_messages_cpp)
+add_dependencies(simple_cpp_service arduinobot_test_gencpp)
+add_dependencies(simple_cpp_service_client arduinobot_test_gencpp)
+add_dependencies(simple_cpp_action_server ${arduinobot_test_EXPORTED_TARGETS})
+add_dependencies(simple_cpp_action_client ${arduinobot_test_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(simple_cpp_publisher
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(simple_cpp_subscriber
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(simple_cpp_service
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(simple_cpp_service_client
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(simple_cpp_action_server
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(simple_cpp_action_client
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
@@ -159,8 +186,11 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# catkin_install_python(PROGRAMS
-#   scripts/my_python_script
+# catkin_install_python(PROGRAMS 
+#   script/simple_subscriber.py 
+#   script/simple_publisher.py 
+#   script/simple_service.py 
+#   script/simple_service_client.py
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
