@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  sensor_msgs
   message_generation
 )
 
@@ -133,7 +134,9 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/arduinobot_controller_node.cpp)
+add_executable(angles_converter_cpp script/angles_converter.cpp)
+add_executable(basic_controller_interface_cpp script/basic_controller_interface.cpp)
+add_executable(basic_fake_controller_interface_cpp script/basic_fake_controller_interface.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -143,12 +146,20 @@ include_directories(
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(angles_converter_cpp arduinobot_controller_gencpp)
+add_dependencies(basic_controller_interface_cpp arduinobot_controller_gencpp)
+add_dependencies(basic_fake_controller_interface_cpp arduinobot_controller_gencpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(angles_converter_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_controller_interface_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(basic_fake_controller_interface_cpp
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

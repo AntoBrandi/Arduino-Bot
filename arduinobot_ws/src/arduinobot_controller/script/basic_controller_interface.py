@@ -6,6 +6,7 @@ from arduinobot_controller.srv import AnglesConverter
 
 """
   arduinobot - basic_controller_interface
+  
   This script implements an interface between ROS Master on the PC/Raspberry side and the
   Arduino Controller with a ROS node that actuates the servo motors
 
