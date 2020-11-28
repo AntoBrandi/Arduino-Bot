@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import rospy
-import math
 from sensor_msgs.msg import JointState
 from std_msgs.msg import UInt16MultiArray
 from arduinobot_controller.srv import AnglesConverter

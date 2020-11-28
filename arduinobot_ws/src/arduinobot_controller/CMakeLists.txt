@@ -13,10 +13,12 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   message_generation
+  actionlib 
+  actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -72,6 +74,7 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
+  actionlib_msgs
 )
 
 ################################################
@@ -106,7 +109,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES arduinobot_controller
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS actionlib_msgs
 #  DEPENDS system_lib
 )
 
@@ -117,8 +120,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -137,6 +141,9 @@ include_directories(
 add_executable(angles_converter_cpp script/angles_converter.cpp)
 add_executable(basic_controller_interface_cpp script/basic_controller_interface.cpp)
 add_executable(basic_fake_controller_interface_cpp script/basic_fake_controller_interface.cpp)
+add_executable(controller_interface_cpp script/controller_interface.cpp)
+add_executable(fake_controller_interface_cpp script/fake_controller_interface.cpp)
+add_executable(gripper_controller_cpp script/gripper_controller.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -149,6 +156,9 @@ add_executable(basic_fake_controller_interface_cpp script/basic_fake_controller_
 add_dependencies(angles_converter_cpp arduinobot_controller_gencpp)
 add_dependencies(basic_controller_interface_cpp arduinobot_controller_gencpp)
 add_dependencies(basic_fake_controller_interface_cpp arduinobot_controller_gencpp)
+add_dependencies(controller_interface_cpp arduinobot_controller_gencpp)
+add_dependencies(fake_controller_interface_cpp arduinobot_controller_gencpp)
+add_dependencies(gripper_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(angles_converter_cpp
@@ -158,6 +168,15 @@ target_link_libraries(basic_controller_interface_cpp
   ${catkin_LIBRARIES}
 )
 target_link_libraries(basic_fake_controller_interface_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(controller_interface_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(fake_controller_interface_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(gripper_controller_cpp
   ${catkin_LIBRARIES}
 )
 

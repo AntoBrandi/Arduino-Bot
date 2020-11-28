@@ -34,18 +34,30 @@ void callback(const sensor_msgs::JointState::ConstPtr& msg)
     // this message is a sensor_msg/JointStatmessage type
     // get the data and publish those on the connected arduino as joint angles
     // The message that was published on the topic /joint_states is then passed to this function as input
-    pub_joint_1.publish(msg->position[0]);
-    pub_joint_2.publish(msg->position[1]);
-    pub_joint_3.publish(msg->position[2]);
-    pub_joint_4.publish(msg->position[3]);
-    pub_joint_5.publish(msg->position[4]);
+    std_msgs::Float64 base;
+    std_msgs::Float64 shoulder;
+    std_msgs::Float64 elbow;
+    std_msgs::Float64 gripper_right;
+    std_msgs::Float64 gripper_left;
+
+    base.data = msg->position[0];
+    shoulder.data = msg->position[0];
+    elbow.data = msg->position[0];
+    gripper_right.data = msg->position[0];
+    gripper_left.data = msg->position[0];
+
+    pub_joint_1.publish(base);
+    pub_joint_2.publish(shoulder);
+    pub_joint_3.publish(elbow);
+    pub_joint_4.publish(gripper_right);
+    pub_joint_5.publish(gripper_left);
 }
 
 
 int main(int argc, char **argv)
 {
     // Inizialize a ROS node called basic_fake_controller_interface
-    ros::init(argc, argv, "talker");
+    ros::init(argc, argv, "basic_fake_controller_interface");
     ros::NodeHandle n;
 
     // register the publishers for the position controller topics that are publishing Float64 messages
