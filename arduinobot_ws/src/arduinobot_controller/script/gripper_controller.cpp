@@ -44,11 +44,8 @@ public:
         // It sends and executes the start pose of the robot gripper so that the start configuration of
         // the robot gripper is known
         // get the parameters passed to this node when is launched
-        if(nh_.getParam("is_simulated", is_simulated)){
-            ROS_INFO("Param succeeded");
-        }else{
-            ROS_INFO("Param not succeeded");
-        }
+        nh_.getParam("is_simulated", is_simulated);
+
         old_joint_angle_ = START_POSE;
 
         nh_ = ros::NodeHandle();
@@ -117,16 +114,18 @@ public:
         // This function checks if the robot is real or simulated 
         // and publishes the target pose on the robot on the matching topic
         ROS_INFO("Angle Radians: %f", angle);
-        std_msgs::Float64 msg;
+        
         // The trajectory controller is moving a simulated robot
         if (is_simulated)
         {
+            std_msgs::Float64 msg;
             msg.data = angle;
             pub.publish(msg);
         }
         // The trajectory controller is moving a real robot controlled by Arduino
         else
         {
+            std_msgs::UInt16 msg;
             // compose the service request message
             arduinobot_controller::AnglesConverter srv;
             srv.request.base = 0;
