@@ -5,9 +5,6 @@ from std_msgs.msg import String
 from std_msgs.msg import Bool
 from moveit_interface import MoveitInterface
 from pick_task import PickTask
-import actionlib
-import control_msgs.msg
-import trajectory_msgs.msg
 
 """
   arduinobot - remote_controller
@@ -30,9 +27,6 @@ import trajectory_msgs.msg
 
   Copyright (c) 2020 Antonio Brandi.  All right reserved.
 """
-
-# constant list of the joint names for the arm
-JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3']
 
 
 def jarvis_controller_callback(data):
@@ -58,14 +52,6 @@ if __name__ == '__main__':
 
     # Init the interface with moveit plugin
     moveit = MoveitInterface()
-
-    # Register a simple action client that uses the action servers declared in the controller packages
-    # for the execution of the arm joint trajectories and the gripper joint
-    client_trajectory = actionlib.SimpleActionClient('/arduinobot_arm_controller/trajectory_action', control_msgs.msg.FollowJointTrajectoryAction)
-    client_gripper = actionlib.SimpleActionClient('/arduinobot_gripper_controller/gripper_action', control_msgs.msg.GripperCommandAction)
-    client_trajectory.wait_for_server()
-    client_gripper.wait_for_server()
-    
 
     # register a subscriber on the topics /jarvis_messenger that will listen for String messages
     # and the topic /jarvis_controller that will receive JointState messages
