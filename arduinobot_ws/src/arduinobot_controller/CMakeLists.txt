@@ -144,6 +144,7 @@ add_executable(basic_fake_controller_interface_cpp script/basic_fake_controller_
 add_executable(controller_interface_cpp script/controller_interface.cpp)
 add_executable(fake_controller_interface_cpp script/fake_controller_interface.cpp)
 add_executable(gripper_controller_cpp script/gripper_controller.cpp)
+add_executable(trajectory_controller_cpp script/trajectory_controller.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -159,6 +160,7 @@ add_dependencies(basic_fake_controller_interface_cpp arduinobot_controller_gencp
 add_dependencies(controller_interface_cpp arduinobot_controller_gencpp)
 add_dependencies(fake_controller_interface_cpp arduinobot_controller_gencpp)
 add_dependencies(gripper_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
+add_dependencies(trajectory_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(angles_converter_cpp
@@ -177,6 +179,9 @@ target_link_libraries(fake_controller_interface_cpp
   ${catkin_LIBRARIES}
 )
 target_link_libraries(gripper_controller_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(trajectory_controller_cpp
   ${catkin_LIBRARIES}
 )
 

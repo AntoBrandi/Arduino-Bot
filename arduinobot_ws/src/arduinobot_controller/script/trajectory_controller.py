@@ -39,7 +39,7 @@ class TrajectoryControllerAction(object):
         self._as = actionlib.SimpleActionServer(self._action_name, control_msgs.msg.FollowJointTrajectoryAction, execute_cb=self.goal_cb, auto_start = False)
         self._as.start()
         self.old_joint_angles = START_POSE
-        self.execute(self.old_joint_angles, JOINT_NAMES)
+        self.execute(self.old_joint_angles)
       
     def goal_cb(self, goal):
         # This function is called when the action server receives a new goal
@@ -48,7 +48,6 @@ class TrajectoryControllerAction(object):
         # joints are separated by a given time interval. 
         success = True
         rospy.loginfo('%s: Goal Received' % self._action_name)
-        joint_names = goal.trajectory.joint_names
         
         # Loop that executes each pose of the robot in the given goal trajectory
         # delaying each consequent pose by a given delay 
@@ -68,7 +67,7 @@ class TrajectoryControllerAction(object):
             rospy.sleep(delay)
 
             # reach the current loop pose
-            self.execute(point.positions, joint_names)
+            self.execute(point.positions)
 
             # Fill out a FollowJointTrajectoryFeedback message to provide
             # a feedback about the current goal execution
@@ -84,7 +83,7 @@ class TrajectoryControllerAction(object):
             self._as.set_succeeded(self._result)        
         
 
-    def execute(self, angles, joint_names):
+    def execute(self, angles):
         # This function checks if the robot is real or simulated 
         # and publishes the target pose on the robot on the matching topic
         rospy.loginfo('Angles Radians : %s' % str(angles))
