@@ -107,7 +107,11 @@ public:
             }
 
             // wait before starting the execution of the next goal
-            ros::Duration delay = goal->trajectory.points.at(i).time_from_start - goal->trajectory.points.at(i-1).time_from_start;
+            ros::Duration delay(0);
+            if (i>0)
+            {
+                delay = goal->trajectory.points.at(i).time_from_start - goal->trajectory.points.at(i-1).time_from_start;
+            } 
             delay.sleep();
 
             // reach the current loop pose
