@@ -2,9 +2,9 @@
 import rospy
 from sensor_msgs.msg import JointState
 from std_msgs.msg import String
-from std_msgs.msg import Bool
+from std_msgs.msg import UInt16
 from moveit_interface import MoveitInterface
-from pick_task import PickTask
+from task import Task
 
 """
   arduinobot - remote_controller
@@ -41,9 +41,26 @@ def jarvis_messenger_callback(data):
 def jarvis_voice_callback(data):
     # function that gets called every time a new message is published on the topic /jarvis_voice
     # it start the execution of a previously recorded task
-    task = PickTask()
-    if data.data:
+    task = Task()
+    # Pick task
+    if data.data == 0:
+        task.add_position([1.5, 0.0, -0.4, -1.0, 1.0])
+        task.add_position([1.5, -0.6, -0.4, -1.0, 1.0])
+        task.add_position([1.5, -0.6, -0.4, 0.0, 0.0])
+        task.add_position([1.5, -0.6, 0.8, 0.0, 0.0])
+        task.add_position([1.5, 0.0, 0.8, 0.0, 0.0])
+        task.add_position([-1.14, -0.6, -0.07, 0.0, 0.0])
         task.execute()
+    # sleep
+    elif data.data == 1:
+        task.add_position([-1.57,0.0,-1.0,0.0, 0.0])
+        task.execute()
+    # wake up
+    elif data.data == 2:
+        task.add_position([0.0,0.0,0.0,-0.7, 0.7])
+        task.execute()
+    else:
+        rospy.loginfo('cannot execute the task: %s', data.data)        
 
 
 if __name__ == '__main__':
@@ -59,7 +76,7 @@ if __name__ == '__main__':
     # when a new message is received, the callback function is triggered and starts its execution
     rospy.Subscriber("jarvis_controller", JointState, jarvis_controller_callback)
     rospy.Subscriber("jarvis_messenger", String, jarvis_messenger_callback)
-    rospy.Subscriber("jarvis_voice", Bool, jarvis_voice_callback)
+    rospy.Subscriber("jarvis_voice", UInt16, jarvis_voice_callback)
 
     # Keep the subscriber running
     rospy.spin()
