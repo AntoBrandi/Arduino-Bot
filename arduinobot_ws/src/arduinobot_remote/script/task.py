@@ -47,5 +47,17 @@ class Task:
         self.positions.append(position)
 
 
+    def set_speed(self, scaling_factor):
+        # Function that sets the maximum speed of the joints as percentage
+        # of the maximum speed defined in the joint_limits.yaml file
+        self.moveit.set_max_velocity(scaling_factor)
+
+
+    def set_acceleration(self, scaling_factor):
+        # Function that sets the maximum acceleration of the joints as percentage
+        # of the maximum speed defined in the joint_limits.yaml file
+        self.moveit.set_max_acceleration(scaling_factor)
+
+
 
 

@@ -4,7 +4,7 @@
     <!-- Useful Variables (Properties) -->
     <xacro:property name="PI" value="3.14159265359" />
     <xacro:property name="effort" value="30" />
-    <xacro:property name="velocity" value="0.5" />
+    <xacro:property name="velocity" value="10" />
 
     <!-- Useful Macros -->
     <xacro:macro name="default_inertial" params="mass">

@@ -88,5 +88,18 @@ class MoveitInterface:
         self.arm_move_group.stop()
         self.gripper_move_group.stop()
 
+    
+    def set_max_velocity(self, scaling_factor):
+        # This function sets the the max velocity of the ARM and GRIPPER move group as percentage
+        # of the max speed of the joint defined in the joint_linits.yaml file
+        # it requires a float number as input >= 0 and <= 1
+        self.arm_move_group.set_max_velocity_scaling_factor(scaling_factor)
+        self.gripper_move_group.set_max_velocity_scaling_factor(scaling_factor)
 
+    def set_max_acceleration(self, scaling_factor):
+        # This function sets the the max acceleration of the ARM and GRIPPER move group as percentage
+        # of the max speed of the joint defined in the joint_linits.yaml file
+        # it requires a float number as input >= 0 and <= 1
+        self.arm_move_group.set_max_acceleration_scaling_factor(scaling_factor)
+        self.gripper_move_group.set_max_acceleration_scaling_factor(scaling_factor)
 
