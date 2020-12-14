@@ -135,12 +135,12 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(simple_cpp_publisher script/simple_publisher.cpp)
-add_executable(simple_cpp_subscriber script/simple_subscriber.cpp)
-add_executable(simple_cpp_service script/simple_service.cpp)
-add_executable(simple_cpp_service_client script/simple_service_client.cpp)
-add_executable(simple_cpp_action_server script/simple_action_server.cpp)
-add_executable(simple_cpp_action_client script/simple_action_client.cpp)
+add_executable(simple_cpp_publisher src/simple_publisher.cpp)
+add_executable(simple_cpp_subscriber src/simple_subscriber.cpp)
+add_executable(simple_cpp_service src/simple_service.cpp)
+add_executable(simple_cpp_service_client src/simple_service_client.cpp)
+add_executable(simple_cpp_action_server src/simple_action_server.cpp)
+add_executable(simple_cpp_action_client src/simple_action_client.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

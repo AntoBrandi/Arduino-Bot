@@ -138,13 +138,13 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(angles_converter_cpp script/angles_converter.cpp)
-add_executable(basic_controller_interface_cpp script/basic_controller_interface.cpp)
-add_executable(basic_fake_controller_interface_cpp script/basic_fake_controller_interface.cpp)
-add_executable(controller_interface_cpp script/controller_interface.cpp)
-add_executable(fake_controller_interface_cpp script/fake_controller_interface.cpp)
-add_executable(gripper_controller_cpp script/gripper_controller.cpp)
-add_executable(trajectory_controller_cpp script/trajectory_controller.cpp)
+add_executable(angles_converter_cpp src/angles_converter.cpp)
+add_executable(basic_controller_interface_cpp src/basic_controller_interface.cpp)
+add_executable(basic_fake_controller_interface_cpp src/basic_fake_controller_interface.cpp)
+add_executable(controller_interface_cpp src/controller_interface.cpp)
+add_executable(fake_controller_interface_cpp src/fake_controller_interface.cpp)
+add_executable(gripper_controller_cpp src/gripper_controller.cpp)
+add_executable(trajectory_controller_cpp src/trajectory_controller.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
