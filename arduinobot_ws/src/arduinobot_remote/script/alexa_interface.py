@@ -4,10 +4,10 @@ from flask_ask import Ask, statement, question, session
 import rospy
 import threading
 from std_msgs.msg import String
+from robot_actions import Dance, Pick, Wake, Sleep
 
 
 threading.Thread(target=lambda: rospy.init_node('alexa_interface', disable_signals=True, anonymous=True)).start()
-pub = rospy.Publisher('alexa_interface', String, queue_size=1)
 
 app = Flask(__name__)
 ask = Ask(app, "/")
@@ -16,28 +16,50 @@ logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
 @ask.launch
 def launch():
-    # function that gets called when the skill is activated
+    # Function that gets called when the skill is activated
     if not rospy.is_shutdown(): 
         launch_msg = render_template('online')
+        wake = Wake()
+        wake.start()
+        return question(launch_msg)
     else:
-        launch_msg = render_template('offline')
-    return question(welcome_msg)
-
+        return question(render_template('offline'))
+    
 
 @ask.intent("DanceIntent")
 def dance():
     # Function that is called when the Dance Intent is activated
-    pub.publish("Dance")
-    dance_msg = render_template('dance')
-    return statement(dance_msg)
+    if not rospy.is_shutdown(): 
+        dance = Dance()
+        dance.start()
+        dance_msg = render_template('dance')
+        return statement(dance_msg)
+    else:
+        return question(render_template('offline'))
 
 
 @ask.intent("PickIntent")
 def pick():
     # Function that is called when the Pick Intent is activated
-    pub.publish("Pick")
-    pick_msg = render_template('pick')
-    return statement(pick_msg)
+    if not rospy.is_shutdown(): 
+        pick = Pick()
+        pick.start()
+        pick_msg = render_template('pick')
+        return statement(pick_msg)
+    else:
+        return question(render_template('offline'))
+
+
+@ask.intent("SleepIntent")
+def sleep():
+    # Function that is called when the Pick Intent is activated
+    if not rospy.is_shutdown(): 
+        sleep = Sleep()
+        sleep.start()
+        sleep_msg = render_template('sleep')
+        return statement(sleep_msg)
+    else:
+        return question(render_template('offline'))
 
 
 if __name__ == '__main__':

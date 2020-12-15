@@ -1,7 +1,9 @@
-online: Hi, the robot is online, how can we help?
+online: Hi, how can we help?
 
 offline: Hi, the robot is offline, can I do something else?
 
 dance: Let's bust a move!
 
 pick: Ok, I'm moving
+
+sleep: Ok, see you later
