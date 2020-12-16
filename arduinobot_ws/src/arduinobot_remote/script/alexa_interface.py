@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import logging
 from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
@@ -5,6 +6,18 @@ import rospy
 import threading
 from std_msgs.msg import String
 from robot_actions import Dance, Pick, Wake, Sleep
+
+
+"""
+  arduinobot - alexa_interface
+
+  This script implements a flask web server.
+  The web server exposes APIs to the Amazon Alexa assistant
+  in order to control the robot with the voice
+
+  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+"""
+
 
 
 threading.Thread(target=lambda: rospy.init_node('alexa_interface', disable_signals=True, anonymous=True)).start()
@@ -52,7 +65,7 @@ def pick():
 
 @ask.intent("SleepIntent")
 def sleep():
-    # Function that is called when the Pick Intent is activated
+    # Function that is called when the Sleep Intent is activated
     if not rospy.is_shutdown(): 
         sleep = Sleep()
         sleep.start()
