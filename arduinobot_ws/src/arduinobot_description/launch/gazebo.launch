@@ -7,6 +7,11 @@
   <arg name="debug" default="false"/>
   <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
 
+  <rosparam file="$(find arduinobot_description)/config/gazebo_controller.yaml" command="load" />
+
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="debug" value="$(arg debug)" />
@@ -14,8 +19,6 @@
     <arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
   </include>
-
-  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"

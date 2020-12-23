@@ -38,7 +38,7 @@
                 " />
   -->
 
-  <arg name="states_topic" default="arduinobot" />
+  <arg name="states_topic" default="arduinobot_sim" />
 
   <!-- Planning Functionality -->
   <include ns="move_group" file="$(find arduinobot_moveit)/launch/planning_pipeline.launch.xml">

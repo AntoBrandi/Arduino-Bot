@@ -1,10 +1,14 @@
 <launch>
 
-  <!-- loads moveit_controller_manager on the parameter server which is taken as argument 
-    if no argument is passed, moveit_simple_controller_manager will be set -->
-  <arg name="moveit_controller_manager" default="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
-  <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
+  <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+	<arg name="moveit_controller_manager" default="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+	<param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
 
-  <!-- loads ros_controllers to the param server -->
-  <rosparam file="$(find arduinobot_kinematic)/config/arduinobot_controller.yaml"/>
+	<!-- load controller_list -->
+	<arg name="use_controller_manager" default="true" />
+	<param name="use_controller_manager" value="$(arg use_controller_manager)" />
+
+	<!-- Load joint controller configurations from YAML file to parameter server -->
+	<rosparam file="$(find arduinobot_moveit)/config/controllers.yaml"/>
+
 </launch>

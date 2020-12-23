@@ -1,0 +1,6 @@
+gazebo_ros_control:
+  pid_gains:
+    joint_5: 
+      i_clamp: 0.2 
+      antiwindup: false 
+      publish_state: true

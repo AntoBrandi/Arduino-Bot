@@ -19,7 +19,6 @@ from robot_actions import Dance, Pick, Wake, Sleep
 """
 
 
-
 threading.Thread(target=lambda: rospy.init_node('alexa_interface', disable_signals=True, anonymous=True)).start()
 
 app = Flask(__name__)

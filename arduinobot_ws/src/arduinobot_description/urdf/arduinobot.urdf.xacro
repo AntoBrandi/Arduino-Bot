@@ -213,7 +213,6 @@
     <xacro:default_transmission number="2"/>
     <xacro:default_transmission number="3"/>
     <xacro:default_transmission number="4"/>
-    <xacro:default_transmission number="5"/>
 
 
     <!-- gazebo ros_control plugin -->
@@ -223,6 +222,19 @@
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <legacyModeNS>true</legacyModeNS>
         </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin name="mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+        <joint>joint_4</joint>
+        <mimicJoint>joint_5</mimicJoint>
+        <!-- <hasPID /> -->
+        <multiplier>-1.0</multiplier>
+        <offset>0</offset>
+        <sensitiveness>0.0</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
+        <maxEffort>${effort}</maxEffort>              
+        <robotNamespace>/arduinobot_sim</robotNamespace>
+      </plugin>
     </gazebo>
 
 </robot>
