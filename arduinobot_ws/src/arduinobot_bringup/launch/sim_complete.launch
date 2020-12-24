@@ -7,14 +7,16 @@
     <arg name="model" value="$(arg model)" />
   </include>
 
-  <include file="$(find arduinobot_controller)/launch/fake_controller.launch"/>
+  <include file="$(find arduinobot_controller)/launch/fake_trajectory_controller.launch"/>
 
-  <!-- Launch the interface with the external -->
-  <include file="$(find arduinobot_remote)/launch/remote_interface.launch"/>
+  <!-- Launch moveitl -->
+  <include file="$(find arduinobot_moveit)/launch/move_group.launch">
+    <arg name="states_topic" value="arduinobot_sim" />
+  </include>
 
-  <!-- Launch the kinematic module -->
-  <include file="$(find arduinobot_kinematic)/launch/arduinobot_kinematic.launch">
-    <arg name="is_simulated" value="true" />
+
+  <include file="$(find arduinobot_moveit)/launch/moveit_rviz.launch">
+    <arg name="config" value="true" />
   </include>
   
 </launch>

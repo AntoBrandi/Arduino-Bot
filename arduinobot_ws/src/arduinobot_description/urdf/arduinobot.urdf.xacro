@@ -30,14 +30,9 @@
 
 
     <!-- Links -->
+    
     <link name="world"/>
 
-    <joint name="virtual_joint" type="fixed">
-        <parent link="world"/>
-        <child link="base_link"/>
-        <origin xyz="0 0 0.25"/>
-    </joint>
-    
     <link name="base_link">
         <xacro:default_inertial mass="1"/>
         <visual>
@@ -52,7 +47,7 @@
                 <mesh filename="package://arduinobot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
-    </link> 
+    </link>
 
     <link name="base_plate">
         <xacro:default_inertial mass="0.1"/>
@@ -65,7 +60,7 @@
         <collision>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/mesh/round_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://arduinobot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
     </link>
@@ -153,7 +148,13 @@
     <link name="tool_link"></link>
 
     
-    <!-- Joints -->       
+    <!-- Joints -->  
+    <joint name="virtual_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint> 
+
     <joint name ="joint_1" type="revolute">
         <parent link="base_link"/>
         <child link = "base_plate"/>
@@ -228,7 +229,7 @@
       <plugin name="mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
         <joint>joint_4</joint>
         <mimicJoint>joint_5</mimicJoint>
-        <!-- <hasPID /> -->
+        <hasPID />
         <multiplier>-1.0</multiplier>
         <offset>0</offset>
         <sensitiveness>0.0</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->

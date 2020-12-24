@@ -1,6 +1,7 @@
-gazebo_ros_control:
+/gazebo_ros_control:   
   pid_gains:
     joint_5: 
-      i_clamp: 0.2 
+      i_clamp_min: -1.0
+      i_clamp_max: 1.0
       antiwindup: false 
       publish_state: true
