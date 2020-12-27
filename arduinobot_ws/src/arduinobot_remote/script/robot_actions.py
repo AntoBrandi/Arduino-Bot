@@ -1,12 +1,10 @@
-from threading import Thread
 from task import Task
 import random
 
 
-class Dance(Thread):
+class Dance():
 
     def __init__(self):
-        Thread.__init__(self)
         self.task = Task()
 
     def run(self):
@@ -23,10 +21,9 @@ class Dance(Thread):
         self.task.execute()
 
 
-class Pick(Thread):
+class Pick():
 
     def __init__(self):
-        Thread.__init__(self)
         self.task = Task()
 
     def run(self):
@@ -41,10 +38,9 @@ class Pick(Thread):
         self.task.execute()
 
 
-class Wake(Thread):
+class Wake():
 
     def __init__(self):
-        Thread.__init__(self)   
         self.task = Task()
 
     def run(self):
@@ -54,12 +50,11 @@ class Wake(Thread):
         self.task.execute()
 
 
-class Sleep(Thread):
+class Sleep():
 
-    def __init__(self):
-        Thread.__init__(self)   
+    def __init__(self): 
         self.task = Task()
-
+        
     def run(self):
         self.task.add_position([-1.57,0.0,-1.0,0.0, 0.0])
         self.task.set_speed(0.7)

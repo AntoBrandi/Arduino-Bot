@@ -32,7 +32,7 @@ def launch():
     if not rospy.is_shutdown(): 
         launch_msg = render_template('online')
         wake = Wake()
-        wake.start()
+        threading.Thread(target = wake.run).start()
         return question(launch_msg)
     else:
         return question(render_template('offline'))
@@ -42,9 +42,9 @@ def launch():
 def dance():
     # Function that is called when the Dance Intent is activated
     if not rospy.is_shutdown(): 
-        dance = Dance()
-        dance.start()
         dance_msg = render_template('dance')
+        dance = Dance()
+        threading.Thread(target = dance.run).start()
         return statement(dance_msg)
     else:
         return question(render_template('offline'))
@@ -53,10 +53,10 @@ def dance():
 @ask.intent("PickIntent")
 def pick():
     # Function that is called when the Pick Intent is activated
-    if not rospy.is_shutdown(): 
+    if not rospy.is_shutdown():
+        pick_msg = render_template('pick') 
         pick = Pick()
-        pick.start()
-        pick_msg = render_template('pick')
+        threading.Thread(target = pick.run).start()
         return statement(pick_msg)
     else:
         return question(render_template('offline'))
@@ -66,10 +66,22 @@ def pick():
 def sleep():
     # Function that is called when the Sleep Intent is activated
     if not rospy.is_shutdown(): 
-        sleep = Sleep()
-        sleep.start()
         sleep_msg = render_template('sleep')
+        sleep = Sleep()
+        threading.Thread(target = sleep.run).start()
         return statement(sleep_msg)
+    else:
+        return question(render_template('offline'))
+
+
+@ask.intent("WakeIntent")
+def sleep():
+    # Function that is called when the Wake Intent is activated
+    if not rospy.is_shutdown(): 
+        wake_msg = render_template('wake')
+        wake = Wake()
+        threading.Thread(target = wake.run).start()
+        return statement(wake_msg)
     else:
         return question(render_template('offline'))
 
