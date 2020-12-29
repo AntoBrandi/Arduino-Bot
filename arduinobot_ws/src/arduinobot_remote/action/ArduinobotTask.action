@@ -1,0 +1,8 @@
+#goal         
+int64 task_number
+---
+#result
+bool success
+---
+#feedback
+int64 percentage

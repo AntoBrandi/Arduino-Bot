@@ -1,5 +1,8 @@
 <launch>
 
+    <!-- Launch the task action server -->
+    <node pkg="arduinobot_remote" type="task_server.py" name="task_server" respawn="true" output="screen"/>
+
     <!-- Launch the remote interface node that handles remote requests -->
     <node pkg="arduinobot_remote" type="alexa_interface.py" name="alexa_interface" respawn="true" output="screen"/>
     
