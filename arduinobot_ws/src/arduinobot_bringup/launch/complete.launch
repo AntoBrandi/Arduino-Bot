@@ -1,19 +1,23 @@
 <launch>
 
+    <!-- Load the robot arm model -->
+    <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+
     <!-- Launch the interface with the robot -->
     <include file="$(find arduinobot_controller)/launch/controller.launch"/>
 
     <!-- Launch moveit move_group -->
-    <include file="$(find arduinobot_moveit)/launch/move_group.launch">
-        <arg name="states_topic" value="arduinobot_sim" />
-    </include>
+    <!-- <include file="$(find arduinobot_moveit)/launch/move_group.launch">
+        <arg name="states_topic" value="arduinobot" />
+    </include> -->
 
     <!-- Launch moveit rviz gui -->
-    <include file="$(find arduinobot_moveit)/launch/moveit_rviz.launch">
+    <!-- <include file="$(find arduinobot_moveit)/launch/moveit_rviz.launch">
         <arg name="config" value="true" />
-    </include>
+    </include> -->
 
     <!-- Launch the interface with the external -->
-    <include file="$(find arduinobot_remote)/launch/remote_interface.launch"/>
+    <!-- <include file="$(find arduinobot_remote)/launch/remote_interface.launch"/> -->
 
 </launch>

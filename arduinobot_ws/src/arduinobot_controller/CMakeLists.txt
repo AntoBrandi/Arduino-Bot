@@ -140,11 +140,9 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(angles_converter_cpp src/angles_converter.cpp)
 add_executable(basic_controller_interface_cpp src/basic_controller_interface.cpp)
-add_executable(basic_fake_controller_interface_cpp src/basic_fake_controller_interface.cpp)
 add_executable(controller_interface_cpp src/controller_interface.cpp)
-add_executable(fake_controller_interface_cpp src/fake_controller_interface.cpp)
-add_executable(gripper_controller_cpp src/gripper_controller.cpp)
-add_executable(trajectory_controller_cpp src/trajectory_controller.cpp)
+add_executable(gripper_trajectory_controller_cpp src/gripper_trajectory_controller.cpp)
+add_executable(arm_trajectory_controller_cpp src/arm_trajectory_controller.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -156,11 +154,9 @@ add_executable(trajectory_controller_cpp src/trajectory_controller.cpp)
 ## same as for the library above
 add_dependencies(angles_converter_cpp arduinobot_controller_gencpp)
 add_dependencies(basic_controller_interface_cpp arduinobot_controller_gencpp)
-add_dependencies(basic_fake_controller_interface_cpp arduinobot_controller_gencpp)
 add_dependencies(controller_interface_cpp arduinobot_controller_gencpp)
-add_dependencies(fake_controller_interface_cpp arduinobot_controller_gencpp)
-add_dependencies(gripper_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
-add_dependencies(trajectory_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
+add_dependencies(gripper_trajectory_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
+add_dependencies(arm_trajectory_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(angles_converter_cpp
@@ -169,19 +165,13 @@ target_link_libraries(angles_converter_cpp
 target_link_libraries(basic_controller_interface_cpp
   ${catkin_LIBRARIES}
 )
-target_link_libraries(basic_fake_controller_interface_cpp
-  ${catkin_LIBRARIES}
-)
 target_link_libraries(controller_interface_cpp
   ${catkin_LIBRARIES}
 )
-target_link_libraries(fake_controller_interface_cpp
+target_link_libraries(gripper_trajectory_controller_cpp
   ${catkin_LIBRARIES}
 )
-target_link_libraries(gripper_controller_cpp
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(trajectory_controller_cpp
+target_link_libraries(arm_trajectory_controller_cpp
   ${catkin_LIBRARIES}
 )
 

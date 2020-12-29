@@ -12,7 +12,7 @@
 
   <!-- Launch moveit move_group -->
   <include file="$(find arduinobot_moveit)/launch/move_group.launch">
-    <arg name="states_topic" value="arduinobot_sim" />
+    <arg name="states_topic" value="arduinobot" />
   </include>
 
   <!-- Launch moveit rviz gui -->

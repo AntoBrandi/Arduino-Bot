@@ -1,4 +1,4 @@
-arduinobot_sim:
+arduinobot:
 
   joint_state_controller:
     type: "joint_state_controller/JointStateController"

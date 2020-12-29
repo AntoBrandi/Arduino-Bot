@@ -1,4 +1,4 @@
-arduinobot_sim:
+arduinobot:
 
   # Arm Trajectory Controllers ---------------------------------------
   arm_controller:

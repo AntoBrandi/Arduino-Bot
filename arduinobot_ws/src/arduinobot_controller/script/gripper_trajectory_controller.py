@@ -21,13 +21,14 @@ from arduinobot_controller.srv import AnglesConverter
 
 # constant that defines the start pose of the robot
 START_POSE = 0.0
+JOINT_NAMES = ['joint_4']
 
 
 class GripperControllerAction(object):
     # create messages that are used to publish feedback/result during the action execution
     # and after its completion
-    _feedback = control_msgs.msg.GripperCommandFeedback()
-    _result = control_msgs.msg.GripperCommandResult()
+    _feedback = control_msgs.msg.FollowJointTrajectoryFeedback()
+    _result = control_msgs.msg.FollowJointTrajectoryResult()
 
     def __init__(self, name):
         # Constructor, called when an instance of this class is created
@@ -35,7 +36,7 @@ class GripperControllerAction(object):
         # It sends and executes the start pose of the robot gripper so that the start configuration of 
         # the robot gripper is known
         self._action_name = name
-        self._as = actionlib.SimpleActionServer(self._action_name, control_msgs.msg.GripperCommandAction, execute_cb=self.goal_cb, auto_start = False)
+        self._as = actionlib.SimpleActionServer(self._action_name, control_msgs.msg.FollowJointTrajectoryAction, execute_cb=self.goal_cb, auto_start = False)
         self._as.start()
         self.old_joint_angle = START_POSE
         self.execute(self.old_joint_angle)
@@ -48,29 +49,37 @@ class GripperControllerAction(object):
         success = True
         rospy.loginfo('%s: Gripper Action Received' % self._action_name)
         
-        # Before the execution, check if the action server received a cancelation request
-        # of the ongoing goal. If so, interrupt the execution of the goal and 
-        # return a result message with status failed
-        if self._as.is_preempt_requested():
-            rospy.loginfo('%s: Preempted' % self._action_name)
-            self._as.set_preempted()
-            success = False
-        else:
-            # reach the target pose
-            self.execute(goal.command.position)
+        # Loop that executes each pose of the robot in the given goal trajectory
+        # delaying each consequent pose by a given delay 
+        for i, point in enumerate(goal.trajectory.points):
 
-            # Fill out a GripperCommandFeedback message to provide
+            # At each execution of the loop, check if the action server received a cancelation request
+            # of the ongoing goal. If so, interrupt the execution of the goal and 
+            # return a result message with status failed
+            if self._as.is_preempt_requested():
+                rospy.loginfo('%s: Preempted' % self._action_name)
+                self._as.set_preempted()
+                success = False
+                break
+
+            # wait before starting the execution of the next goal
+            delay = point.time_from_start - goal.trajectory.points[i-1].time_from_start if i>0 else 0
+            rospy.sleep(delay)
+
+            # reach the current loop pose
+            self.execute(point.positions)
+
+            # Fill out a FollowJointTrajectoryFeedback message to provide
             # a feedback about the current goal execution
-            self._feedback.position = goal.command.position
-            self._feedback.reached_goal = True
+            self._feedback.joint_names = JOINT_NAMES
+            self._feedback.actual = point
+            self._feedback.desired = point
             self._as.publish_feedback(self._feedback)
 
         # if during its execution the goal hasn't received any cancelation request,
         # return a result message with status succeeded
         if success:
             rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._result.position = goal.command.position
-            self._result.reached_goal = True
             self._as.set_succeeded(self._result)         
         
 
@@ -93,15 +102,9 @@ if __name__ == '__main__':
     # Inizialize a ROS node called gripper_action
     rospy.init_node('gripper_action')
 
-    # get the parameters passed to this node when is launched
-    isSimulated = rospy.get_param('~is_simulated')
+    pub = rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
 
-    # Accoring to the input parameter is_simulated, decide whether or not the robot is a real one controlled by Arduino
-    # or is a simulated one in Gazebo. The publisher topic will be chosen accordingly 
-    pub = rospy.Publisher('arduino_sim/gripper_actuate', Float64, queue_size=10) if isSimulated else rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
-
-    if not isSimulated:
-        rospy.wait_for_service('angles_converter')
+    rospy.wait_for_service('angles_converter')
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot

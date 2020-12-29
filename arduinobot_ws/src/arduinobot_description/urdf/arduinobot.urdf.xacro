@@ -219,7 +219,7 @@
     <!-- gazebo ros_control plugin -->
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/arduinobot_sim</robotNamespace>
+            <robotNamespace>/arduinobot</robotNamespace>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <legacyModeNS>true</legacyModeNS>
         </plugin>
@@ -234,7 +234,7 @@
         <offset>0</offset>
         <sensitiveness>0.0</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
         <maxEffort>${effort}</maxEffort>              
-        <robotNamespace>/arduinobot_sim</robotNamespace>
+        <robotNamespace>/arduinobot</robotNamespace>
       </plugin>
     </gazebo>
 

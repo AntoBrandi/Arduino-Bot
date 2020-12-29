@@ -1,4 +1,4 @@
-arduinobot_sim:
+arduinobot:
 
   joint_1_position_controller:
     type: "position_controllers/JointPositionController"

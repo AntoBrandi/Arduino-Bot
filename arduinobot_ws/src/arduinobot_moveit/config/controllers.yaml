@@ -1,5 +1,5 @@
 controller_list:
-  - name: arduinobot_sim/arm_controller
+  - name: arduinobot/arm_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: true
@@ -7,7 +7,7 @@ controller_list:
       - joint_1
       - joint_2
       - joint_3
-  - name: arduinobot_sim/gripper_controller
+  - name: arduinobot/gripper_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: true

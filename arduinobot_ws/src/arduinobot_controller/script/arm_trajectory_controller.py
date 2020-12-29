@@ -7,12 +7,10 @@ from std_msgs.msg import UInt16MultiArray, Float64MultiArray
 from arduinobot_controller.srv import AnglesConverter
 
 """
-  arduinobot - trajectory_controller
+  arduinobot - arm_trajectory_controller
 
   This file creates an Action Server that is in charge of receiving and executing FollowJointTrajectory and track
   their execution giving feedback during its execution and a result after its completion.
-  The current node is parametric and will work with both real robot controlled via Arduino and
-  simulated robots in Gazebo
 
   Copyright (c) 2020 Antonio Brandi.  All right reserved.
 """
@@ -84,33 +82,22 @@ class TrajectoryControllerAction(object):
         
 
     def execute(self, angles):
-        # This function checks if the robot is real or simulated 
-        # and publishes the target pose on the robot on the matching topic
+        # This function publishes the target pose on the robot on the matching topic
         rospy.loginfo('Angles Radians : %s' % str(angles))
-        # The trajectory controller is moving a simulated robot
-        if isSimulated:
-            pub.publish(data=angles)
         # The trajectory controller is moving a real robot controlled by Arduino
-        else:
-            radians_to_degrees = rospy.ServiceProxy('radians_to_degrees', AnglesConverter)
-            angles_deg = radians_to_degrees(angles[0],angles[1],angles[2],0)
-            rospy.loginfo('Angles Degrees : %s' % str(angles_deg[:-1]))
-            pub.publish(data=angles_deg[:-1])
+        radians_to_degrees = rospy.ServiceProxy('radians_to_degrees', AnglesConverter)
+        angles_deg = radians_to_degrees(angles[0],angles[1],angles[2],0)
+        rospy.loginfo('Angles Degrees : %s' % str(angles_deg[:-1]))
+        pub.publish(data=angles_deg[:-1])
         
 
 if __name__ == '__main__':
     # Inizialize a ROS node called trajectory_action
     rospy.init_node('trajectory_action')
 
-    # get the parameters passed to this node when is launched
-    isSimulated = rospy.get_param('~is_simulated')
+    pub = rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
 
-    # Accoring to the input parameter is_simulated, decide whether or not the robot is a real one controlled by Arduino
-    # or is a simulated one in Gazebo. The publisher topic will be chosen accordingly 
-    pub = rospy.Publisher('arduino_sim/arm_actuate', Float64MultiArray, queue_size=10) if isSimulated else rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
-
-    if not isSimulated:
-        rospy.wait_for_service('angles_converter')
+    rospy.wait_for_service('angles_converter')
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot

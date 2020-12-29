@@ -28,7 +28,6 @@ ask = Ask(app, "/")
 @ask.launch
 def launch():
     # Function that gets called when the skill is activated
-    #client.wait_for_server()
     goal = ArduinobotTaskGoal(task_number=0)
     client.send_goal(goal)
     launch_msg = render_template('online')
@@ -73,6 +72,12 @@ def sleep():
     client.send_goal(goal)
     wake_msg = render_template('wake')
     return statement(wake_msg)
+
+
+@ask.intent("AMAZON.FallbackIntent")
+def fallback():
+    fallback_msg = render_template('fallback')
+    return statement(fallback_msg)
 
 
 if __name__ == '__main__':
