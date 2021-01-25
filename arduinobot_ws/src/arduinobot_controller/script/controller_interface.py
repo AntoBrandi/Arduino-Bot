@@ -32,7 +32,7 @@ JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4']
 def convert_angles(angles_deg):
     # Function that converts servo motors angles from degrees to radians 
     # according to the angle convention and boundaries expressed in the robot description
-    degrees_to_radians = rospy.ServiceProxy('degrees_to_radians', AnglesConverter)
+    degrees_to_radians = rospy.ServiceProxy('/degrees_to_radians', AnglesConverter)
     angles_rad = degrees_to_radians(angles_deg[0],angles_deg[1],angles_deg[2],angles_deg[3])
     return [angles_rad.base, angles_rad.shoulder, angles_rad.elbow, angles_rad.gripper]
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     # when a new message is received, the callback function is triggered and starts its execution
     rospy.Subscriber("arduino/joint_states", UInt16MultiArray, joint_states_cb)
 
-    rospy.wait_for_service('angles_converter')
+    rospy.wait_for_service('/degrees_to_radians')
     
     # keep this ROS node up and running
     rospy.spin()

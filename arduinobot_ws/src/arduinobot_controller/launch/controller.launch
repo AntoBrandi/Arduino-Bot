@@ -10,15 +10,16 @@
     <!-- Launch the angles converter service -->
     <node pkg="arduinobot_controller" type="angles_converter.py" name="angles_converter" respawn="true" output="screen"/>
 
-    <group ns="arm_controller">
-        <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-        <node pkg="arduinobot_controller" type="arm_trajectory_controller.py" name="trajectory_action" respawn="true" output="screen"/>
+    <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
+    <group ns="arduinobot/arm_controller">
+        <node pkg="arduinobot_controller" type="arm_trajectory_controller.py" name="follow_joint_trajectory" respawn="true" output="screen"/>
     </group>
 
-    <group ns="gripper_controller">
-        <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-        <node pkg="arduinobot_controller" type="gripper_trajectory_controller.py" name="gripper_action" respawn="true" output="screen"/>
+    <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
+    <group ns="arduinobot/gripper_controller">
+        <node pkg="arduinobot_controller" type="gripper_trajectory_controller.py" name="follow_joint_trajectory" respawn="true" output="screen"/>
     </group>
+
 
     <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
 

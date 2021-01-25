@@ -23,7 +23,6 @@ std::vector<std::string> JOINT_NAMES;
 
 ros::Publisher pub;
 ros::ServiceClient client;
-bool is_simulated = true;
 
 
 class TrajectoryControllerAction
@@ -54,10 +53,6 @@ public:
         JOINT_NAMES.push_back("joint_2");
         JOINT_NAMES.push_back("joint_3");
 
-        nh_ = ros::NodeHandle("~");
-        
-        // get the parameters passed to this node when is launched
-        nh_.getParam("is_simulated", is_simulated);
 
         old_joint_angle_ = START_POSE;
 
@@ -65,12 +60,9 @@ public:
 
         // Accoring to the input parameter is_simulated, decide whether or not the robot is a real one controlled by Arduino
         // or is a simulated one in Gazebo. The publisher topic will be chosen accordingly
-        pub = is_simulated ? nh_.advertise<std_msgs::Float64MultiArray>("arduino_sim/arm_actuate", 1000) : nh_.advertise<std_msgs::UInt16MultiArray>("arduino/arm_actuate", 1000);
+        pub = nh_.advertise<std_msgs::UInt16MultiArray>("/arduino/arm_actuate", 1000);
 
-        if (!is_simulated)
-        {
-            client = nh_.serviceClient<arduinobot_controller::AnglesConverter>("radians_to_degrees");
-        }
+        client = nh_.serviceClient<arduinobot_controller::AnglesConverter>("/radians_to_degrees");
 
         as_.start();
         execute(START_POSE);
@@ -137,60 +129,42 @@ public:
 
     void execute(std::vector<double> angles)
     {
-        // This function checks if the robot is real or simulated 
+        // This function checks if the robot is real or simulated
         // and publishes the target pose on the robot on the matching topic
         ROS_INFO("Angle Radians: %f %f %f", angles.at(0), angles.at(1), angles.at(2));
         // The trajectory controller is moving a simulated robot
-        if (is_simulated)
+        std_msgs::UInt16MultiArray msg;
+        // compose the service request message
+        arduinobot_controller::AnglesConverter srv;
+        srv.request.base = angles.at(0);
+        srv.request.shoulder = angles.at(1);
+        srv.request.elbow = angles.at(2);
+        srv.request.gripper = 0;
+
+        // Call the service and show the response of the service
+        if (client.call(srv))
         {
-            std_msgs::Float64MultiArray msg;
+            // compose the message
+            std::vector<double> angles_deg;
+            angles_deg.push_back(static_cast<unsigned int>(srv.response.base));
+            angles_deg.push_back(static_cast<unsigned int>(srv.response.shoulder));
+            angles_deg.push_back(static_cast<unsigned int>(srv.response.elbow));
+
             // set up dimensions
             msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-            msg.layout.dim[0].size = angles.size();
+            msg.layout.dim[0].size = angles_deg.size();
             msg.layout.dim[0].stride = 1;
 
             // copy in the data
             msg.data.clear();
-            msg.data.insert(msg.data.end(), angles.begin(), angles.end());
+            msg.data.insert(msg.data.end(), angles_deg.begin(), angles_deg.end());
 
+            // publish the array message to the defined topic
             pub.publish(msg);
         }
-        // The trajectory controller is moving a real robot controlled by Arduino
         else
         {
-            std_msgs::UInt16MultiArray msg;
-            // compose the service request message
-            arduinobot_controller::AnglesConverter srv;
-            srv.request.base = angles.at(0);
-            srv.request.shoulder = angles.at(1);
-            srv.request.elbow = angles.at(2);
-            srv.request.gripper = 0;
-
-            // Call the service and show the response of the service
-            if (client.call(srv))
-            {
-                // compose the message
-                std::vector<double> angles_deg;
-                angles_deg.push_back(static_cast<unsigned int>(srv.response.base));
-                angles_deg.push_back(static_cast<unsigned int>(srv.response.shoulder));
-                angles_deg.push_back(static_cast<unsigned int>(srv.response.elbow));
-
-                // set up dimensions
-                msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-                msg.layout.dim[0].size = angles_deg.size();
-                msg.layout.dim[0].stride = 1;
-
-                // copy in the data
-                msg.data.clear();
-                msg.data.insert(msg.data.end(), angles_deg.begin(), angles_deg.end());
-
-                // publish the array message to the defined topic
-                pub.publish(msg);
-            }
-            else
-            {
-                ROS_ERROR("Failed to call service radians_to_degrees");
-            }
+            ROS_ERROR("Failed to call service radians_to_degrees");
         }
     }
 };
@@ -198,10 +172,10 @@ public:
 int main(int argc, char **argv)
 {
     // Inizialize a ROS node called trajectory_action
-    ros::init(argc, argv, "trajectory_action");
+    ros::init(argc, argv, "arm_controller");
 
     // get the parameters passed to this node when is launched
-    TrajectoryControllerAction server("trajectory_action");
+    TrajectoryControllerAction server("arm_controller");
 
     // keep this ROS node up and running
     ros::spin();

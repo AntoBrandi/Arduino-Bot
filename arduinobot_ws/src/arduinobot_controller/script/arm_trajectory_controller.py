@@ -85,19 +85,19 @@ class TrajectoryControllerAction(object):
         # This function publishes the target pose on the robot on the matching topic
         rospy.loginfo('Angles Radians : %s' % str(angles))
         # The trajectory controller is moving a real robot controlled by Arduino
-        radians_to_degrees = rospy.ServiceProxy('radians_to_degrees', AnglesConverter)
+        radians_to_degrees = rospy.ServiceProxy('/radians_to_degrees', AnglesConverter)
         angles_deg = radians_to_degrees(angles[0],angles[1],angles[2],0)
-        rospy.loginfo('Angles Degrees : %s' % str(angles_deg[:-1]))
-        pub.publish(data=angles_deg[:-1])
+        rospy.loginfo('Angles Degrees : %s' % str([angles_deg.base,angles_deg.shoulder,angles_deg.elbow]))
+        pub.publish(data=[angles_deg.base,angles_deg.shoulder,angles_deg.elbow])
         
 
 if __name__ == '__main__':
     # Inizialize a ROS node called trajectory_action
-    rospy.init_node('trajectory_action')
+    rospy.init_node('arm_controller')
 
-    pub = rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
+    pub = rospy.Publisher('/arduino/arm_actuate', UInt16MultiArray, queue_size=10)
 
-    rospy.wait_for_service('angles_converter')
+    rospy.wait_for_service('/radians_to_degrees')
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot

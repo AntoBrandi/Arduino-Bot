@@ -89,7 +89,7 @@ int main(int argc, char **argv)
     // when a new message is received, the callback function is triggered and starts its execution
     sub = n.subscribe("arduino/joint_states", 1000, joint_states_cb);
 
-    client = n.serviceClient<arduinobot_controller::AnglesConverter>("degrees_to_radians");
+    client = n.serviceClient<arduinobot_controller::AnglesConverter>("/degrees_to_radians");
 
     // keeps the node up and running
     ros::spin();

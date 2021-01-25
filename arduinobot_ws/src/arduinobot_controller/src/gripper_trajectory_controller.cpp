@@ -19,7 +19,6 @@
 double const START_POSE = 0.0;
 
 ros::Publisher pub;
-bool is_simulated = true;
 ros::ServiceClient client;
 
 class GripperControllerAction
@@ -38,26 +37,15 @@ public:
     GripperControllerAction(std::string name) : as_(nh_, name, boost::bind(&GripperControllerAction::goal_cb, this, _1), false),
                                                 action_name_(name)
     {
-        nh_ = ros::NodeHandle("~");
-        // Constructor, called when an instance of this class is created
-        // It init and starts an action server with the GripperCommandAction interface
-        // It sends and executes the start pose of the robot gripper so that the start configuration of
-        // the robot gripper is known
-        // get the parameters passed to this node when is launched
-        nh_.getParam("is_simulated", is_simulated);
-
         old_joint_angle_ = START_POSE;
 
         nh_ = ros::NodeHandle();
 
         // Accoring to the input parameter is_simulated, decide whether or not the robot is a real one controlled by Arduino
         // or is a simulated one in Gazebo. The publisher topic will be chosen accordingly
-        pub = is_simulated ? nh_.advertise<std_msgs::Float64>("arduino_sim/gripper_actuate", 1000) : nh_.advertise<std_msgs::UInt16>("arduino/gripper_actuate", 1000);
+        pub = nh_.advertise<std_msgs::UInt16>("/arduino/gripper_actuate", 1000);
 
-        if (!is_simulated)
-        {
-            client = nh_.serviceClient<arduinobot_controller::AnglesConverter>("radians_to_degrees");
-        }
+        client = nh_.serviceClient<arduinobot_controller::AnglesConverter>("/radians_to_degrees");
 
         as_.start();
         execute(START_POSE);
@@ -114,38 +102,27 @@ public:
         // This function checks if the robot is real or simulated 
         // and publishes the target pose on the robot on the matching topic
         ROS_INFO("Angle Radians: %f", angle);
-        
-        // The trajectory controller is moving a simulated robot
-        if (is_simulated)
+
+        std_msgs::UInt16 msg;
+        // compose the service request message
+        arduinobot_controller::AnglesConverter srv;
+        srv.request.base = 0;
+        srv.request.shoulder = 0;
+        srv.request.elbow = 0;
+        srv.request.gripper = angle;
+
+        // Call the service and show the response of the service
+        if (client.call(srv))
         {
-            std_msgs::Float64 msg;
-            msg.data = angle;
+            // compose the message
+            msg.data = static_cast<unsigned int>(srv.response.gripper);
+
+            // publish the array message to the defined topic
             pub.publish(msg);
         }
-        // The trajectory controller is moving a real robot controlled by Arduino
         else
         {
-            std_msgs::UInt16 msg;
-            // compose the service request message
-            arduinobot_controller::AnglesConverter srv;
-            srv.request.base = 0;
-            srv.request.shoulder = 0;
-            srv.request.elbow = 0;
-            srv.request.gripper = angle;
-
-            // Call the service and show the response of the service
-            if (client.call(srv))
-            {
-                // compose the message
-                msg.data = static_cast<unsigned int>(srv.response.gripper);
-
-                // publish the array message to the defined topic
-                pub.publish(msg);
-            }
-            else
-            {
-                ROS_ERROR("Failed to call service radians_to_degrees");
-            }
+            ROS_ERROR("Failed to call service radians_to_degrees");
         }
     }
 };
@@ -153,11 +130,11 @@ public:
 int main(int argc, char **argv)
 {
     // Inizialize a ROS node called gripper_action
-    ros::init(argc, argv, "gripper_action");
+    ros::init(argc, argv, "gripper_controller");
 
     // Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     // execute it in the real robot
-    GripperControllerAction server("gripper_action");
+    GripperControllerAction server("gripper_controller");
 
     // keep this ROS node up and running
     ros::spin();

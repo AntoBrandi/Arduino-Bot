@@ -87,24 +87,19 @@ class GripperControllerAction(object):
         # This function checks if the robot is real or simulated 
         # and publishes the target pose on the robot on the matching topic
         rospy.loginfo('Angle Radians: %s' % angle)
-        # The trajectory controller is moving a simulated robot
-        if isSimulated:
-            pub.publish(data=angle)
-        # The trajectory controller is moving a real robot controlled by Arduino
-        else:
-            radians_to_degrees = rospy.ServiceProxy('radians_to_degrees', AnglesConverter)
-            angles_deg = radians_to_degrees(0,0,0,angle)
-            rospy.loginfo('Angle Degrees: %s' % angle_deg[-1])
-            pub.publish(data=int(angle_deg[-1]))
+        radians_to_degrees = rospy.ServiceProxy('/radians_to_degrees', AnglesConverter)
+        angles_deg = radians_to_degrees(0,0,0,angle)
+        rospy.loginfo('Angle Degrees: %s' % angles_deg.gripper)
+        pub.publish(data=int(angles_deg.gripper))
         
 
 if __name__ == '__main__':
     # Inizialize a ROS node called gripper_action
-    rospy.init_node('gripper_action')
+    rospy.init_node('gripper_controller')
 
-    pub = rospy.Publisher('arduino/gripper_actuate', UInt16, queue_size=10)
+    pub = rospy.Publisher('/arduino/gripper_actuate', UInt16, queue_size=10)
 
-    rospy.wait_for_service('angles_converter')
+    rospy.wait_for_service('/radians_to_degrees')
 
     # Init the FollowJointTrajectory action server that will receive a trajectory for each joint and will
     # execute it in the real robot
