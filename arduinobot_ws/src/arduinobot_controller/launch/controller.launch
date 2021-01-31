@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="arduino_iface" default="false"/>
+    <arg name="arduino_iface" default="true"/>
 
     <!-- Launch the rosserial node that interface ROS with Arduino -->
     <node if="$(arg arduino_iface)" pkg="rosserial_python" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">

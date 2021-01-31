@@ -151,10 +151,10 @@ void gripper_actuate_cb(const std_msgs::UInt16& msg){
 // SUBSCRIBERS
 // Define the subscriber to the topic /arduinobot_arm_controller/arduino/arm_actuate where are published UInt16MultiArray messages
 // Define the function that will be triggered each time a new message is published on this topic
-ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arduinobot_arm_controller/arduino/arm_actuate", &arm_actuate_cb );
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arduino/arm_actuate", &arm_actuate_cb );
 // Define the subscriber to the topic /arduinobot_gripper_controller/arduino/gripper_actuate where are published UInt16 messages
 // Define the function that will be triggered each time a new message is published on this topic
-ros::Subscriber<std_msgs::UInt16> sub_gripper("arduinobot_gripper_controller/arduino/gripper_actuate", &gripper_actuate_cb );
+ros::Subscriber<std_msgs::UInt16> sub_gripper("arduino/gripper_actuate", &gripper_actuate_cb );
 
 // PUBLISHERS
 // Define the type of the message that will be published 

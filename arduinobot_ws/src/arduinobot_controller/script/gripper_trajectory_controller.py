@@ -88,7 +88,7 @@ class GripperControllerAction(object):
         # and publishes the target pose on the robot on the matching topic
         rospy.loginfo('Angle Radians: %s' % angle)
         radians_to_degrees = rospy.ServiceProxy('/radians_to_degrees', AnglesConverter)
-        angles_deg = radians_to_degrees(0,0,0,angle)
+        angles_deg = radians_to_degrees(0,0,0,angle[0])
         rospy.loginfo('Angle Degrees: %s' % angles_deg.gripper)
         pub.publish(data=int(angles_deg.gripper))
         
