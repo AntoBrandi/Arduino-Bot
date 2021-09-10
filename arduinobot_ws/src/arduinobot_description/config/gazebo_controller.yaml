@@ -1,5 +1,9 @@
-/gazebo_ros_control:   
+gazebo_ros_control:   
   pid_gains:
+    joint_1: {p: 100.0, i: 0.01, d: 10.0}
+    joint_2: {p: 100.0, i: 0.01, d: 10.0}
+    joint_3: {p: 100.0, i: 0.01, d: 10.0}
+    joint_4: {p: 100.0, i: 0.01, d: 10.0}
     joint_5: 
       i_clamp_min: -1.0
       i_clamp_max: 1.0
