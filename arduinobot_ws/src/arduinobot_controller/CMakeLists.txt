@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   actionlib 
   actionlib_msgs
+  controller_manager
 )
 
 ## System dependencies are found with CMake's conventions
@@ -107,7 +108,7 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES arduinobot_controller
   CATKIN_DEPENDS actionlib_msgs
 #  DEPENDS system_lib
@@ -143,6 +144,7 @@ add_executable(basic_controller_interface_cpp src/basic_controller_interface.cpp
 add_executable(controller_interface_cpp src/controller_interface.cpp)
 add_executable(gripper_trajectory_controller_cpp src/gripper_trajectory_controller.cpp)
 add_executable(arm_trajectory_controller_cpp src/arm_trajectory_controller.cpp)
+add_executable(arduinobot_controller_node src/arduinobot_hardware_interface.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -157,6 +159,7 @@ add_dependencies(basic_controller_interface_cpp arduinobot_controller_gencpp)
 add_dependencies(controller_interface_cpp arduinobot_controller_gencpp)
 add_dependencies(gripper_trajectory_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
 add_dependencies(arm_trajectory_controller_cpp ${arduinobot_controller_EXPORTED_TARGETS})
+add_dependencies(arduinobot_controller_node ${arduinobot_controller_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(angles_converter_cpp
@@ -172,6 +175,9 @@ target_link_libraries(gripper_trajectory_controller_cpp
   ${catkin_LIBRARIES}
 )
 target_link_libraries(arm_trajectory_controller_cpp
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(arduinobot_controller_node
   ${catkin_LIBRARIES}
 )
 
