@@ -232,7 +232,7 @@
         <hasPID />
         <multiplier>-1.0</multiplier>
         <offset>0</offset>
-        <sensitiveness>0.0</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
+        <sensitiveness>0.0</sensitiveness>  
         <maxEffort>${effort}</maxEffort>              
         <robotNamespace>/arduinobot</robotNamespace>
       </plugin>
