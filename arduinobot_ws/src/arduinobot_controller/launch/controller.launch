@@ -1,26 +1,31 @@
 <launch>
 
-    <arg name="arduino_iface" default="true"/>
+    <arg name="is_sim" default="false"/>
 
-    <!-- Launch the rosserial node that interface ROS with Arduino -->
-    <node if="$(arg arduino_iface)" pkg="rosserial_python" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">
-        <param name="port" value="/dev/ttyACM0" />
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find arduinobot_controller)/config/trajectory_controllers.yaml" command="load"/>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find arduinobot_controller)/config/joint_state_controller.yaml" command="load"/>
+
+    <!-- If interfacing with the real Hardware -->
+    <group unless="$(arg is_sim)">
+        <!-- Launch the angles converter service -->
+        <node pkg="arduinobot_controller" type="angles_converter.py" name="angles_converter" respawn="true" output="screen"/>
+
+        <!-- Launch the Hardware interface with the real robot -->
+        <node name="arduinobot_interface_node" pkg="arduinobot_controller" type="arduinobot_interface_node" 
+            ns="/arduinobot" respawn="false" output="screen"/>
+    </group>
+
+    <!-- Load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+        ns="/arduinobot" args="joint_state_controller arm_controller gripper_controller" />
+
+    <!-- Convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+        <remap from="/joint_states" to="/arduinobot/joint_states" />
     </node>
-
-    <!-- Launch the angles converter service -->
-    <node pkg="arduinobot_controller" type="angles_converter.py" name="angles_converter" respawn="true" output="screen"/>
-
-    <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-    <group ns="arduinobot/arm_controller">
-        <node pkg="arduinobot_controller" type="arm_trajectory_controller.py" name="follow_joint_trajectory" respawn="true" output="screen"/>
-    </group>
-
-    <!-- Launch the controller_interface node that converts joint state messages in Arduino readable messages -->
-    <group ns="arduinobot/gripper_controller">
-        <node pkg="arduinobot_controller" type="gripper_trajectory_controller.py" name="follow_joint_trajectory" respawn="true" output="screen"/>
-    </group>
-
-
-    <node pkg="arduinobot_controller" type="controller_interface.py" name="controller_interface" respawn="true" output="screen"/>
 
 </launch>

@@ -6,12 +6,13 @@
 #include <controller_manager/controller_manager.h>
 #include <ros/ros.h>
 #include <boost/scoped_ptr.hpp>
+#include <vector>
 
-class ArduinobotHardwareInterface: public hardware_interface::RobotHW {
+class ArduinobotInterface: public hardware_interface::RobotHW {
 
     public:
 
-        ArduinobotHardwareInterface(ros::NodeHandle&);
+        ArduinobotInterface(ros::NodeHandle&);
 
         void update(const ros::TimerEvent& e);    
         void read();
@@ -28,9 +29,9 @@ class ArduinobotHardwareInterface: public hardware_interface::RobotHW {
         hardware_interface::PositionJointInterface joint_position_interface_;
         boost::shared_ptr<controller_manager::ControllerManager> controller_manager_;
         
-        double cmd_[4];
-        double pos_[4];
-        double vel_[4];
-        double eff_[4];
+        std::vector<double> cmd_;
+        std::vector<double> pos_;
+        std::vector<double> vel_;
+        std::vector<double> eff_;
 
 };

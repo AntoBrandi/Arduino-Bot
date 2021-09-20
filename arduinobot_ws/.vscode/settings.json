@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "*.ipp": "cpp"
-    },
-    "python.autoComplete.extraPaths": [
-        "/home/alien/Workspaces/Arduino-Bot/arduinobot_ws/devel/lib/python2.7/dist-packages",
-        "/opt/ros/melodic/lib/python2.7/dist-packages"
-    ]
-}

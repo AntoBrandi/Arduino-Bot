@@ -7,8 +7,10 @@
     <arg name="model" value="$(arg model)" />
   </include>
 
-  <!-- Launch the gazebo controllers -->
-  <include file="$(find arduinobot_controller)/launch/fake_controller.launch"/>
+  <!-- Launch the controllers -->
+  <include file="$(find arduinobot_controller)/launch/controller.launch">
+    <arg name="is_sim" value="true"/>
+  </include>
 
   <!-- Launch moveit move_group -->
   <include file="$(find arduinobot_moveit)/launch/move_group.launch">

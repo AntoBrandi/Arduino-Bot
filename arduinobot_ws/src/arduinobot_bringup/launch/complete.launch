@@ -6,7 +6,9 @@
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
 
     <!-- Launch the interface with the robot -->
-    <include file="$(find arduinobot_controller)/launch/controller.launch"/>
+    <include file="$(find arduinobot_controller)/launch/controller.launch">
+        <arg name="is_sim" value="false"/>
+    </include>
 
     <!-- Launch moveit move_group -->
     <include file="$(find arduinobot_moveit)/launch/move_group.launch">
