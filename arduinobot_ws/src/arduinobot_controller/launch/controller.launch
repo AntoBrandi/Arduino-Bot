@@ -16,7 +16,9 @@
 
         <!-- Launch the Hardware interface with the real robot -->
         <node name="arduinobot_interface_node" pkg="arduinobot_controller" type="arduinobot_interface_node" 
-            ns="/arduinobot" respawn="false" output="screen"/>
+            ns="/arduinobot" respawn="false" output="screen">
+            <param name="joint_pins"  type="yaml" value="[18, 19, 20, 21]"/>
+        </node>
     </group>
 
     <!-- Load the controllers -->

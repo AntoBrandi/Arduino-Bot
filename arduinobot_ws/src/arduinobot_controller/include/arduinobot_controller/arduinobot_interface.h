@@ -7,6 +7,7 @@
 #include <ros/ros.h>
 #include <boost/scoped_ptr.hpp>
 #include <vector>
+// #include <wiringPi.h>
 
 class ArduinobotInterface: public hardware_interface::RobotHW {
 
@@ -21,6 +22,7 @@ class ArduinobotInterface: public hardware_interface::RobotHW {
     private:
 
         ros::NodeHandle nh_;
+        ros::NodeHandle pnh_;
         ros::Duration elapsed_time_;
         ros::Duration update_freq_;
         ros::Timer looper_;
@@ -33,5 +35,8 @@ class ArduinobotInterface: public hardware_interface::RobotHW {
         std::vector<double> pos_;
         std::vector<double> vel_;
         std::vector<double> eff_;
+
+        std::vector<int> pins_;
+        std::vector<std::string> names_;
 
 };
