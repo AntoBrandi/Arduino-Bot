@@ -34,7 +34,7 @@ class TaskServer(object):
         elif goal.task_number == 2:
             self._goal.position = [-1.57,0.0,-1.0,0.0, 0.0]
         else:
-            rospy.loginfo('Invalid goal')
+            rospy.logerr('Invalid goal')
 
         self._moveit.set_max_velocity(0.7)
         self._moveit.set_max_acceleration(0.1)
@@ -54,7 +54,7 @@ class TaskServer(object):
 
 if __name__ == '__main__':
 
-    # Inizialize a ROS node called arduinobot_task
+    # Inizialize a ROS node called task_server
     rospy.init_node('task_server')
 
     server = TaskServer(rospy.get_name())
