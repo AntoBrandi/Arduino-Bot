@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from flask import Flask, render_template
-from flask_ask import Ask, statement, question, session
+from flask_ask import Ask, statement, question
 from arduinobot_remote.msg import ArduinobotTaskAction, ArduinobotTaskGoal
 import rospy
 import threading
@@ -34,21 +34,11 @@ def launch():
     return question(launch_msg)
 
 
-@ask.intent("DanceIntent")
-def dance():
-    # Function that is called when the Dance Intent is activated
-    client.wait_for_server()
-    goal = ArduinobotTaskGoal(task_number=1)
-    client.send_goal(goal)
-    dance_msg = render_template('dance')
-    return statement(dance_msg)
-
-
 @ask.intent("PickIntent")
 def pick():
     # Function that is called when the Pick Intent is activated
     client.wait_for_server()
-    goal = ArduinobotTaskGoal(task_number=2)
+    goal = ArduinobotTaskGoal(task_number=1)
     client.send_goal(goal)
     pick_msg = render_template('pick')
     return statement(pick_msg)
@@ -58,14 +48,14 @@ def pick():
 def sleep():
     # Function that is called when the Sleep Intent is activated
     client.wait_for_server()
-    goal = ArduinobotTaskGoal(task_number=3)
+    goal = ArduinobotTaskGoal(task_number=2)
     client.send_goal(goal)
     sleep_msg = render_template('sleep')
     return statement(sleep_msg)
 
 
 @ask.intent("WakeIntent")
-def sleep():
+def wake():
     # Function that is called when the Wake Intent is activated
     client.wait_for_server()
     goal = ArduinobotTaskGoal(task_number=0)

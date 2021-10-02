@@ -1,14 +1,17 @@
 #! /usr/bin/env python
 import rospy
 import actionlib
-from arduinobot_remote.msg import ArduinobotTaskAction, ArduinobotTaskGoal, ArduinobotTaskFeedback, ArduinobotTaskResult
-from robot_actions import Wake, Sleep, Dance, Pick
+from arduinobot_remote.msg import ArduinobotTaskAction, ArduinobotTaskFeedback, ArduinobotTaskResult
+from sensor_msgs.msg import JointState
+from moveit_interface import MoveitInterface
 
 
 class TaskServer(object):
     # create messages that are used to publish feedback/result
     _feedback = ArduinobotTaskFeedback()
     _result = ArduinobotTaskResult()
+    _moveit = MoveitInterface()
+    _goal = JointState()
 
     def __init__(self, name):
         # Constructor
@@ -25,32 +28,28 @@ class TaskServer(object):
 
         # start executing the action
         if goal.task_number == 0:
-            wake = Wake()
-            wake.run()
+            self._goal.position = [0.0,0.0,0.0,-0.7, 0.7]
         elif goal.task_number == 1:
-            dance = Dance()
-            dance.run()
+            self._goal.position = [-1.14, -0.6, -0.07, 0.0, 0.0]
         elif goal.task_number == 2:
-            pick = Pick()
-            pick.run()
-        elif goal.task_number == 3:
-            sleep = Sleep()
-            sleep.run()
+            self._goal.position = [-1.57,0.0,-1.0,0.0, 0.0]
         else:
             rospy.loginfo('Invalid goal')
 
+        self._moveit.set_max_velocity(0.7)
+        self._moveit.set_max_acceleration(0.1)
+        self._moveit.reach_goal(self._goal)
 
         if self._as.is_preempt_requested():
             rospy.loginfo('%s: Preempted' % self._action_name)
             self._as.set_preempted()
             success = False
-
-          
+       
         # If no cancelation requests are received, return a suceeded result 
         if success:
             self._result.success = True
             rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self._result)
+            self._as.set_succeeded(self._result)        
 
 
 if __name__ == '__main__':
