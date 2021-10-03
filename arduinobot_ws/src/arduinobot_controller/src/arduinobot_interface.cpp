@@ -7,12 +7,13 @@ ArduinobotInterface::ArduinobotInterface(ros::NodeHandle& nh) : nh_(nh),
             vel_(4, 0),
             eff_(4, 0),
             cmd_(4, 0),
-            names_{"joint_1", "joint_2", "joint_3", "joint_4"},
-            pins_{1, 2, 3, 4}
+            names_{"joint_1", "joint_2", "joint_3", "joint_4"}
 {
     // Read from the param server
     pnh_.param("joint_names", names_, names_);
-    pnh_.param("joint_pins", pins_, pins_);
+    // Init the publisher with the hardware
+    hardware_pub_ = pnh_.advertise<std_msgs::UInt16MultiArray>("/arduino/arm_actuate", 1000);
+    hardware_srv_ = pnh_.serviceClient<arduinobot_controller::AnglesConverter>("/radians_to_degrees");
     
     ROS_INFO("Starting Arduinobot Hardware Interface...");
 
@@ -43,16 +44,6 @@ ArduinobotInterface::ArduinobotInterface(ros::NodeHandle& nh) : nh_(nh),
 
     ROS_INFO("Interfaces registered.");
 
-    ROS_INFO("Starting the connection with the motor");
-
-    // wiringPiSetupGpio();
-    // pinMode(pins_.at(0), PWM_OUTPUT);
-    // pwmSetMode(PWM_MODE_MS);
-    // pwmSetRange(2000);
-    // pwmSetClock(192);
-
-    ROS_INFO("Motor Initializedr");
-
 
     ROS_INFO("Preparing the Controller Manager");
 
@@ -74,6 +65,7 @@ void ArduinobotInterface::update(const ros::TimerEvent& e)
 
 void ArduinobotInterface::read()
 {
+    // Open loop control, confirm that each motor reached the goal
     ROS_INFO("Read Event");
     ROS_INFO_STREAM("joint_1 position: " << pos_.at(0));
     ROS_INFO_STREAM("joint_2 position: " << pos_.at(1));
@@ -92,11 +84,42 @@ void ArduinobotInterface::write(ros::Duration elapsed_time)
     ROS_INFO_STREAM("joint_2 position command: " << cmd_.at(1));
     ROS_INFO_STREAM("joint_3 position command: " << cmd_.at(2));
     ROS_INFO_STREAM("joint_4 position command: " << cmd_.at(3));
-    // TODO: calculate the pwm intensity from the command
-    // pwmWrite(pins_.at(0), cmd_.at(0));
-    // pwmWrite(pins_.at(1), cmd_.at(1));
-    // pwmWrite(pins_.at(2), cmd_.at(2));
-    // pwmWrite(pins_.at(3), cmd_.at(3));
+    
+    // Send the command to the Hardware (Arduino)
+    arduinobot_controller::AnglesConverter srv;
+    srv.request.base = cmd_.at(0);
+    srv.request.shoulder = cmd_.at(1);
+    srv.request.elbow = cmd_.at(2);
+    srv.request.gripper = cmd_.at(3);
+
+    // Call the service and show the response of the service
+    if (hardware_srv_.call(srv))
+    {
+        // compose the array message
+        std::vector<unsigned int> angles_deg;
+        angles_deg.push_back(srv.response.base);
+        angles_deg.push_back(srv.response.shoulder);
+        angles_deg.push_back(srv.response.elbow);
+        angles_deg.push_back(srv.response.gripper);
+
+        std_msgs::UInt16MultiArray msg;
+
+        // set up dimensions
+        msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
+        msg.layout.dim[0].size = angles_deg.size();
+        msg.layout.dim[0].stride = 1;
+
+        // copy in the data
+        msg.data.clear();
+        msg.data.insert(msg.data.end(), angles_deg.begin(), angles_deg.end());
+
+        // publish the array message to the defined topic
+        hardware_pub_.publish(msg);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service radians_to_degrees");
+    }
 }
 
 

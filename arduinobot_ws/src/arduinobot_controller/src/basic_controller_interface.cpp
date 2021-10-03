@@ -81,7 +81,7 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
 
     // register a publisher on the topic /servo_actuate that will publish UInt16MultiArray messages
-    pub = n.advertise<std_msgs::UInt16MultiArray>("servo_actuate", 1000);
+    pub = n.advertise<std_msgs::UInt16MultiArray>("arduino/arm_actuate", 1000);
 
     // register a subscriber on the topic /joint_states that will listen for JointState messages
     // when a new message is received, the callback function is triggered and starts its execution

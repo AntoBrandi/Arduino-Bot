@@ -12,13 +12,12 @@
     <!-- If interfacing with the real Hardware -->
     <group unless="$(arg is_sim)">
         <!-- Launch the angles converter service -->
-        <node pkg="arduinobot_controller" type="angles_converter.py" name="angles_converter" respawn="true" output="screen"/>
+        <node pkg="arduinobot_controller" type="angles_converter.py" name="angles_converter" 
+            respawn="true" output="screen"/>
 
         <!-- Launch the Hardware interface with the real robot -->
         <node name="arduinobot_interface_node" pkg="arduinobot_controller" type="arduinobot_interface_node" 
-            ns="/arduinobot" respawn="false" output="screen">
-            <param name="joint_pins"  type="yaml" value="[18, 19, 20, 21]"/>
-        </node>
+            ns="/arduinobot" respawn="false" output="screen"/>
     </group>
 
     <!-- Load the controllers -->

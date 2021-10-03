@@ -43,7 +43,7 @@ if __name__ == '__main__':
     rospy.init_node('basic_controller_interface', anonymous=True)
 
     # register a publisher on the topic /servo_actuate that will publish UInt16MultiArray messages
-    pub = rospy.Publisher('servo_actuate', UInt16MultiArray, queue_size=10)
+    pub = rospy.Publisher('arduino/arm_actuate', UInt16MultiArray, queue_size=10)
 
     # register a subscriber on the topic /joint_states that will listen for JointState messages
     # when a new message is received, the callback function is triggered and starts its execution

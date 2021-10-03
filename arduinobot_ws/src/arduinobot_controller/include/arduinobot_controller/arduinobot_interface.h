@@ -7,7 +7,8 @@
 #include <ros/ros.h>
 #include <boost/scoped_ptr.hpp>
 #include <vector>
-// #include <wiringPi.h>
+#include "std_msgs/UInt16MultiArray.h"
+#include "arduinobot_controller/AnglesConverter.h"
 
 class ArduinobotInterface: public hardware_interface::RobotHW {
 
@@ -26,6 +27,8 @@ class ArduinobotInterface: public hardware_interface::RobotHW {
         ros::Duration elapsed_time_;
         ros::Duration update_freq_;
         ros::Timer looper_;
+        ros::Publisher hardware_pub_;
+        ros::ServiceClient hardware_srv_;
 
         hardware_interface::JointStateInterface joint_state_interface_;
         hardware_interface::PositionJointInterface joint_position_interface_;
@@ -36,7 +39,5 @@ class ArduinobotInterface: public hardware_interface::RobotHW {
         std::vector<double> vel_;
         std::vector<double> eff_;
 
-        std::vector<int> pins_;
         std::vector<std::string> names_;
-
 };
