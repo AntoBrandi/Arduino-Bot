@@ -2,6 +2,7 @@
 #include <actionlib/server/simple_action_server.h>
 #include <arduinobot_remote/ArduinobotTaskAction.h>
 #include <sensor_msgs/JointState.h>
+#include "moveit_interface.cpp"
 
 
 class TaskServer
@@ -14,37 +15,46 @@ protected:
   // create messages that are used to published feedback/result
   arduinobot_remote::ArduinobotTaskFeedback feedback_;
   arduinobot_remote::ArduinobotTaskResult result_;
-  sensor_msgs::JointState goal_;
+  std::vector<double> arm_goal_;
+  std::vector<double> gripper_goal_;
+  MoveitInterface moveit_;
 
 public:
 
   TaskServer(std::string name) :
-    as_(nh_, name, boost::bind(&TaskServer::executeCb, this, _1), false),
+    as_(nh_, name, boost::bind(&TaskServer::execute_cb, this, _1), false),
     action_name_(name)
   {
     as_.start();
   }
 
-  void executeCb(const arduinobot_remote::ArduinobotTaskGoalConstPtr &goal)
+  void execute_cb(const arduinobot_remote::ArduinobotTaskGoalConstPtr &goal)
   {
     bool success = true;
 
     if (goal->task_number == 0)
     {
-        goal_.position = std::vector<double>{0.0, 0.0, 0.0, -0.7, 0.7};
+      arm_goal_ = {0.0, 0.0, 0.0};
+      gripper_goal_ = {-0.7, 0.7};
     }
     else if (goal->task_number == 1)
     {
-        goal_.position = std::vector<double>{-1.14, -0.6, -0.07, 0.0, 0.0};
+      arm_goal_ = {-1.14, -0.6, -0.07};
+      gripper_goal_ = {0.0, 0.0};
     }
     else if (goal->task_number == 2)
     {
-        goal_.position = std::vector<double>{-1.57,0.0,-1.0,0.0, 0.0};
+      arm_goal_ = {-1.57,0.0,-1.0};
+      gripper_goal_ = {0.0, 0.0};
     }
     else
     {
         ROS_ERROR("Invalid goal");
     }
+
+    moveit_.set_max_velocity(0.7);
+    moveit_.set_max_acceleration(0.1);
+    moveit_.reach_goal(arm_goal_, gripper_goal_);
 
     // check that preempt has not been requested by the client
     if (as_.isPreemptRequested() || !ros::ok())

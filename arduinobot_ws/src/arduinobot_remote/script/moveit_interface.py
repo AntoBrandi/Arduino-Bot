@@ -2,7 +2,6 @@
 import sys
 import rospy
 import moveit_commander
-import moveit_msgs.msg
 
 """
   arduinobot - moveit_interface
@@ -38,21 +37,14 @@ class MoveitInterface:
 
         # create a move group commander object for the gripper
         self.gripper_move_group = moveit_commander.MoveGroupCommander(GRIPPER_GROUP_NAME)
-
-        # create a display trajectory object that will publish the trajectory to rviz
-        self.display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
-                                                    moveit_msgs.msg.DisplayTrajectory,
-                                                    queue_size=20)
     
-    def reach_goal(self, goal):
+    def reach_goal(self, arm_goal, gripper_goal):
         # This function requires a JointState message as input 
         # with a list of 5 angles in radians for each joint
         # The first 3 elemnt of this list are passed to the arm group 
         # and the last 2 elements are passed to the gripper group.
         # Consider that the last two element of this list have to be the same 
         # as absolute value and with opposite sign
-        arm_goal = goal.position[:-2]
-        gripper_goal = goal.position[-2:]
 
         # Plan and Execute a trajectory that brings the robot from the current pose
         # to the target pose
@@ -63,7 +55,6 @@ class MoveitInterface:
         self.arm_move_group.stop()
         self.gripper_move_group.stop()
 
-    
     def set_max_velocity(self, scaling_factor):
         # This function sets the the max velocity of the ARM and GRIPPER move group as percentage
         # of the max speed of the joint defined in the joint_linits.yaml file

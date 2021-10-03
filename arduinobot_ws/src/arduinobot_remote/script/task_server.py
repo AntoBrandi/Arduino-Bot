@@ -38,7 +38,7 @@ class TaskServer(object):
 
         self._moveit.set_max_velocity(0.7)
         self._moveit.set_max_acceleration(0.1)
-        self._moveit.reach_goal(self._goal)
+        self._moveit.reach_goal(self._goal.position[:-2], self._goal.position[-2:])
 
         if self._as.is_preempt_requested():
             rospy.loginfo('%s: Preempted' % self._action_name)
