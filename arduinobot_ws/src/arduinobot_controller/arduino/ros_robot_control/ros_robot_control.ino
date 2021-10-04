@@ -4,7 +4,7 @@
   joint angle messages and actuates the servo motors according to the
   selected angles
   
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 */
 
 #include <Servo.h>
@@ -54,14 +54,14 @@ void reach_goal(Servo servo, int start_point, int end_point){
   if(end_point>=start_point){
     // goes from the start point degrees to the end point degrees
     for (int pos = start_point; pos <= end_point; pos += 1) { 
-    servo.write(pos);     
-    delay(5);                       
+      servo.write(pos);     
+      delay(5);                       
     }
   } else{
     // goes from the end point degrees to the start point degrees
     for (int pos = start_point; pos >= end_point; pos -= 1) { 
-    servo.write(pos);     
-    delay(5);                       
+      servo.write(pos);     
+      delay(5);                       
     }
   }
 }

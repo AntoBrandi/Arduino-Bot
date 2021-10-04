@@ -1,3 +1,13 @@
+/*
+  arduinobot - task_server
+
+  This script implements an Action Server that manages the execution
+  of goals of the robot interfacing with moveit.
+  Given a goal, it sends and execute a moveit trajectory
+
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
+*/
+
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
 #include <arduinobot_remote/ArduinobotTaskAction.h>
@@ -21,6 +31,9 @@ protected:
 
 public:
 
+  // Constructor
+  // function that inizialize the ArduinobotTaskAction class and creates 
+  // a Simple Action Server from the library actionlib
   TaskServer(std::string name) :
     as_(nh_, name, boost::bind(&TaskServer::execute_cb, this, _1), false),
     action_name_(name)
@@ -32,6 +45,9 @@ public:
   {
     bool success = true;
 
+    // start executing the action
+    // based on the goal id received, send a different goal 
+    // to the robot
     if (goal->task_number == 0)
     {
       arm_goal_ = {0.0, 0.0, 0.0};
@@ -52,6 +68,7 @@ public:
         ROS_ERROR("Invalid goal");
     }
 
+    // Sends a goal to the moveit API
     moveit_.set_max_velocity(0.7);
     moveit_.set_max_acceleration(0.1);
     moveit_.reach_goal(arm_goal_, gripper_goal_);
@@ -60,16 +77,15 @@ public:
     if (as_.isPreemptRequested() || !ros::ok())
     {
       ROS_INFO("%s: Preempted", action_name_.c_str());
-      // set the action state to preempted
       as_.setPreempted();
       success = false;
     }
 
+    // check if the goal request has been executed correctly
     if(success)
     {
       result_.success = true;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
-      // set the action state to succeeded
       as_.setSucceeded(result_);
     }
   }

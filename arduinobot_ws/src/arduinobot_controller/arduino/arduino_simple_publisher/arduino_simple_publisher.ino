@@ -2,7 +2,8 @@
   arduinobot - arduino_simple_publisher
   Simple Arduino ROS publisher.
   This script creates a ROS node on the Arduino that publish a string message each 1000ms
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+  
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 */
 #include <ros.h>
 #include <std_msgs/String.h>

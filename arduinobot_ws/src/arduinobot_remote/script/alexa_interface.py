@@ -14,7 +14,7 @@ import actionlib
   The web server exposes APIs to the Amazon Alexa assistant
   in order to control the robot with the voice
 
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 """
 
 

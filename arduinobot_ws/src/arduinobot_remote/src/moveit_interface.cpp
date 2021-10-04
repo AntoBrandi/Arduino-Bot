@@ -1,3 +1,16 @@
+/*
+  arduinobot - moveit_interface
+
+  This script uses the MoveIt! API for C++ in order to reach a given goal
+  and eventually prints the current robot status and informations.
+
+  When triggered, the reach_goal function uses the MoveIt! API for creating a planning request
+  that generates a new trajectory that allows the robot to reach its new destination.
+  Then, this trajectory is executed via controllers that have been registered and launched with MoveIt!
+
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
+*/
+
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <vector>
 

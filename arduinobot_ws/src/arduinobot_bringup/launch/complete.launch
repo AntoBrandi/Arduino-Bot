@@ -20,7 +20,7 @@
         <arg name="config" value="true" />
     </include>
 
-    <!-- Launch the interface with the external -->
+    <!-- Launch the interface with alexa -->
     <include file="$(find arduinobot_remote)/launch/remote_interface.launch"/>
 
 </launch>

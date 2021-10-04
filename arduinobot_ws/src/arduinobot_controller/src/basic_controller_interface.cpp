@@ -14,7 +14,7 @@
     - elbow
     - gripper
 
-    Copyright (c) 2020 Antonio Brandi.  All right reserved.
+    Copyright (c) 2021 Antonio Brandi.  All right reserved.
 */
 
 #include "ros/ros.h"

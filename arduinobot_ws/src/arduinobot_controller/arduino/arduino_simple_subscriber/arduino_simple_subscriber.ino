@@ -3,7 +3,8 @@
   Simple Arduino ROS subscriber.
   This script creates a ROS node on the Arduino that subscribe to a ROS topic 
   and turns on/off a led when a new message is received
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 */
 
 #include <ros.h>

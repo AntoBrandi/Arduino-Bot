@@ -26,7 +26,7 @@ from arduinobot_controller.srv import AnglesConverter, AnglesConverterResponse
   as used in ROS in degrees angles as used in Arduino for the actuation of the Servo motors
   
 
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 """
 
 def convert_radians_to_degrees(req):

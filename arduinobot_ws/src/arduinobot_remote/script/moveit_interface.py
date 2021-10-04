@@ -13,7 +13,7 @@ import moveit_commander
   that generates a new trajectory that allows the robot to reach its new destination.
   Then, this trajectory is executed via controllers that have been registered and launched with MoveIt!
 
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 """
 
 

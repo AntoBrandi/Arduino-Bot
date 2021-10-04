@@ -23,7 +23,7 @@
   as used in ROS in degrees angles as used in Arduino for the actuation of the Servo motors
   
 
-  Copyright (c) 2020 Antonio Brandi.  All right reserved.
+  Copyright (c) 2021 Antonio Brandi.  All right reserved.
 */
 
 #include "ros/ros.h"
