@@ -1,0 +1,28 @@
+<launch>
+
+  <!-- Launch the Gazebo simulation of the robot arm -->
+  <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
+
+  <include file="$(find arduinobot_description)/launch/gazebo.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <!-- Launch the controllers -->
+  <include file="$(find arduinobot_controller)/launch/controller.launch">
+    <arg name="is_sim" value="true"/>
+  </include>
+
+  <!-- Launch moveit move_group -->
+  <include file="$(find arduinobot_moveit)/launch/move_group.launch">
+    <arg name="states_topic" value="arduinobot" />
+  </include>
+
+  <!-- Launch moveit rviz gui -->
+  <include file="$(find arduinobot_moveit)/launch/moveit_rviz.launch">
+    <arg name="config" value="true" />
+  </include>
+
+  <!-- Launch the demo -->
+  <!-- <node pkg="arduinobot_remote" type="demo.py" name="demo" respawn="true" output="screen"/> -->
+
+</launch>

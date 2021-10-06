@@ -21,7 +21,8 @@ class TaskServer(object):
     _feedback = ArduinobotTaskFeedback()
     _result = ArduinobotTaskResult()
     _moveit = MoveitInterface()
-    _goal = JointState()
+    _arm_goal = []
+    _gripper_goal = []
 
     def __init__(self, name):
         # Constructor
@@ -40,18 +41,21 @@ class TaskServer(object):
         # based on the goal id received, send a different goal 
         # to the robot
         if goal.task_number == 0:
-            self._goal.position = [0.0,0.0,0.0,-0.7, 0.7]
+            self._arm_goal = [0.0,0.0,0.0]
+            self._gripper_goal = [-0.7, 0.7]
         elif goal.task_number == 1:
-            self._goal.position = [-1.14, -0.6, -0.07, 0.0, 0.0]
+            self._arm_goal = [-1.14, -0.6, -0.07]
+            self._gripper_goal = [0.0, 0.0]
         elif goal.task_number == 2:
-            self._goal.position = [-1.57,0.0,-1.0,0.0, 0.0]
+            self._arm_goal = [-1.57,0.0,-1.0]
+            self._gripper_goal = [0.0, 0.0]
         else:
             rospy.logerr('Invalid goal')
 
         # Sends a goal to the moveit API
         self._moveit.set_max_velocity(0.7)
         self._moveit.set_max_acceleration(0.1)
-        self._moveit.reach_goal(self._goal.position[:-2], self._goal.position[-2:])
+        self._moveit.reach_goal(self._arm_goal, self._gripper_goal)
 
         # check that preempt has not been requested by the client
         if self._as.is_preempt_requested():
