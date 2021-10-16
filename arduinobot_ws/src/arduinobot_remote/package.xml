@@ -6,8 +6,9 @@
 
   <maintainer email="antonio.brandi@outlook.it">Antonio Brandi</maintainer>
 
-
   <license>BSD</license>
+
+  <author email="antonio.brandi@outlook.it">Antonio Brandi</author>
 
 
   <buildtool_depend>catkin</buildtool_depend>
