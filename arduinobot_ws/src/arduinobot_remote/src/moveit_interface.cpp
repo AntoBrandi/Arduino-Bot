@@ -14,8 +14,6 @@
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <vector>
 
-#pragma once
-
 
 const std::string ARM_GROUP_NAME = "arduinobot_arm";
 const std::string GRIPPER_GROUP_NAME = "arduinobot_hand";
