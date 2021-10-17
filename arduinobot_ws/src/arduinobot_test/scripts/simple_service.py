@@ -19,5 +19,7 @@ if __name__ == "__main__":
     # Define the function that is called each time the service receives a request
     service = rospy.Service('add_two_ints', AddTwoInts, add_two_ints)
 
+    rospy.loginfo("Ready to add two ints.")
+
     # keeps the node up and running
     rospy.spin()
