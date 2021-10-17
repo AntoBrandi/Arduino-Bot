@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 import math
 from arduinobot_controller.srv import AnglesConverter, AnglesConverterResponse

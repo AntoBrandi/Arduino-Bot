@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
 
@@ -14,11 +14,14 @@ if __name__ == '__main__':
         # The rate is expressed in Hertz
         rate = rospy.Rate(10) # 10hz
 
+        counter = 0
+
         # Keep going publishing messages until the ROS communication is alive
         while not rospy.is_shutdown():
-            hello_str = "hello world %s" % rospy.get_time()
+            hello_str = "hello world %d" % counter
             rospy.loginfo(hello_str)
             pub.publish(hello_str)
+            counter += 1
             # wait the desired rate before publishing the next message
             rate.sleep()
     except rospy.ROSInterruptException:
