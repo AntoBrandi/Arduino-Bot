@@ -66,7 +66,7 @@ This robot is powered by:
 * SG90 Servo Motors (x4)
 
 And is controlled by:
-* ROS Melodic
+* ROS Noetic
 
 [![Product Name Screen Shot Real][product-screenshot-real]](https://example.com)
 
@@ -123,7 +123,7 @@ catkin_make
 ```sh
 source devel/setup.bash
 ```
-5. Connect the Arduino UNO to your PC and open the Arduino IDE. Open the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/melodic/arduinobot_ws/src/arduinobot_controller/arduino)
+5. Connect the Arduino UNO to your PC and open the Arduino IDE. Open the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/noetic/arduinobot_ws/src/arduinobot_controller/arduino)
 containing the code for the Arduino controller.
 
 
@@ -136,7 +136,7 @@ To launch the ROS simulated robot
 roslaunch arduinobot_bringup sim_complete.launch
 ```
 
-To launch the real robot, connect the Arduino to the PC and upload the code in the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/melodic/arduinobot_ws/src/arduinobot_controller/arduino/ros_robot_control) on the Arduino controller.
+To launch the real robot, connect the Arduino to the PC and upload the code in the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/noetic/arduinobot_ws/src/arduinobot_controller/arduino/ros_robot_control) on the Arduino controller.
 Then launch the real robot
 ```sh
 roslaunch arduinobot_bringup complete.launch
