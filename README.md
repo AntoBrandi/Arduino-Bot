@@ -13,7 +13,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-   <img src="images/logo.jpg" alt="Logo" width="200" height="200">
+   <img src="images/logo.png" alt="Logo">
 
   <h3 align="center">arduinobot</h3>
 
@@ -61,10 +61,9 @@ of the robot.
 
 ### Built With
 This robot is powered by:
-* Raspberry Pi 3/4 or PC with Ubuntu 18.04
+* PC with Ubuntu 20.04 with ROS Noetic
 * Arduino UNO
 * SG90 Servo Motors (x4)
-* Prototype Expansion Board or Breadboard
 
 And is controlled by:
 * ROS Melodic
@@ -75,26 +74,29 @@ And is controlled by:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Once it's printed and assembled according and connected, there are few configuration to be made in both Raspberry Pi side and Arduino UNO.
+Once it's printed and assembled according and connected, there are few configuration to be made in both Ubuntu 18.04 side and Arduino UNO.
 
 ### Prerequisites
 
 Make sure you install correctly the following required tools before continuing
-* Install Ubuntu 18.04 on Raspberry Pi 3/4 or on PC
-Use the [Ubuntu Raspberry Pi](https://ubuntu.com/download/raspberry-pi) for your Raspberry Pi or [Ubuntu 18.04](https://ubuntu.com/download/alternative-downloads) for your PC
-* Install [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) on your Ubuntu 18.04
+* Install Ubuntu 20.04 on PC or in Virtual Machine
+Download the ISO [Ubuntu 20.04](https://ubuntu.com/download/alternative-downloads) for your PC
+* Install [ROS Noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) on your Ubuntu 20.04
 * Install ROS missing libraries. Some libraries that are used in this project are not in the standard ROS package. Install them with:
 ```sh
-sudo apt-get install ros-kinetic-rosserial
+sudo apt-get install ros-noetic-rosserial
 ```
 ```sh
-sudo apt-get install ros-kinetic-rosserial-arduino
+sudo apt-get install ros-noetic-rosserial-arduino
 ```
 ```sh
-sudo apt-get install ros-kinetic-rosbridge-server
+sudo apt-get install ros-noetic-gazebo-ros-control
 ```
 ```sh
-sudo apt-get install ros-kinetic-moveit
+sudo apt-get install ros-noetic-moveit
+```
+```sh
+sudo apt-get install ros-noetic-actionlib-tools
 ```
 * Install VS Code and Arduino IDE on your PC in order to build and load the Arduino code on the device
 
@@ -105,22 +107,23 @@ sudo apt-get install ros-kinetic-moveit
 ```sh
 git clone https://github.com/AntoBrandi/arduinobot.git
 ```
-2. Build the ROS workspace
+2. If you are using Ubuntu 20.04 with ROS Noetic change the branch to ```noetic```
 ```sh
-cd ~/arduinobot/arduinobot_ws
+cd ~/Arduino-Bot
+git checkout noetic
+```
+3. Build the ROS workspace
+```sh
+cd ~/Arduino-Bot/arduinobot_ws
 ```
 ```sh
 catkin_make
 ```
-3. Source the project
+4. Source the project
 ```sh
-sudo nano ~/.bashrc
+source devel/setup.bash
 ```
-And add the following at the end of the document
-```sh
-source ~/arduinobot/arduinobot_ws/devel/setup.bash
-```
-4. Connect the Arduino UNO on your PC with VS Code and Arduino IDE. Open the [folder](https://github.com/AntoBrandi/arduinobot/tree/master/arduino)
+5. Connect the Arduino UNO to your PC and open the Arduino IDE. Open the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/melodic/arduinobot_ws/src/arduinobot_controller/arduino)
 containing the code for the Arduino controller.
 
 
@@ -133,11 +136,21 @@ To launch the ROS simulated robot
 roslaunch arduinobot_bringup sim_complete.launch
 ```
 
-To launch the real robot, connect the Arduino to the PC and upload the code in the [folder](https://github.com/AntoBrandi/arduinobot/tree/master/arduino/ros_robot_control) on the Arduino controller.
+To launch the real robot, connect the Arduino to the PC and upload the code in the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/melodic/arduinobot_ws/src/arduinobot_controller/arduino/ros_robot_control) on the Arduino controller.
 Then launch the real robot
 ```sh
 roslaunch arduinobot_bringup complete.launch
 ```
+
+To launch the interface with Alexa download [ngrok](https://ngrok.com/download) and create an [account](https://dashboard.ngrok.com/signup) then setup ngrok with your key
+```sh
+./ngrok authtoken <YOUR-KEY>
+```
+Then start the ngrok web server with
+```sh
+./ngrok http 5000
+```
+Copy the link that provides ngrok and paste it in the section Endpoint of your Alexa Developer account
 
 
 
