@@ -8,7 +8,6 @@
   <arg name="headless" default="false"/>
   <arg name="model" default="$(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
 
-  <rosparam file="$(find arduinobot_description)/config/gazebo_controller.yaml" command="load" ns="arduinobot"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
