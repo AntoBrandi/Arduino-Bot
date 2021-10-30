@@ -226,16 +226,14 @@
     </gazebo>
 
     <gazebo>
-      <plugin name="mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
-        <joint>joint_4</joint>
-        <mimicJoint>joint_5</mimicJoint>
-        <hasPID />
-        <multiplier>-1.0</multiplier>
-        <offset>0</offset>
-        <sensitiveness>0.0</sensitiveness>  
-        <maxEffort>${effort}</maxEffort>              
+        <plugin name="joint_5_mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+          <joint>joint_4</joint>
+          <mimicJoint>joint_5</mimicJoint>
+          <multiplier>-1.0</multiplier>
+          <offset>0</offset> 
+          <maxEffort>${effort}</maxEffort>             
         <robotNamespace>/arduinobot</robotNamespace>
-      </plugin>
+        </plugin>
     </gazebo>
 
 </robot>

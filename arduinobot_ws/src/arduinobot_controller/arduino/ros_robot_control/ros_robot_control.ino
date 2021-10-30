@@ -43,7 +43,7 @@ ros::NodeHandle  nh;
 int last_angle_base = BASE_START;
 int last_angle_shoulder = SHOULDER_START;
 int last_angle_elbow = ELBOW_START;
-int last_angle_gripper = GRIPPER_START
+int last_angle_gripper = GRIPPER_START;
 
 /*
  * This function moves a given servo smoothly from a given start position to a given end position.
