@@ -1,0 +1,10 @@
+is_real_file: false
+
+arduinobot:
+  is_real_robot: false
+  number_of_joints: 4
+  name_of_joints:
+    - joint_1
+    - joint_2
+    - joint_3
+    - joint_4
