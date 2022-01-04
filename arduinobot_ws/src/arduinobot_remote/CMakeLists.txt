@@ -40,9 +40,4 @@ target_link_libraries(moveit_interface
 )
 
 add_executable(task_server src/task_server.cpp)
-add_dependencies(task_server ${catkin_EXPORTED_TARGETS})
-target_link_libraries(
-  task_server
-  ${catkin_LIBRARIES}
-  moveit_interface
-)
+target_link_libraries(task_server ${catkin_LIBRARIES} moveit_interface)
