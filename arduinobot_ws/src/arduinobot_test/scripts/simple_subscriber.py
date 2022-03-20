@@ -6,7 +6,7 @@ from std_msgs.msg import String
 def callback(data):
     # This function is called each time a new message is published on the topic /chatter
     # The message that has been published is then passed as input to this function
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    rospy.loginfo("I heard %s", data.data)
    
     
 if __name__ == '__main__':

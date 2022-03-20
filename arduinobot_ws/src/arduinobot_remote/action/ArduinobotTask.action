@@ -1,8 +1,8 @@
-#goal         
+# Goal         
 int64 task_number
 ---
-#result
+# Result
 bool success
 ---
-#feedback
+# Feedback
 int64 percentage

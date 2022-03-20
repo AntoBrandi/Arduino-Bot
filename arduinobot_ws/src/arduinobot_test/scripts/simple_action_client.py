@@ -1,21 +1,20 @@
 #! /usr/bin/env python3
-from __future__ import print_function
 import rospy
 import actionlib
-import actionlib_tutorials.msg
+from arduinobot_test.msg import FibonacciAction, FibonacciGoal
 
 
 def fibonacci_client():
     # Creates the SimpleActionClient, passing the type of the action
     # (FibonacciAction) to the constructor.
-    client = actionlib.SimpleActionClient('fibonacci', actionlib_tutorials.msg.FibonacciAction)
+    client = actionlib.SimpleActionClient('fibonacci', FibonacciAction)
 
     # Waits until the action server has started up and started
     # listening for goals.
     client.wait_for_server()
 
     # Creates a goal to send to the action server.
-    goal = actionlib_tutorials.msg.FibonacciGoal(order=20)
+    goal = FibonacciGoal(order=20)
 
     # Sends the goal to the action server.
     print("Seding goal order %s" % goal.order)
@@ -29,14 +28,11 @@ def fibonacci_client():
 
 
 if __name__ == '__main__':
-    try:
-        # Inizialize a ROS node called fibonacci_client
-        rospy.init_node('fibonacci_client')
+    # Inizialize a ROS node called fibonacci_client
+    rospy.init_node('fibonacci_client')
 
-        print("Simple Action Client Started")
+    print("Simple Action Client Started")
 
-        # Keep this node active until the action server returns a result
-        result = fibonacci_client()
-        print("Result:", ', '.join([str(n) for n in result.sequence]))
-    except rospy.ROSInterruptException:
-        print("program interrupted before completion", file=sys.stderr)
+    # Keep this node active until the action server returns a result
+    result = fibonacci_client()
+    print("Result: ", result.sequence)

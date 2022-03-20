@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-from __future__ import print_function
-from arduinobot_test.srv import AddTwoInts,AddTwoIntsResponse
+from arduinobot_test.srv import AddTwoInts, AddTwoIntsResponse
 import rospy
 
 
 def add_two_ints(req):
     # Function that is called each time the service receives a request
     # The request message is passed as input to this function
-    print("Returning [%s + %s = %s]"%(req.a, req.b, (req.a + req.b)))
+    rospy.loginfo('Ready to sum %d and %d', req.a, req.b)
     return AddTwoIntsResponse(req.a + req.b)
 
 if __name__ == "__main__":

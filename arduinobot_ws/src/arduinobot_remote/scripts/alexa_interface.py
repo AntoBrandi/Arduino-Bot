@@ -1,73 +1,127 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template
-from flask_ask import Ask, statement, question
+from flask import Flask
+from ask_sdk_core.skill_builder import SkillBuilder
+from flask_ask_sdk.skill_adapter import SkillAdapter
+from ask_sdk_core.utils import is_request_type, is_intent_name
+from ask_sdk_core.handler_input import HandlerInput
+from ask_sdk_model import Response
+from ask_sdk_model.ui import SimpleCard
+from ask_sdk_core.dispatch_components import AbstractRequestHandler, AbstractExceptionHandler
 from arduinobot_remote.msg import ArduinobotTaskAction, ArduinobotTaskGoal
 import rospy
 import threading
 import actionlib
 
-
-"""
-  arduinobot - alexa_interface
-
-  This script implements a flask web server.
-  The web server exposes APIs to the Amazon Alexa assistant
-  in order to control the robot with the voice
-
-  Copyright (c) 2021 Antonio Brandi.  All right reserved.
-"""
-
-
 threading.Thread(target=lambda: rospy.init_node('alexa_interface', disable_signals=True)).start()
 client = actionlib.SimpleActionClient('task_server', ArduinobotTaskAction)
 
 app = Flask(__name__)
-ask = Ask(app, "/")
 
 
-@ask.launch
-def launch():
-    # Function that gets called when the skill is activated
-    goal = ArduinobotTaskGoal(task_number=0)
-    client.send_goal(goal)
-    launch_msg = render_template('online')
-    return question(launch_msg)
+class LaunchRequestHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_request_type("LaunchRequest")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        speech_text = "Hi, how can we help?"
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("Online", speech_text)).set_should_end_session(
+            False)
+
+        goal = ArduinobotTaskGoal(task_number=0)
+        client.send_goal(goal)
+
+        return handler_input.response_builder.response
 
 
-@ask.intent("PickIntent")
-def pick():
-    # Function that is called when the Pick Intent is activated
-    client.wait_for_server()
-    goal = ArduinobotTaskGoal(task_number=1)
-    client.send_goal(goal)
-    pick_msg = render_template('pick')
-    return statement(pick_msg)
+class PickIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("PickIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        speech_text = "Ok, I'm moving"
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("Pick", speech_text)).set_should_end_session(
+            True)
+
+        goal = ArduinobotTaskGoal(task_number=1)
+        client.send_goal(goal)
+
+        return handler_input.response_builder.response
 
 
-@ask.intent("SleepIntent")
-def sleep():
-    # Function that is called when the Sleep Intent is activated
-    client.wait_for_server()
-    goal = ArduinobotTaskGoal(task_number=2)
-    client.send_goal(goal)
-    sleep_msg = render_template('sleep')
-    return statement(sleep_msg)
+class SleepIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("SleepIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        speech_text = "Ok, see you later"
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("Sleep", speech_text)).set_should_end_session(
+            True)
+
+        goal = ArduinobotTaskGoal(task_number=2)
+        client.send_goal(goal)
+
+        return handler_input.response_builder.response
 
 
-@ask.intent("WakeIntent")
-def wake():
-    # Function that is called when the Wake Intent is activated
-    client.wait_for_server()
-    goal = ArduinobotTaskGoal(task_number=0)
-    client.send_goal(goal)
-    wake_msg = render_template('wake')
-    return statement(wake_msg)
+class WakeIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("WakeIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        speech_text = "Hi, I am ready"
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("Wake", speech_text)).set_should_end_session(
+            True)
+            
+        goal = ArduinobotTaskGoal(task_number=0)
+        client.send_goal(goal)
+
+        return handler_input.response_builder.response
 
 
-@ask.intent("AMAZON.FallbackIntent")
-def fallback():
-    fallback_msg = render_template('fallback')
-    return statement(fallback_msg)
+class AllExceptionHandler(AbstractExceptionHandler):
+
+    def can_handle(self, handler_input, exception):
+        # type: (HandlerInput, Exception) -> bool
+        return True
+
+    def handle(self, handler_input, exception):
+        # type: (HandlerInput, Exception) -> Response
+
+        speech = "Hmm, I don't know that. Can you please say it again?"
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+
+
+skill_builder = SkillBuilder()
+skill_builder.add_request_handler(LaunchRequestHandler())
+skill_builder.add_request_handler(PickIntentHandler())
+skill_builder.add_request_handler(SleepIntentHandler())
+skill_builder.add_request_handler(WakeIntentHandler())
+skill_builder.add_exception_handler(AllExceptionHandler())
+
+
+skill_adapter = SkillAdapter(
+    skill=skill_builder.create(), skill_id="SKILL-ID",
+    app=app)
+
+
+skill_adapter.register(app=app, route="/")
 
 
 if __name__ == '__main__':

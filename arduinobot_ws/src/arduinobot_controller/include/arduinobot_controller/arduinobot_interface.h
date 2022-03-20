@@ -7,7 +7,7 @@
 #include <ros/ros.h>
 #include <boost/scoped_ptr.hpp>
 #include <vector>
-#include "std_msgs/UInt16MultiArray.h"
+#include <std_msgs/UInt16MultiArray.h>
 #include "arduinobot_controller/AnglesConverter.h"
 
 class ArduinobotInterface: public hardware_interface::RobotHW {

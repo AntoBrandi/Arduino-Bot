@@ -4,11 +4,11 @@
   <version>0.0.0</version>
   <description>The arduinobot_description package</description>
 
-  <maintainer email="antonio.brandi@outlook.it">Antonio Brandi</maintainer>
+  <maintainer email="antonio.brandi@todo.com">Antonio Brandi</maintainer>
 
   <license>BSD</license>
 
-  <author email="antonio.brandi@outlook.it">Antonio Brandi</author>
+  <author email="antonio.brandi@todo.com">Antonio Brandi</author>
 
 
   <buildtool_depend>catkin</buildtool_depend>

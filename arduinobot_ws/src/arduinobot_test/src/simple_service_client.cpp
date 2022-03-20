@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "add_two_ints_client");
     if (argc != 3)
     {
-        ROS_INFO("usage: add_two_ints_client X Y");
+        ROS_INFO("Requested two arguments");
         return 1;
     }
 
@@ -24,9 +24,10 @@ int main(int argc, char **argv)
     srv.request.b = atoll(argv[2]);
 
     // Show the response of the service
+    ROS_INFO("Requesting %d + %d", (int)srv.request.a, (int)srv.request.b);
     if (client.call(srv))
     {
-        ROS_INFO("Sum: %ld", (long int)srv.response.sum);
+        ROS_INFO("Service Response %d", (int)srv.response.sum);
     }
     else
     {

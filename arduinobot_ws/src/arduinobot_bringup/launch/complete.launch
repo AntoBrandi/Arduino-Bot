@@ -11,13 +11,11 @@
     </include>
 
     <!-- Launch moveit move_group -->
-    <include file="$(find arduinobot_moveit)/launch/move_group.launch">
-        <arg name="states_topic" value="arduinobot" />
-    </include>
+    <include file="$(find arduinobot_moveit)/launch/move_group.launch"/>
 
     <!-- Launch moveit rviz gui -->
     <include file="$(find arduinobot_moveit)/launch/moveit_rviz.launch">
-        <arg name="config" value="true" />
+        <arg name="rviz_config" value="$(find arduinobot_moveit)/launch/moveit.rviz"/>
     </include>
 
     <!-- Launch the interface with alexa -->

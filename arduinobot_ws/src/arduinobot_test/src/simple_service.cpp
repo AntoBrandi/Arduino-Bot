@@ -7,10 +7,8 @@ bool add(arduinobot_test::AddTwoInts::Request  &req,
 {
     // Function that is called each time the service receives a request
     // The request message is passed as input to this function
-
+    ROS_INFO("Ready to sum %d and %d", (int)req.a, (int)req.b);
     res.sum = req.a + req.b;
-    ROS_INFO("request: x=%ld, y=%ld", (long int)req.a, (long int)req.b);
-    ROS_INFO("sending back response: [%ld]", (long int)res.sum);
     return true;
 }
 
@@ -24,7 +22,7 @@ int main(int argc, char **argv)
     // for the Request/Response communication interface
     // Define the function that is called each time the service receives a request
     ros::ServiceServer service = n.advertiseService("add_two_ints", add);
-    ROS_INFO("Ready to add two ints.");
+    ROS_INFO("The service is ready to add two ints.");
 
     // keeps the node up and running
     ros::spin();

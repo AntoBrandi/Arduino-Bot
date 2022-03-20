@@ -5,15 +5,15 @@ project(arduinobot_remote)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  actionlib_msgs                
+  actionlib             
   std_msgs                      
   message_generation 
   moveit_ros_planning_interface
 )
 
 add_action_files(
-  DIRECTORY action
-  FILES ArduinobotTask.action
+  FILES 
+  ArduinobotTask.action
 )
 
 generate_messages(
@@ -23,21 +23,12 @@ generate_messages(
 )
 
 
-catkin_package(
-  CATKIN_DEPENDS std_msgs actionlib_msgs message_runtime
-)
+catkin_package()
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(moveit_interface
-  src/moveit_interface.cpp
-)
-
-target_link_libraries(moveit_interface
-  ${catkin_LIBRARIES}
-)
-
 add_executable(task_server src/task_server.cpp)
-target_link_libraries(task_server ${catkin_LIBRARIES} moveit_interface)
+add_dependencies(task_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(task_server ${catkin_LIBRARIES})

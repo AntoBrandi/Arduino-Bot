@@ -6,36 +6,33 @@
 int main(int argc, char **argv)
 {
     // Inizialize a ROS node called talker
-    ros::init(argc, argv, "talker");
+    ros::init(argc, argv, "simple_publisher_cpp");
     ros::NodeHandle n;
 
     // register a publisher on the topic /chatter that will publish String messages
-    ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+    ros::Publisher pub = n.advertise<std_msgs::String>("chatter", 10);
 
     // Define the frequency for publishing the messages
     // The rate is expressed in Hertz
-    ros::Rate loop_rate(10); // Hz
+    ros::Rate rate(10); // Hz
 
 
-    int count = 0;
+    int counter = 0;
     // Keep going publishing messages until the ROS communication is alive
     while (ros::ok())
     {
         std_msgs::String msg;
 
         std::stringstream ss;
-        ss << "hello world " << count;
+        ss << "Hello world " << counter;
         msg.data = ss.str();
-
-        ROS_INFO("%s", msg.data.c_str());
-
-        chatter_pub.publish(msg);
+        pub.publish(msg);
 
         ros::spinOnce();
 
         // wait the desired rate before publishing the next message
-        loop_rate.sleep();
-        ++count;
+        rate.sleep();
+        ++counter;
     }
 
 

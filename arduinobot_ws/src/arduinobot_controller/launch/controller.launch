@@ -9,10 +9,12 @@
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find arduinobot_controller)/config/joint_state_controller.yaml" command="load"/>
 
+    <param name="robot_description" command="$(find xacro)/xacro $(find arduinobot_description)/urdf/arduinobot.urdf.xacro"/>
+
     <!-- If interfacing with the real Hardware -->
     <group unless="$(arg is_sim)">
         <!-- Launch the rosserial node that interface ROS with Arduino -->
-        <node pkg="rosserial_python" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">
+        <node pkg="rosserial_arduino" type="serial_node.py" name= "serial_interface" respawn="true" output="screen">
             <param name="port" value="/dev/ttyACM0" />
         </node>
 
@@ -22,7 +24,7 @@
 
         <!-- Launch the Hardware interface with the real robot -->
         <node name="arduinobot_interface_node" pkg="arduinobot_controller" type="arduinobot_interface_node" 
-            ns="/arduinobot" respawn="false" output="screen"/>
+            ns="/arduinobot" respawn="true" output="screen"/>
     </group>
 
     <!-- Load the controllers -->

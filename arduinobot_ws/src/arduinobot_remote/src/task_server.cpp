@@ -11,13 +11,16 @@
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
 #include <arduinobot_remote/ArduinobotTaskAction.h>
-#include <sensor_msgs/JointState.h>
-#include "moveit_interface.cpp"
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <vector>
+
+static const std::string ARM_GROUP_NAME = "arduinobot_arm";
+static const std::string GRIPPER_GROUP_NAME = "arduinobot_hand";
 
 
 class TaskServer
 {
-protected:
+private:
 
   ros::NodeHandle nh_;
   actionlib::SimpleActionServer<arduinobot_remote::ArduinobotTaskAction> as_; // NodeHandle instance must be created before this line. Otherwise strange error occurs.
@@ -27,7 +30,8 @@ protected:
   arduinobot_remote::ArduinobotTaskResult result_;
   std::vector<double> arm_goal_;
   std::vector<double> gripper_goal_;
-  MoveitInterface moveit_;
+  moveit::planning_interface::MoveGroupInterface arm_move_group_;
+  moveit::planning_interface::MoveGroupInterface gripper_move_group_;
 
 public:
 
@@ -35,8 +39,10 @@ public:
   // function that inizialize the ArduinobotTaskAction class and creates 
   // a Simple Action Server from the library actionlib
   TaskServer(std::string name) :
-    as_(nh_, name, boost::bind(&TaskServer::execute_cb, this, _1), false),
-    action_name_(name)
+    as_(nh_, name, boost::bind(&TaskServer::execute_cb, this, _1), false)
+    , action_name_(name)
+    , arm_move_group_(ARM_GROUP_NAME)
+    , gripper_move_group_(GRIPPER_GROUP_NAME)
   {
     as_.start();
   }
@@ -69,9 +75,16 @@ public:
     }
 
     // Sends a goal to the moveit API
-    moveit_.set_max_velocity(0.7);
-    moveit_.set_max_acceleration(0.1);
-    moveit_.reach_goal(arm_goal_, gripper_goal_);
+    arm_move_group_.setJointValueTarget(arm_goal_);
+    gripper_move_group_.setJointValueTarget(gripper_goal_);
+
+    // blocking functions below, will return after the execution
+    arm_move_group_.move();
+    gripper_move_group_.move();
+
+    // Make sure that no residual movement remains
+    arm_move_group_.stop();
+    gripper_move_group_.stop();
 
     // check that preempt has not been requested by the client
     if (as_.isPreemptRequested() || !ros::ok())
