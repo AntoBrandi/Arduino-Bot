@@ -19,7 +19,6 @@
 
 // Define the working range for each joint
 #define MIN_RANGE 0
-#define MIN_RANGE_GRIPPER 40
 #define MAX_RANGE 180
 
 // Define the start configuration of the joints
@@ -37,50 +36,25 @@ Servo gripper;
 // Initialize the ROS node
 ros::NodeHandle  nh;
 
-// Keep track of the last angle of each servo
-// When a new angle is assigned to a servo, start its movement from 
-// the last known position instead of restarting from 0
-int last_angle_base = BASE_START;
-int last_angle_shoulder = SHOULDER_START;
-int last_angle_elbow = ELBOW_START;
-int last_angle_gripper = GRIPPER_START;
-
 /*
  * This function moves a given servo smoothly from a given start position to a given end position.
  * The mouvement can be both clockwise or counterclockwise based on the values assigned to
  * the start position and end position
  */
-void reach_goal(Servo servo, int start_point, int end_point){
-  if(end_point>=start_point){
+void reach_goal(Servo& motor, int goal){
+  if(goal>=motor.read()){
     // goes from the start point degrees to the end point degrees
-    for (int pos = start_point; pos <= end_point; pos += 1) { 
-      servo.write(pos);     
+    for (int pos = motor.read(); pos <= goal; pos += 1) { 
+      motor.write(pos);     
       delay(5);                       
     }
   } else{
     // goes from the end point degrees to the start point degrees
-    for (int pos = start_point; pos >= end_point; pos -= 1) { 
-      servo.write(pos);     
+    for (int pos = motor.read(); pos >= goal; pos -= 1) { 
+      motor.write(pos);     
       delay(5);                       
     }
   }
-}
-
-/*
- * This function triggers the actuation of each servo motor of the arm 
- * and keeps track of the last position of each joint for the next execution.
- * So that, the start point for the current actuation of the servo motors is the 
- * last registered position for the joint
- */
-void move_arm(int base_angle, int shoulder_angle, int elbow_angle, int gripper_angle){
-  reach_goal(base, last_angle_base, base_angle);
-  reach_goal(shoulder, last_angle_shoulder, shoulder_angle);
-  reach_goal(elbow, last_angle_elbow, elbow_angle);
-  reach_goal(gripper, last_angle_gripper, gripper_angle);
-  last_angle_base = base_angle;
-  last_angle_shoulder = shoulder_angle;
-  last_angle_elbow = elbow_angle;
-  last_angle_gripper = gripper_angle;
 }
 
 
@@ -99,23 +73,22 @@ void move_arm(int base_angle, int shoulder_angle, int elbow_angle, int gripper_a
  * and then each servo is actuated. 
  */
 void arm_actuate_cb( const std_msgs::UInt16MultiArray& msg){
-  int base_angle = (int)msg.data[0];
-  int shoulder_angle = (int)msg.data[1];
-  int elbow_angle = (int)msg.data[2];
-  int gripper_angle = (int)msg.data[3];
 
   // check that the received data are bounded correctly
-  if(base_angle<MIN_RANGE) base_angle = MIN_RANGE;
-  if(shoulder_angle<MIN_RANGE) shoulder_angle = MIN_RANGE;
-  if(elbow_angle<MIN_RANGE) elbow_angle = MIN_RANGE;
-  if(gripper_angle<MIN_RANGE_GRIPPER) gripper_angle = MIN_RANGE_GRIPPER;
+  if(msg.data[0]<MIN_RANGE) msg.data[0] = MIN_RANGE;
+  if(msg.data[1]<MIN_RANGE) msg.data[1] = MIN_RANGE;
+  if(msg.data[2]<MIN_RANGE) msg.data[2] = MIN_RANGE;
+  if(msg.data[3]<MIN_RANGE) msg.data[3] = MIN_RANGE;
 
-  if(base_angle>MAX_RANGE) base_angle = MAX_RANGE;
-  if(shoulder_angle>MAX_RANGE) shoulder_angle = MAX_RANGE;
-  if(elbow_angle>MAX_RANGE) elbow_angle = MAX_RANGE;
-  if(gripper_angle>MAX_RANGE) gripper_angle = MAX_RANGE;
+  if(msg.data[0]>MAX_RANGE) msg.data[0] = MAX_RANGE;
+  if(msg.data[1]>MAX_RANGE) msg.data[1] = MAX_RANGE;
+  if(msg.data[2]>MAX_RANGE) msg.data[2] = MAX_RANGE;
+  if(msg.data[3]>MAX_RANGE) msg.data[3] = MAX_RANGE;
 
-  move_arm(base_angle, shoulder_angle, elbow_angle, gripper_angle);
+  reach_goal(base, msg.data[0]);
+  reach_goal(shoulder, msg.data[1]);
+  reach_goal(elbow, msg.data[2]);
+  reach_goal(gripper, msg.data[3]);
 }
 
 // Define the subscriber to the topic /servo_actuate where are published UInt16MultiArray messages
