@@ -22,11 +22,16 @@ generate_messages(
   actionlib_msgs
 )
 
-
 catkin_package()
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
+)
+
+catkin_install_python(PROGRAMS 
+    scripts/task_server.py 
+    scripts/alexa_interface.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 add_executable(task_server src/task_server.cpp)
