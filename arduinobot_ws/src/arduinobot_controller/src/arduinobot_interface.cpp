@@ -15,6 +15,8 @@
 */
 
 #include "arduinobot_controller/arduinobot_interface.h"
+#include <std_msgs/UInt16MultiArray.h>
+#include "arduinobot_controller/AnglesConverter.h"
 
 
 ArduinobotInterface::ArduinobotInterface(ros::NodeHandle& nh) : nh_(nh), 
