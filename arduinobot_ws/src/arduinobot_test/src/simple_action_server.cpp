@@ -5,16 +5,13 @@
 
 class FibonacciActionServer
 {
-protected:
-
+public:
   ros::NodeHandle nh_;
   actionlib::SimpleActionServer<arduinobot_test::FibonacciAction> as_; 
   std::string action_name_;
   // create messages that are used to published feedback/result
   arduinobot_test::FibonacciFeedback feedback_;
   arduinobot_test::FibonacciResult result_;
-
-public:
 
   FibonacciActionServer(std::string name) :
     as_(nh_, name, boost::bind(&FibonacciActionServer::executeCB, this, _1), false),
@@ -64,8 +61,6 @@ public:
       as_.setSucceeded(result_);
     }
   }
-
-
 };
 
 
