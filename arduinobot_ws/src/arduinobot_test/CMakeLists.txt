@@ -38,7 +38,7 @@ catkin_install_python(PROGRAMS
     scripts/simple_service.py
     scripts/simple_service_client.py
     scripts/simple_action_server.py
-    scripts/simple_action_server.py
+    scripts/simple_action_client.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
