@@ -24,9 +24,13 @@ int main (int argc, char **argv)
   //wait for the action to return
   ac.waitForResult(ros::Duration(30.0));
 
-  actionlib::SimpleClientGoalState state = ac.getState();
-  ROS_INFO("Action finished: %s",state.toString().c_str());
-
+  arduinobot_test::FibonacciResultConstPtr result = ac.getResult();
+  ROS_INFO("Action finished:");
+  for (int i : result->sequence)
+  {
+    ROS_INFO("%d", i);
+  }
+  
   //exit
   return 0;
 }
