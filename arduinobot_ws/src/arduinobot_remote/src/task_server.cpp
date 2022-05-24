@@ -14,9 +14,6 @@
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <vector>
 
-static const std::string ARM_GROUP_NAME = "arduinobot_arm";
-static const std::string GRIPPER_GROUP_NAME = "arduinobot_hand";
-
 
 class TaskServer
 {
@@ -25,8 +22,7 @@ private:
   ros::NodeHandle nh_;
   actionlib::SimpleActionServer<arduinobot_remote::ArduinobotTaskAction> as_; // NodeHandle instance must be created before this line. Otherwise strange error occurs.
   std::string action_name_;
-  // create messages that are used to published feedback/result
-  arduinobot_remote::ArduinobotTaskFeedback feedback_;
+  // create messages that are used to publish result
   arduinobot_remote::ArduinobotTaskResult result_;
   std::vector<double> arm_goal_;
   std::vector<double> gripper_goal_;
@@ -41,8 +37,8 @@ public:
   TaskServer(std::string name) :
     as_(nh_, name, boost::bind(&TaskServer::execute_cb, this, _1), false)
     , action_name_(name)
-    , arm_move_group_(ARM_GROUP_NAME)
-    , gripper_move_group_(GRIPPER_GROUP_NAME)
+    , arm_move_group_("arduinobot_arm")
+    , gripper_move_group_("arduinobot_hand")
   {
     as_.start();
   }

@@ -15,9 +15,6 @@ import moveit_commander
   Copyright (c) 2021 Antonio Brandi.  All right reserved.
 """
 
-ARM_GROUP_NAME = 'arduinobot_arm'
-GRIPPER_GROUP_NAME = 'arduinobot_hand'
-
 
 class TaskServer(object):
     # create messages that are used to publish feedback/result
@@ -35,10 +32,10 @@ class TaskServer(object):
         moveit_commander.roscpp_initialize(sys.argv)
 
         # create a move group commander object that will be the interface with the robot joints
-        self.arm_move_group_ = moveit_commander.MoveGroupCommander(ARM_GROUP_NAME)
+        self.arm_move_group_ = moveit_commander.MoveGroupCommander('arduinobot_arm')
 
         # create a move group commander object for the gripper
-        self.gripper_move_group_ = moveit_commander.MoveGroupCommander(GRIPPER_GROUP_NAME)
+        self.gripper_move_group_ = moveit_commander.MoveGroupCommander('arduinobot_hand')
 
         self.action_name_ = name
         self.as_ = actionlib.SimpleActionServer(self.action_name_, ArduinobotTaskAction, execute_cb=self.execute_cb, auto_start = False)
