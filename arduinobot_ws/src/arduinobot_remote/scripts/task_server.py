@@ -60,6 +60,7 @@ class TaskServer(object):
             self.gripper_goal_ = [0.0, 0.0]
         else:
             rospy.logerr('Invalid goal')
+            return
 
         # Sends a goal to the moveit API
         self.arm_move_group_.go(self.arm_goal_, wait=True)

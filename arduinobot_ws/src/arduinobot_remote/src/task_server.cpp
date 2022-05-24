@@ -68,6 +68,7 @@ public:
     else
     {
         ROS_ERROR("Invalid goal");
+        return;
     }
 
     // Sends a goal to the moveit API
