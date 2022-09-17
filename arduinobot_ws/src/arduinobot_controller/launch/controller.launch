@@ -32,7 +32,7 @@
         ns="/arduinobot" args="joint_state_controller arm_controller gripper_controller" />
 
     <!-- Convert joint states to TF transforms for rviz, etc -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen">
         <remap from="/joint_states" to="/arduinobot/joint_states" />
     </node>
 
