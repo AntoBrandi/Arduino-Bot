@@ -1,14 +1,18 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.5)
 project(arduinobot_description)
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
+
+find_package(ament_cmake REQUIRED)
+find_package(urdf REQUIRED)
+
+install(
+  DIRECTORY launch meshes urdf rviz config
+  DESTINATION share/${PROJECT_NAME}
 )
 
-catkin_package()
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+ament_package()
