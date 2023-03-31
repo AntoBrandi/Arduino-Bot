@@ -1,13 +1,6 @@
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
+[![Udemy][udemy-shield]][udemy-url]
+[![Skillshare][skillshare-shield]][skillshare-url]
 
 
 <!-- PROJECT LOGO -->
@@ -15,10 +8,10 @@
 <p align="center">
    <img src="images/logo.png" alt="Logo">
 
-  <h3 align="center">arduinobot</h3>
+  <h3 align="center">Arduinobot</h3>
 
   <p align="center">
-    3D printed robot arm powered by ROS and Arduino Uno
+    3D Printed robot arm powered by ROS and Arduino and controlled via MoveIt! and Amazon Alexa.
     <br />
     <a href="https://github.com/AntoBrandi/arduinobot/"><strong>Explore the docs »</strong></a>
     <br />
@@ -59,6 +52,14 @@ Despite all the other robot arms built with an Aruidno Uno that are controlled b
 Furthermore, it implements a speech recognition module that can run on any computer with a microphone that is connected to the same Wi-Fi network 
 of the robot.
 
+This Robot is Build and Developed in the online course called: **Robotics and ROS - Learn by Doing! Manipulators** and is currently available on the following platforms:
+
+* [Udemy](https://www.udemy.com/course/robotics-and-ros-learn-by-doing-manipulators/?couponCode=LEARNBYDOING)
+* [Skillshare](https://skl.sh/3UAFaXW)
+
+If you want more information on the course or just want to check the course material this [link](https://github.com/AntoBrandi/Robotics-and-ROS-Learn-by-Doing-Manipulators) is for you
+
+
 ### Built With
 This robot is powered by:
 * PC with Ubuntu 20.04 with ROS Noetic
@@ -74,7 +75,7 @@ And is controlled by:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Once it's printed and assembled according and connected, there are few configuration to be made in both Ubuntu 18.04 side and Arduino UNO.
+Once it's printed and assembled according and connected, there are few configuration to be made both in Ubuntu and in the Arduino UNO.
 
 ### Prerequisites
 
@@ -84,19 +85,13 @@ Download the ISO [Ubuntu 20.04](https://ubuntu.com/download/alternative-download
 * Install [ROS Noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) on your Ubuntu 20.04
 * Install ROS missing libraries. Some libraries that are used in this project are not in the standard ROS package. Install them with:
 ```sh
-sudo apt-get install ros-noetic-rosserial
-```
-```sh
-sudo apt-get install ros-noetic-rosserial-arduino
-```
-```sh
-sudo apt-get install ros-noetic-gazebo-ros-control
-```
-```sh
-sudo apt-get install ros-noetic-moveit
-```
-```sh
-sudo apt-get install ros-noetic-actionlib-tools
+sudo apt-get update && sudo apt-get install -y \
+     ros-noetic-rosserial \
+     ros-noetic-gazebo-ros-control \
+     ros-noetic-joint-state-publisher-gui \
+     ros-noetic-rosserial-arduino \
+     ros-noetic-moveit \
+     ros-noetic-actionlib-tools
 ```
 * Install VS Code and Arduino IDE on your PC in order to build and load the Arduino code on the device
 
@@ -107,23 +102,18 @@ sudo apt-get install ros-noetic-actionlib-tools
 ```sh
 git clone https://github.com/AntoBrandi/arduinobot.git
 ```
-2. If you are using Ubuntu 20.04 with ROS Noetic change the branch to ```noetic```
-```sh
-cd ~/Arduino-Bot
-git checkout noetic
-```
-3. Build the ROS workspace
+2. Build the ROS workspace
 ```sh
 cd ~/Arduino-Bot/arduinobot_ws
 ```
 ```sh
 catkin_make
 ```
-4. Source the project
+3. Source the ROS Workspace
 ```sh
 source devel/setup.bash
 ```
-5. Connect the Arduino UNO to your PC and open the Arduino IDE. Open the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/noetic/arduinobot_ws/src/arduinobot_controller/arduino)
+4. Connect the Arduino UNO to your PC and open the Arduino IDE. Open the [folder](https://github.com/AntoBrandi/Arduino-Bot/tree/noetic/arduinobot_ws/src/arduinobot_controller/arduino)
 containing the code for the Arduino controller.
 
 
@@ -194,9 +184,12 @@ My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/antonio-brandi-512166bb/
+[udemy-shield]: https://img.shields.io/badge/-Udemy-black.svg?style=flat-square&logo=udemy&colorB=555
+[udemy-url]: https://www.udemy.com/user/antonio-brandi/
+[skillshare-shield]: https://img.shields.io/badge/-Skillshare-black.svg?style=flat-square&logo=skillshare&colorB=555
+[skillshare-url]: https://www.skillshare.com/en/profile/Antonio-Brandi/471799472
 [product-screenshot]: images/BB3A0020.jpg
 [product-screenshot-2]: images/BB3A0026.jpg
 [product-screenshot-real]: images/screen_video.png
