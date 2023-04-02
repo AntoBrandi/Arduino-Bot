@@ -1,6 +1,8 @@
 #include <rclcpp/rclcpp.hpp>
 #include "arduinobot_msgs/srv/add_two_ints.hpp"
 
+#include <memory>
+
 
 using std::placeholders::_1;
 using std::placeholders::_2;

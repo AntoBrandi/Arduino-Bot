@@ -21,8 +21,8 @@ class SimplePublisher(Node):
         self.counter_ += 1
 
 
-def main(args=None):
-    rclpy.init(args=args)
+def main():
+    rclpy.init()
 
     simple_publisher = SimplePublisher()
     rclpy.spin(simple_publisher)

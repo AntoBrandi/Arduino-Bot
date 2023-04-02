@@ -14,8 +14,8 @@ class SimpleSubscriber(Node):
         self.get_logger().info("I heard: %s" % msg.data)
 
 
-def main(args=None):
-    rclpy.init(args=args)
+def main():
+    rclpy.init()
 
     simple_publisher = SimpleSubscriber()
     rclpy.spin(simple_publisher)
