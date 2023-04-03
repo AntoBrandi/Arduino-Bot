@@ -4,8 +4,7 @@
 #include <memory>
 
 
-using std::placeholders::_1;
-using std::placeholders::_2;
+using namespace std::placeholders;
 
 class SimpleServiceServer : public rclcpp::Node
 {
