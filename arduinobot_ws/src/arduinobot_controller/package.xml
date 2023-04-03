@@ -1,31 +1,21 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
   <name>arduinobot_controller</name>
   <version>0.0.0</version>
   <description>The arduinobot_controller package</description>
+  <maintainer email="antonio.brandi@outlook.it">Antonio Brandi</maintainer>
+  <license>Apache 2.0</license>
+  <author email="antonio.brandi@outlook.it">Antonio Brandi</author>
 
-  <maintainer email="antonio.brandi@todo.com">Antonio Brandi</maintainer>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <license>BSD</license>
-
-  <author email="antonio.brandi@todo.com">Antonio Brandi</author>
-
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>rospy</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_depend>controller_manager</build_depend>
-  <build_depend>hardware_interface</build_depend>
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>rospy</build_export_depend>
-  <build_export_depend>std_msgs</build_export_depend>
-  <build_export_depend>controller_manager</build_export_depend>
-  <build_export_depend>hardware_interface</build_export_depend>
-  <exec_depend>roscpp</exec_depend>
-  <exec_depend>rospy</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
-  <exec_depend>message_runtime</exec_depend>
   <exec_depend>controller_manager</exec_depend>
-  <exec_depend>hardware_interface</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 
 </package>

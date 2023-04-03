@@ -1,8 +1,10 @@
+# Request
 float64 base
 float64 shoulder
 float64 elbow 
 float64 gripper
 ---
+# Response
 float64 base
 float64 shoulder
 float64 elbow 

@@ -1,4 +1,0 @@
-# Move this to the arduinobot_controller pkg
-controller_manager:
-  ros__parameters:
-    update_rate: 100 # Hz

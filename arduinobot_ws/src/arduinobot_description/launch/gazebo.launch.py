@@ -52,7 +52,6 @@ def generate_launch_description():
                         output='screen'
     )
 
-
     return LaunchDescription([
         env_var,
         model_arg,
