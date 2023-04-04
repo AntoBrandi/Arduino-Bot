@@ -1,11 +1,23 @@
 moveit_setup_assistant_config:
-  URDF:
+  urdf:
     package: arduinobot_description
     relative_path: urdf/arduinobot.urdf.xacro
-    xacro_args: ""
-  SRDF:
+  srdf:
     relative_path: config/arduinobot.srdf
-  CONFIG:
+  package_settings:
     author_name: Antonio Brandi
-    author_email: youremail@gmail.com
-    generated_timestamp: 1643476199
+    author_email: antonio.brandi@outlook.it
+    generated_timestamp: 1680640039
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position

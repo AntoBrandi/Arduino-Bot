@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
-
-    <!-- Useful Variables (Properties) -->
-    <xacro:property name="PI" value="3.14159265359" />
-    <xacro:property name="effort" value="30" />
-    <xacro:property name="velocity" value="10" />
+    
+    <!-- Include XACRO Variables -->
+    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_variables.xacro" />
     
     <!-- Include Gazebo Parameters -->
     <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" />
@@ -160,7 +158,8 @@
         <child link = "base_plate"/>
         <origin xyz="0 0 0.307"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI / 2}" upper="${PI / 2}" effort="${effort}" velocity="${velocity}"/>
+        <limit lower="${joint_arm_lower_limit}" upper="${joint_arm_upper_limit}" 
+               effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="joint_2" type="revolute">
@@ -168,7 +167,8 @@
         <child link = "forward_drive_arm"/>
         <origin xyz="-0.02 0 0.35"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-${PI / 2}" upper="${PI / 2}" effort="${effort}" velocity="${velocity}"/>
+        <limit lower="${joint_arm_lower_limit}" upper="${joint_arm_upper_limit}"
+                effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="joint_3" type="revolute">
@@ -176,7 +176,8 @@
         <child link = "horizontal_arm"/>
         <origin xyz="0 0 0.8"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-${PI / 2}" upper="${PI / 2}" effort="${effort}" velocity="${velocity}"/>
+        <limit lower="${joint_arm_lower_limit}" upper="${joint_arm_upper_limit}"
+               effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="horizontal_arm_to_claw_support" type="fixed">
@@ -190,7 +191,8 @@
         <child link = "gripper_right"/>
         <origin xyz="-0.04 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI / 2}" upper="0" effort="${effort}" velocity="${velocity}"/>
+        <limit lower="${joint_finger_right_lower_limit}" upper="${joint_finger_right_upper_limit}" 
+               effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="joint_5" type="revolute">
@@ -198,7 +200,8 @@
         <child link = "gripper_left"/>
         <origin xyz="-0.22 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
-        <limit lower="0" upper="${PI / 2}" effort="${effort}" velocity="${velocity}"/>
+        <limit lower="${joint_finger_left_lower_limit}" upper="${joint_finger_left_upper_limit}" 
+               effort="${effort}" velocity="${velocity}"/>
     </joint>
 
     <joint name ="gripper_right_to_tool" type="fixed">
