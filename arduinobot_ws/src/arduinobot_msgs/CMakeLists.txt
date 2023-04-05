@@ -13,6 +13,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/AddTwoInts.srv"
   "srv/AnglesConverter.srv"
   "action/Fibonacci.action"
+  "action/ArduinobotTask.action"
 )
 
 ament_package()

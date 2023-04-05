@@ -1,8 +1,8 @@
 # Goal         
-int64 task_number
+int32 task_number
 ---
 # Result
 bool success
 ---
 # Feedback
-int64 percentage
+int32 percentage
