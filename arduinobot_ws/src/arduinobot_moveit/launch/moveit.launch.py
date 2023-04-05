@@ -9,11 +9,14 @@ def generate_launch_description():
 
     moveit_config = (
         MoveItConfigsBuilder("arduinobot", package_name="arduinobot_moveit")
-        .robot_description(
-            file_path="config/arduinobot.urdf.xacro" # TODO: take from arduinobot_description
+        .robot_description(file_path=os.path.join(
+            get_package_share_directory("arduinobot_description"),
+            "urdf",
+            "arduinobot.urdf.xacro"
+            )
         )
         .robot_description_semantic(file_path="config/arduinobot.srdf")
-        .trajectory_execution(file_path="config/moveit_controllers.yaml") # TODO: take from arduinobot_controller
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
         .to_moveit_configs()
     )
 
