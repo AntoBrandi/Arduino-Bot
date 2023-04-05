@@ -58,7 +58,6 @@
           <param name="min">${joint_finger_left_lower_limit}</param>
           <param name="max">${joint_finger_left_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
       </joint>
 
     </ros2_control>

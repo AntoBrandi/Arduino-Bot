@@ -202,6 +202,7 @@
         <axis xyz="0 0 1"/>
         <limit lower="${joint_finger_left_lower_limit}" upper="${joint_finger_left_upper_limit}" 
                effort="${effort}" velocity="${velocity}"/>
+        <mimic joint="joint_4" multiplier="-1"/>
     </joint>
 
     <joint name ="gripper_right_to_tool" type="fixed">
