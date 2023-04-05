@@ -28,7 +28,6 @@
     </group_state>
     <group_state name="home" group="gripper">
         <joint name="joint_4" value="0"/>
-        <joint name="joint_5" value="0"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
