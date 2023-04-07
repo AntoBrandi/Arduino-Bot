@@ -7,13 +7,14 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractRequestHandler, AbstractExceptionHandler
-from arduinobot_remote.msg import ArduinobotTaskAction, ArduinobotTaskGoal
-import rospy
+from arduinobot_msgs.action import ArduinobotTask
+import rclpy
+from rclpy.node import Node
 import threading
-import actionlib
+from rclpy.action import ActionClient
 
-threading.Thread(target=lambda: rospy.init_node('alexa_interface', disable_signals=True)).start()
-client = actionlib.SimpleActionClient('task_server', ArduinobotTaskAction)
+threading.Thread(target=lambda: rclpy.init()).start()
+action_client = ActionClient(Node('alexa_interface'), ArduinobotTask, "task_server")
 
 app = Flask(__name__)
 
@@ -31,8 +32,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
             SimpleCard("Online", speech_text)).set_should_end_session(
             False)
 
-        goal = ArduinobotTaskGoal(task_number=0)
-        client.send_goal(goal)
+        goal = ArduinobotTask.Goal()
+        goal.task_number = 0
+        action_client.send_goal_async(goal)
 
         return handler_input.response_builder.response
 
@@ -50,8 +52,9 @@ class PickIntentHandler(AbstractRequestHandler):
             SimpleCard("Pick", speech_text)).set_should_end_session(
             True)
 
-        goal = ArduinobotTaskGoal(task_number=1)
-        client.send_goal(goal)
+        goal = ArduinobotTask.Goal()
+        goal.task_number = 1
+        action_client.send_goal_async(goal)
 
         return handler_input.response_builder.response
 
@@ -69,8 +72,9 @@ class SleepIntentHandler(AbstractRequestHandler):
             SimpleCard("Sleep", speech_text)).set_should_end_session(
             True)
 
-        goal = ArduinobotTaskGoal(task_number=2)
-        client.send_goal(goal)
+        goal = ArduinobotTask.Goal()
+        goal.task_number = 2
+        action_client.send_goal_async(goal)
 
         return handler_input.response_builder.response
 
@@ -88,8 +92,9 @@ class WakeIntentHandler(AbstractRequestHandler):
             SimpleCard("Wake", speech_text)).set_should_end_session(
             True)
             
-        goal = ArduinobotTaskGoal(task_number=0)
-        client.send_goal(goal)
+        goal = ArduinobotTask.Goal()
+        goal.task_number = 0
+        action_client.send_goal_async(goal)
 
         return handler_input.response_builder.response
 
@@ -117,7 +122,8 @@ skill_builder.add_exception_handler(AllExceptionHandler())
 
 
 skill_adapter = SkillAdapter(
-    skill=skill_builder.create(), skill_id="SKILL-ID",
+    skill=skill_builder.create(), 
+    skill_id="SKILL-ID",
     app=app)
 
 

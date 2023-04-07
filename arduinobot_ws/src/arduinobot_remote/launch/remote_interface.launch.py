@@ -5,13 +5,13 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     task_server_node = Node(
-        package="arduinobot_cpp_remote",
+        package="arduinobot_remote",
         executable="task_server",
     )
 
     alexa_interface_node = Node(
-        package="arduinobot_py_remote",
-        executable="alexa_interface",
+        package="arduinobot_remote",
+        executable="alexa_interface.py",
     )
 
     return LaunchDescription([

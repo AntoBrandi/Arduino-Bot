@@ -1,39 +1,54 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.8)
 project(arduinobot_remote)
 
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  actionlib             
-  std_msgs                      
-  message_generation 
-  moveit_ros_planning_interface
+find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(rclcpp_components REQUIRED)
+find_package(arduinobot_msgs REQUIRED)
+find_package(moveit_ros_planning_interface REQUIRED)
+find_package(rclpy REQUIRED)
+
+add_library(task_server SHARED src/task_server.cpp)
+target_include_directories(task_server PRIVATE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_definitions(task_server
+  PRIVATE "TASK_SERVER_CPP_BUILDING_DLL")
+ament_target_dependencies(task_server
+  "arduinobot_msgs"
+  "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components"
+  "moveit_ros_planning_interface")
+rclcpp_components_register_node(task_server 
+  PLUGIN "arduinobot_remote::TaskServer" 
+  EXECUTABLE task_server_node
 )
 
-add_action_files(
-  FILES 
-  ArduinobotTask.action
+ament_python_install_package(${PROJECT_NAME})
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
 
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-  actionlib_msgs
+install(TARGETS 
+  task_server
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+  DESTINATION lib/${PROJECT_NAME}
 )
 
-catkin_package()
-
-include_directories(
-  ${catkin_INCLUDE_DIRS}
+install(PROGRAMS
+  ${PROJECT_NAME}/alexa_interface.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
-catkin_install_python(PROGRAMS 
-    scripts/task_server.py 
-    scripts/alexa_interface.py
-    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-add_executable(task_server src/task_server.cpp)
-add_dependencies(task_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(task_server ${catkin_LIBRARIES})
+ament_package()
