@@ -16,7 +16,7 @@ class SimpleSerialReceiver(Node):
         self.port_ = self.get_parameter("port").value
         self.baudrate_ = self.get_parameter("baudrate").value
 
-        self.pub_ = self.create_publisher(String, "simple_receiver", 10)
+        self.pub_ = self.create_publisher(String, "serial_receiver", 10)
         self.arduino_ = serial.Serial(port=self.port_, baudrate=self.baudrate_, timeout=0.1)
 
     def execute(self):

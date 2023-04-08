@@ -16,7 +16,7 @@ public:
 
     port_ = get_parameter("port").as_string();
 
-    pub_ = create_publisher<std_msgs::msg::String>("simple_receiver", 10);
+    pub_ = create_publisher<std_msgs::msg::String>("serial_receiver", 10);
 
     arduino_.Open(port_);
     arduino_.SetBaudRate(LibSerial::BaudRate::BAUD_115200);

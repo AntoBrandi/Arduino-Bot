@@ -16,7 +16,7 @@ public:
     port_ = get_parameter("port").as_string();
 
     sub_ = create_subscription<std_msgs::msg::String>(
-        "simple_transmitter", 10, std::bind(&SimpleSerialTransmitter::msgCallback, this, _1));
+        "serial_transmitter", 10, std::bind(&SimpleSerialTransmitter::msgCallback, this, _1));
     
     arduino_.Open(port_);
     arduino_.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
