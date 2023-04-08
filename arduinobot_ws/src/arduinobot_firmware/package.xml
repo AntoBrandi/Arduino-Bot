@@ -12,6 +12,7 @@
 
   <depend>rclcpp</depend>
   <depend>rclpy</depend>
+  <depend>libserial-dev</depend>
   
   <exec_depend>python3-serial</exec_depend>
 
