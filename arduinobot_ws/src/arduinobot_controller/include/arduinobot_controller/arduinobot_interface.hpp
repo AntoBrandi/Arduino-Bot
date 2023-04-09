@@ -20,16 +20,11 @@ class ArduinobotInterface : public hardware_interface::SystemInterface
 {
 public:
   ArduinobotInterface();
-
-  ~ArduinobotInterface();
+  virtual ~ArduinobotInterface();
 
   // Implementing rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface
-  virtual CallbackReturn on_configure(const rclcpp_lifecycle::State &previous_state) override;
-  virtual CallbackReturn on_cleanup(const rclcpp_lifecycle::State &previous_state) override;
-  virtual CallbackReturn on_shutdown(const rclcpp_lifecycle::State &previous_state) override;
   virtual CallbackReturn on_activate(const rclcpp_lifecycle::State &previous_state) override;
   virtual CallbackReturn on_deactivate(const rclcpp_lifecycle::State &previous_state) override;
-  virtual CallbackReturn on_error(const rclcpp_lifecycle::State &previous_state) override;
 
   // Implementing hardware_interface::SystemInterface
   virtual CallbackReturn on_init(const hardware_interface::HardwareInfo &hardware_info) override;
