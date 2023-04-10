@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
+
+    <!-- Load Simulated or Real Hardware Interfaces -->
+    <xacro:arg name="is_sim" default="true"/>
     
     <!-- Include XACRO Variables -->
     <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_variables.xacro" />
     
     <!-- Include Gazebo Parameters -->
     <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" />
+
+    <!-- Include ros2_control Plugins -->
+    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_ros2_control.xacro" />
 
     <!-- Useful Macros -->
     <xacro:macro name="default_inertial" params="mass">

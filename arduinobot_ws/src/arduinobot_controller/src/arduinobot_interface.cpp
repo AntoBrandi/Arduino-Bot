@@ -47,6 +47,7 @@ CallbackReturn ArduinobotInterface::on_init(const hardware_interface::HardwareIn
 
   position_commands_.reserve(info_.joints.size());
   position_states_.reserve(info_.joints.size());
+  prev_position_commands_.reserve(info_.joints.size());
 
   return CallbackReturn::SUCCESS;
 }
@@ -88,6 +89,7 @@ CallbackReturn ArduinobotInterface::on_activate(const rclcpp_lifecycle::State &p
 
   // Reset commands and states
   position_commands_ = { 0.0, 0.0, 0.0, 0.0 };
+  prev_position_commands_ = { 0.0, 0.0, 0.0, 0.0 };
   position_states_ = { 0.0, 0.0, 0.0, 0.0 };
 
   try
@@ -141,33 +143,42 @@ hardware_interface::return_type ArduinobotInterface::read(const rclcpp::Time &ti
 hardware_interface::return_type ArduinobotInterface::write(const rclcpp::Time &time,
                                                            const rclcpp::Duration &period)
 {
-  std::string msg;
-  for (size_t i = 0; i < info_.joints.size(); i++)
+  if (position_commands_ == prev_position_commands_)
   {
-    if (i > 0)
-    {
-      msg.append(",");  // Delimiter
-    }
-    msg.append(std::to_string(position_commands_.at(i)));
+    // Nothing changed, do not send any command
+    return hardware_interface::return_type::OK;
   }
+
+  std::string msg;
+  int base = static_cast<int>(((position_commands_.at(0) + (M_PI / 2)) * 180) / M_PI);
+  msg.append(std::to_string(base));
+  msg.append(",");
+  int shoulder = 180 - static_cast<int>(((position_commands_.at(1) + (M_PI / 2)) * 180) / M_PI);
+  msg.append(std::to_string(shoulder));
+  msg.append(",");
+  int elbow = static_cast<int>(((position_commands_.at(2) + (M_PI / 2)) * 180) / M_PI);
+  msg.append(std::to_string(elbow));
+  msg.append(",");
+  int gripper = static_cast<int>(((-position_commands_.at(3)) * 180) / (M_PI / 2));
+  msg.append(std::to_string(gripper));
 
   try
   {
+    RCLCPP_INFO_STREAM(rclcpp::get_logger("ArduinobotInterface"), "Sending new command " << msg);
     arduino_.Write(msg);
   }
   catch (...)
   {
     RCLCPP_ERROR_STREAM(rclcpp::get_logger("ArduinobotInterface"),
                         "Something went wrong while sending the message "
-                        << msg << " to the port " << port_);
+                            << msg << " to the port " << port_);
     return hardware_interface::return_type::ERROR;
   }
+
+  prev_position_commands_ = position_commands_;
 
   return hardware_interface::return_type::OK;
 }
 }  // namespace arduinobot_controller
 
-PLUGINLIB_EXPORT_CLASS(
-  arduinobot_controller::ArduinobotInterface,
-  hardware_interface::SystemInterface
-)
+PLUGINLIB_EXPORT_CLASS(arduinobot_controller::ArduinobotInterface, hardware_interface::SystemInterface)

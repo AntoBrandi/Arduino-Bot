@@ -1,24 +1,18 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>arduinobot_bringup</name>
   <version>0.0.0</version>
-  <description>The arduinobot_bringup package</description>
-
+  <description>Arduinobot Bringup package</description>
   <maintainer email="antonio.brandi@outlook.it">Antonio Brandi</maintainer>
+  <license>Apache 2.0</license>
 
-  <license>BSD</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <author email="antonio.brandi@outlook.it">Antonio Brandi</author>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
 
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>rospy</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>rospy</build_export_depend>
-  <build_export_depend>std_msgs</build_export_depend>
-  <exec_depend>roscpp</exec_depend>
-  <exec_depend>rospy</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
-
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>

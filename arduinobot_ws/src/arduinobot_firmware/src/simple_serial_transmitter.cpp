@@ -35,7 +35,7 @@ private:
 
   void msgCallback(const std_msgs::msg::String &msg)
   {
-    RCLCPP_INFO_STREAM(this->get_logger(), "New message received, publishing on serial: ");
+    RCLCPP_INFO_STREAM(this->get_logger(), "New message received, publishing on serial: " << msg.data);
     arduino_.Write(msg.data);
   }
 };

@@ -37,6 +37,7 @@ private:
   LibSerial::SerialPort arduino_;
   std::string port_;
   std::vector<double> position_commands_;
+  std::vector<double> prev_position_commands_;
   std::vector<double> position_states_;
 };
 }  // namespace arduinobot_controller

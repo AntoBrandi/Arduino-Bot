@@ -1,14 +1,11 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.5)
 project(arduinobot_bringup)
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
+find_package(ament_cmake REQUIRED)
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
 
-catkin_package()
-
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+ament_package()
