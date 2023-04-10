@@ -151,16 +151,21 @@ hardware_interface::return_type ArduinobotInterface::write(const rclcpp::Time &t
 
   std::string msg;
   int base = static_cast<int>(((position_commands_.at(0) + (M_PI / 2)) * 180) / M_PI);
+  msg.append("b");
   msg.append(std::to_string(base));
   msg.append(",");
   int shoulder = 180 - static_cast<int>(((position_commands_.at(1) + (M_PI / 2)) * 180) / M_PI);
+  msg.append("s");
   msg.append(std::to_string(shoulder));
   msg.append(",");
   int elbow = static_cast<int>(((position_commands_.at(2) + (M_PI / 2)) * 180) / M_PI);
+  msg.append("e");
   msg.append(std::to_string(elbow));
   msg.append(",");
   int gripper = static_cast<int>(((-position_commands_.at(3)) * 180) / (M_PI / 2));
+  msg.append("g");
   msg.append(std::to_string(gripper));
+  msg.append(",");
 
   try
   {

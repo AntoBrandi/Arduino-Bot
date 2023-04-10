@@ -20,7 +20,11 @@
 Servo base;  
 Servo shoulder;  
 Servo elbow;  
-Servo gripper;  
+Servo gripper; 
+
+uint8_t idx = 0;
+uint8_t val_idx = 0;
+char value[4] = "000";
 
 
 /*
@@ -66,37 +70,64 @@ void setup() {
 void loop() {
   if (Serial.available())
   {
-    String msg = Serial.readStringUntil('\n');
-    uint8_t j = 0;
-    uint8_t last_idx = 0;
-    uint8_t joints[4];
-    for(uint8_t i = 0; i < msg.length(); i++)
+    char chr = Serial.read();
+
+    // base motor
+    if(chr == 'b')
     {
-      if (msg.charAt(i) == ',')
-      {
-        joints[j] = msg.substring(last_idx, i).toInt();
-        j++;
-        last_idx = i + 1;
-      }
+      idx = 0;
+      val_idx = 0;
     }
-    // Add last element
-    joints[j] = msg.substring(last_idx, msg.length()).toInt();
-    
-    // check that the received data are bounded correctly
-    if(joints[0]<MIN_RANGE) joints[0] = MIN_RANGE;
-    if(joints[1]<MIN_RANGE) joints[1] = MIN_RANGE;
-    if(joints[2]<MIN_RANGE) joints[2] = MIN_RANGE;
-    if(joints[3]<MIN_RANGE) joints[3] = MIN_RANGE;
-  
-    if(joints[0]>MAX_RANGE) joints[0] = MAX_RANGE;
-    if(joints[1]>MAX_RANGE) joints[1] = MAX_RANGE;
-    if(joints[2]>MAX_RANGE) joints[2] = MAX_RANGE;
-    if(joints[3]>MAX_RANGE) joints[3] = MAX_RANGE;
-  
-    reach_goal(base, joints[0]);
-    reach_goal(shoulder, joints[1]);
-    reach_goal(elbow, joints[2]);
-    reach_goal(gripper, joints[3]);
+    // shoulder motor
+    else if(chr == 's')
+    {
+      idx = 1;
+      val_idx = 0;
+    }
+    // elbow motor
+    else if(chr == 'e')
+    {
+      idx = 2;
+      val_idx = 0;
+    }
+    // gripper motor
+    else if(chr == 'g')
+    {
+      idx = 3;
+      val_idx = 0;
+    }
+    // Separator
+    else if(chr == ',')
+    {
+      int val = atoi(value);
+      if(idx == 0)
+      {
+        reach_goal(base, val);
+      }
+      else if(idx == 1)
+      {
+        reach_goal(shoulder, val);
+      }
+      else if(idx == 2)
+      {
+        reach_goal(elbow, val);
+      }
+      else if(idx == 3)
+      {
+        reach_goal(gripper, val);
+      }
+
+      // reset the angle
+      value[0] = '0';
+      value[1] = '0';
+      value[2] = '0';
+      value[2] = '\0';
+    }
+    // Plain number
+    else
+    {
+      value[val_idx] = chr;
+      val_idx++;
+    }
   }
-  delay(0.01);
 }
