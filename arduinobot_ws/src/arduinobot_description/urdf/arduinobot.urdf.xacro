@@ -78,7 +78,7 @@
             </geometry>
         </visual>
         <collision>
-            <origin rpy=" 0 -${PI / 2} -${PI / 2}" xyz="0.19 0.06 -0.08"/>
+            <origin rpy=" 0 -${PI / 2} ${PI / 2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
