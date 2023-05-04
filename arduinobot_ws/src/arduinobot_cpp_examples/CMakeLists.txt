@@ -26,7 +26,7 @@ add_executable(simple_service_client src/simple_service_client.cpp)
 ament_target_dependencies(simple_service_client rclcpp arduinobot_msgs)
 
 add_executable(simple_parameter src/simple_parameter.cpp)
-ament_target_dependencies(simple_parameter rclcpp)
+ament_target_dependencies(simple_parameter rclcpp rcl_interfaces)
 
 add_library(simple_action_server SHARED src/simple_action_server.cpp)
 target_include_directories(simple_action_server PRIVATE
