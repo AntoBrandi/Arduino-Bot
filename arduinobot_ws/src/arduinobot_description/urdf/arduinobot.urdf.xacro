@@ -23,11 +23,4 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint> 
 
-    <joint name ="joint_1" type="revolute">
-        <parent link="base_link"/>
-        <child link = "base_plate"/>
-        <origin xyz="0 0 0.307"/>
-        <axis xyz="0 0 1"/>
-    </joint>
-
 </robot>
