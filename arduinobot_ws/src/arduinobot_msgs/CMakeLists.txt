@@ -11,7 +11,8 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/AddTwoInts.srv"
-  "srv/AnglesConverter.srv"
+  "srv/EulerToQuaternion.srv"
+  "srv/QuaternionToEuler.srv"
   "action/Fibonacci.action"
   "action/ArduinobotTask.action"
 )
