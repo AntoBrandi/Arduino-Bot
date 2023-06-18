@@ -11,7 +11,6 @@ public:
   SimpleSerialTransmitter() : Node("simple_serial_transmitter")
   {
     declare_parameter<std::string>("port", "/dev/ttyUSB0");
-    declare_parameter<int>("baudrate", 115200);
 
     port_ = get_parameter("port").as_string();
 
@@ -30,7 +29,6 @@ public:
 private:
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
   std::string port_;
-  int baudrate_;
   LibSerial::SerialPort arduino_;
 
   void msgCallback(const std_msgs::msg::String &msg)
