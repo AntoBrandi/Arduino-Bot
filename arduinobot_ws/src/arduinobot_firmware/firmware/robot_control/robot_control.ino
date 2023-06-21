@@ -25,7 +25,7 @@ char value[4] = "000";
 
 /*
  * This function moves a given servo smoothly from a given start position to a given end position.
- * The mouvement can be both clockwise or counterclockwise based on the values assigned to
+ * The movement can be both clockwise or counterclockwise based on the values assigned to
  * the start position and end position
  */
 void reach_goal(Servo& motor, int goal){
