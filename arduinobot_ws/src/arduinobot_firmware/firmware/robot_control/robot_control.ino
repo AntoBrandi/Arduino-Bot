@@ -6,10 +6,6 @@
 #define SERVO_ELBOW_PIN 10
 #define SERVO_GRIPPER_PIN 11
 
-// Define the working range for each joint
-#define MIN_RANGE 0
-#define MAX_RANGE 180
-
 // Define the start configuration of the joints
 #define BASE_START 90
 #define SHOULDER_START 90
