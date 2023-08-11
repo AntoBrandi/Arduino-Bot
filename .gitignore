@@ -1,5 +1,7 @@
 arduinobot_ws/build
 arduinobot_ws/devel
+arduinobot_ws/install
+arduinobot_ws/log*
 arduinobot_ws/.vscode
 remote/__pycache__
 .vscode
