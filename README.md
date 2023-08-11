@@ -1,6 +1,5 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Udemy][udemy-shield]][udemy-url]
-[![Skillshare][skillshare-shield]][skillshare-url]
 
 
 <!-- PROJECT LOGO -->
@@ -54,8 +53,7 @@ of the robot.
 
 This Robot is Build and Developed in the online course called: **Robotics and ROS - Learn by Doing! Manipulators** and is currently available on the following platforms:
 
-* [Udemy](https://www.udemy.com/course/robotics-and-ros-learn-by-doing-manipulators/?couponCode=LEARNBYDOING)
-* [Skillshare](https://skl.sh/3UAFaXW)
+* [Udemy](https://www.udemy.com/course/robotics-and-ros-learn-by-doing-manipulators/?referralCode=6EDAA8501C5E3CCEE526)
 
 If you want more information on the course or just want to check the course material this [link](https://github.com/AntoBrandi/Robotics-and-ROS-Learn-by-Doing-Manipulators) is for you
 
@@ -187,9 +185,7 @@ My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/antonio-brandi-512166bb/
 [udemy-shield]: https://img.shields.io/badge/-Udemy-black.svg?style=flat-square&logo=udemy&colorB=555
-[udemy-url]: https://www.udemy.com/user/antonio-brandi/
-[skillshare-shield]: https://img.shields.io/badge/-Skillshare-black.svg?style=flat-square&logo=skillshare&colorB=555
-[skillshare-url]: https://www.skillshare.com/en/profile/Antonio-Brandi/471799472
+[udemy-url]: https://www.udemy.com/course/robotics-and-ros-learn-by-doing-manipulators/?referralCode=6EDAA8501C5E3CCEE526
 [product-screenshot]: images/BB3A0020.jpg
 [product-screenshot-2]: images/BB3A0026.jpg
 [product-screenshot-real]: images/screen_video.png
