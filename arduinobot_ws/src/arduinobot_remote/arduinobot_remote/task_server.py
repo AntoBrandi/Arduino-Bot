@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rclpy
 import numpy as np
 from rclpy.node import Node
@@ -38,7 +39,7 @@ class TaskServer(Node):
             arm_joint_goal = np.array([-1.14, -0.6, -0.07])
             gripper_joint_goal = np.array([0.0, 0.0])
         elif goal_handle.request.task_number == 2:
-            arm_joint_goal = np.array([-1.57,0.0,-1.0])
+            arm_joint_goal = np.array([-1.57,0.0,-0.9])
             gripper_joint_goal = np.array([0.0, 0.0])
         else:
             self.get_logger().error("Invalid Task Number")
