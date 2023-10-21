@@ -5,10 +5,10 @@
     <xacro:arg name="is_sim" default="true"/>
 
     <!-- Include Gazebo Parameters -->
-    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" />
+    <!-- <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" /> -->
 
     <!-- Include ros2_control Plugins -->
-    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_ros2_control.xacro" />
+    <!-- <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_ros2_control.xacro" /> -->
     
     <!-- Useful XACRO Variables (Properties) -->
     <xacro:property name="PI" value="3.14159265359" />
@@ -151,6 +151,22 @@
         </collision>
     </link>
 
+    <link name="rgb_camera">
+        <xacro:default_inertial mass="0.001"/>
+        <visual>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
     
     <!-- Joints -->  
     <joint name="virtual_joint" type="fixed">
@@ -209,6 +225,12 @@
         <limit lower="0.0" upper="${PI / 2}" 
                effort="${effort}" velocity="${velocity}"/>
         <mimic joint="joint_4" multiplier="-1"/>
+    </joint>
+
+    <joint name ="rgb_camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link = "rgb_camera"/>
+        <origin xyz="0 0.45 0.2" rpy="0 -0.5 1.57"/>
     </joint>
 
 

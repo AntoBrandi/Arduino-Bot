@@ -10,4 +10,37 @@
       </plugin>
     </gazebo>
 
+    <gazebo reference="rgb_camera">
+        <sensor type="camera" name="rgb_camera">
+            <always_on>true</always_on>
+            <update_rate>30.0</update_rate>
+            <camera name="rgb_camera">
+                <horizontal_fov>1.15</horizontal_fov>
+                <vertical_fov>0.71</vertical_fov>
+                <image>
+                    <width>2304</width>
+                    <height>1296</height>
+                    <format>R8G8B8</format>
+                </image>
+                <distortion>
+                    <k1>0.0</k1>
+                    <k2>0.0</k2>
+                    <k3>0.0</k3>
+                    <p1>0.0</p1>
+                    <p2>0.0</p2>
+                    <center>0.5 0.5</center>
+                </distortion>
+            </camera>
+            <plugin name="plugin_name" filename="libgazebo_ros_camera.so">
+                <ros>
+                    <remapping>~/image_raw:=image_raw</remapping>
+                    <remapping>~/camera_info:=camera_info</remapping>
+                </ros>
+                <camera_name>rgb_camera</camera_name>
+                <frame_name>rgb_camera</frame_name>
+                <hack_baseline>0.2</hack_baseline>
+            </plugin>
+        </sensor>
+      </gazebo>
+
 </robot>
