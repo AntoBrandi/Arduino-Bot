@@ -5,10 +5,10 @@
     <xacro:arg name="is_sim" default="true"/>
 
     <!-- Include Gazebo Parameters -->
-    <!-- <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" /> -->
+    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" /> 
 
     <!-- Include ros2_control Plugins -->
-    <!-- <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_ros2_control.xacro" /> -->
+    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_ros2_control.xacro" /> 
     
     <!-- Useful XACRO Variables (Properties) -->
     <xacro:property name="PI" value="3.14159265359" />
