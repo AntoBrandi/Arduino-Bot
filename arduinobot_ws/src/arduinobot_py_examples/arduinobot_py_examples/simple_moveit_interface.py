@@ -15,6 +15,9 @@ def move_robot():
     arm_state.set_joint_group_positions("arm", np.array([1.57, 0.0, 0.0]))
     gripper_state.set_joint_group_positions("gripper", np.array([-0.7, 0.7]))
 
+    arduinobot_arm.set_start_state_to_current_state()
+    arduinobot_gripper.set_start_state_to_current_state()
+    
     arduinobot_arm.set_goal_state(robot_state=arm_state)
     arduinobot_gripper.set_goal_state(robot_state=gripper_state)
 
@@ -22,19 +25,17 @@ def move_robot():
     gripper_plan_result = arduinobot_gripper.plan()
 
     if arm_plan_result and gripper_plan_result:
-        get_logger("rclcp").info("Planner SUCCEED, moving the arme and the gripper")
+        get_logger("rclpy").info("Planner SUCCEED, moving the arm and the gripper")
         arduinobot.execute(arm_plan_result.trajectory, controllers=[])
         arduinobot.execute(gripper_plan_result.trajectory, controllers=[])
     else:
-        get_logger("rclcp").info("One or more planners failed!")
+        get_logger("rclpy").error("One or more planners failed!")
 
 
 def main():
     rclpy.init()
     move_robot()
-
     rclpy.shutdown()
-
 
 if __name__ == "__main__":
     main()

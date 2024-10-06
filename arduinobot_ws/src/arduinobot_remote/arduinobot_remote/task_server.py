@@ -16,18 +16,18 @@ class TaskServer(Node):
             self, ArduinobotTask, "task_server", self.goalCallback
         )
 
+        # MoveIt 2 Interface
+        self.arduinobot = MoveItPy(node_name="moveit_py")
+        self.arduinobot_arm = self.arduinobot.get_planning_component("arm")
+        self.arduinobot_gripper = self.arduinobot.get_planning_component("gripper")
+
     def goalCallback(self, goal_handle):
         self.get_logger().info(
             "Received goal request with id %d" % goal_handle.request.task_number
         )
 
-        # MoveIt 2 Interface
-        arduinobot = MoveItPy(node_name="moveit_py")
-        arduinobot_arm = arduinobot.get_planning_component("arm")
-        arduinobot_gripper = arduinobot.get_planning_component("gripper")
-
-        arm_state = RobotState(arduinobot.get_robot_model())
-        gripper_state = RobotState(arduinobot.get_robot_model())
+        arm_state = RobotState(self.arduinobot.get_robot_model())
+        gripper_state = RobotState(self.arduinobot.get_robot_model())
 
         arm_joint_goal = []
         gripper_joint_goal = []
@@ -48,16 +48,19 @@ class TaskServer(Node):
         arm_state.set_joint_group_positions("arm", arm_joint_goal)
         gripper_state.set_joint_group_positions("gripper", gripper_joint_goal)
 
-        arduinobot_arm.set_goal_state(robot_state=arm_state)
-        arduinobot_gripper.set_goal_state(robot_state=gripper_state)
+        self.arduinobot_arm.set_start_state_to_current_state()
+        self.arduinobot_gripper.set_start_state_to_current_state()
 
-        arm_plan_result = arduinobot_arm.plan()
-        gripper_plan_result = arduinobot_gripper.plan()
+        self.arduinobot_arm.set_goal_state(robot_state=arm_state)
+        self.arduinobot_gripper.set_goal_state(robot_state=gripper_state)
+
+        arm_plan_result = self.arduinobot_arm.plan()
+        gripper_plan_result = self.arduinobot_gripper.plan()
 
         if arm_plan_result and gripper_plan_result:
-            self.get_logger().info("Planner SUCCEED, moving the arme and the gripper")
-            arduinobot.execute(arm_plan_result.trajectory, controllers=[])
-            arduinobot.execute(gripper_plan_result.trajectory, controllers=[])
+            self.get_logger().info("Planner SUCCEED, moving the arm and the gripper")
+            self.arduinobot.execute(arm_plan_result.trajectory, controllers=[])
+            self.arduinobot.execute(gripper_plan_result.trajectory, controllers=[])
         else:
             self.get_logger().info("One or more planners failed!")
         
@@ -72,7 +75,6 @@ def main(args=None):
     rclpy.init(args=args)
     task_server = TaskServer()
     rclpy.spin(task_server)
-
 
 if __name__ == "__main__":
     main()
