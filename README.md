@@ -3,7 +3,7 @@
 
 
 <p align="center">
-  <img src="images/logo.png" alt="Logo">
+  <img src="media/logo.png" alt="Logo">
 </p>
 
 Arduinobot is an open-source 3D printed robot arm powered by ROS 2. Its simple design and low cost make it an excellent learning tool, featured in the [Robotics and ROS 2 - Learn by Doing! Manipulators](https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/?referralCode=4B27D2CF97C1E099DD4C) course.
@@ -97,9 +97,12 @@ ros2 launch arduinobot_bringup real_robot.launch.py
 
 ## :selfie: Media
 <p align="center">
-  <img src="images/BB3A0020.jpg" alt="Robot 1">
-  <img src="images/BB3A0026.jpg" alt="Robot 2">
-  <img src="images/screen_video.png" alt="Robot 3">
+  <video controls>
+    <source src="media/demo_pick.mp4" type="video/mp4">
+  </video>
+  <img src="media/BB3A0020.jpg" alt="Robot 1">
+  <img src="media/BB3A0026.jpg" alt="Robot 2">
+  <img src="media/screen_video.png" alt="Robot 3">
 </p>
 
 ## :raised_hands: Contributing
