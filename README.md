@@ -86,9 +86,6 @@ ros2 launch arduinobot_bringup simulated_robot.launch.py
 #### :mechanical_arm: Real Robot
 
 7. Connect the Arduino actuating your robot to your PC and load the [robot_control.ino](./arduinobot_firmware/firmware/robot_control/robot_control.ino) script using the Arduino IDE.
-```sh
-ros2 launch arduinobot_bringup simulated_robot.launch.py
-```
 
 8. Launch all the functionalities for the real robot
 ```sh
