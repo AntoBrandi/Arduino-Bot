@@ -116,7 +116,8 @@ Please refer to [CONTRIBUTING](CONTRIBUTING.md) doc.
 ## :link: Contact
 
 Antonio Brandi - [LinkedIn]([linkedin-url]) - antonio.brandi@outlook.it
-My Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
+
+Other Projects: [https://github.com/AntoBrandi](https://github.com/AntoBrandi)
 
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
