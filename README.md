@@ -97,9 +97,7 @@ ros2 launch arduinobot_bringup real_robot.launch.py
 
 ## :selfie: Media
 <p align="center">
-  <video controls>
-    <source src="media/demo_pick.mp4" type="video/mp4">
-  </video>
+  https://github.com/user-attachments/assets/74157eb4-2f9c-4c7f-95d8-00c09da898f3
   <img src="media/BB3A0020.jpg" alt="Robot 1">
   <img src="media/BB3A0026.jpg" alt="Robot 2">
   <img src="media/screen_video.png" alt="Robot 3">
